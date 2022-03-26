@@ -1,0 +1,12 @@
+.login-back {
+    background-image: url("https://i.pinimg.com/originals/3e/23/da/3e23daededad161550ca58300caaa898.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.login-inner {
+    border: 2px dashed #505050;
+    /*background-image: url("https://i.redd.it/232fq3oh1ny51.jpg");*/
+    /*background-attachment: fixed;*/
+    /*background-size: cover;*/
+}

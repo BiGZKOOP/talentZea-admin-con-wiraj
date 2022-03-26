@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap');
+
+.text-medium {
+    font-size: 18px;
+}
+
+.bg-grey {
+    background-color: #e3e3e3;
+}
+
+/*marging right*/
+.mr-1 {
+    margin-right: 10px;
+}
+
+.mr-2 {
+    margin-right: 20px;
+}
+
+.mr-3 {
+    margin-right: 30px;
+}
+
+.mr-4 {
+    margin-right: 40px;
+}
+
+.mr-5 {
+    margin-right: 50px;
+}
+
+.mr-6 {
+    margin-right: 60px;
+}
+
+.mr-7 {
+    margin-right: 70px;
+}
+
+.mr-8 {
+    margin-right: 80px;
+}
+
+/*margin-left*/
+.ml-1 {
+    margin-left: 10px;
+}
+
+.ml-2 {
+    margin-left: 20px;
+}
+
+.ml-3 {
+    margin-left: 30px;
+}
+
+.ml-4 {
+    margin-left: 40px;
+}
+
+.ml-5 {
+    margin-left: 50px;
+}
+
+.ml-6 {
+    margin-left: 60px;
+}
+
+.ml-7 {
+    margin-left: 70px;
+}
+
+.ml-8 {
+    margin-left: 80px;
+}
+
+/*border-radius*/
+.radius-5 {
+    border-radius: 5px;
+}
+
+.radius-8 {
+    border-radius: 8px;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.radius-12 {
+    border-radius: 12px;
+}
+
+.radius-15 {
+    border-radius: 15px;
+}
+
+.radius-20 {
+    border-radius: 20px;
+}
+
+.radius-25 {
+    border-radius: 25px;
+}
+
+.radius-35 {
+    border-radius: 35px;
+}
+
+.radius-50 {
+    border-radius: 50px;
+}
+
+.radius-100 {
+    border-radius: 100px;
+}
+
+/*sizes*/
+.width-24 {
+    width: 24%;
+    border-radius: 10px;
+}
+
+/*layouts*/
+.fullContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.d-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*utils*/
+.pointer {
+    cursor: pointer;
+}
+
+/*components*/
+.custom-dropdown {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border-color: #bdc3c7;
+}
+
+.custom-dropdown:focus {
+    outline: none;
+}
+
+/*images*/
+.object-fit {
+    object-fit: cover;
+}
+
+/*borders*/
+.right-border {
+    border-right: 1px black;
+}
+
+/*text*/
+.text-right {
+    text-align: right;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.f-courgette {
+    font-family: 'Courgette', cursive;
+}
+
+.f-Londrina {
+    font-family: 'Londrina Solid', cursive;
+}
+
+.f-shippori {
+    font-family: 'Shippori Antique B1', sans-serif;
+}
+
+@media all and (max-width: 540px) {
+    .width-24 {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .sm-mb-2 {
+        margin-bottom: 20px;
+    }
+}
