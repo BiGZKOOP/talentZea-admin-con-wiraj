@@ -1,6 +1,5 @@
 import * as actionTypes from './constants'
 import {takeLatest, call} from "redux-saga/effects"
-import axios from '../../../../Axios.js'
 import qs from 'qs'
 
 // eslint-disable-next-line no-unused-vars
