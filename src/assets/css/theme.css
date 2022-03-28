@@ -153,6 +153,10 @@
     cursor: pointer;
 }
 
+.grabbing {
+    cursor: grabbing;
+}
+
 /*components*/
 .custom-dropdown {
     padding: 10px 20px;

@@ -1,0 +1,1 @@
+export const BASE_CLOUD_URL = "https://talent-zea-cloud.herokuapp.com/"

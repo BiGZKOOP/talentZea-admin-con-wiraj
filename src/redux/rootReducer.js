@@ -13,6 +13,7 @@ import dataTables from '@src/views/tables/data-tables/store'
 import permissions from '@src/views/apps/roles-permissions/store'
 import loginReducer from "../views/pages/authentication/redux/reducer"
 import {combineReducers} from "redux"
+import mainCatViewReducer from "../custom-views/MainCategoryView/reducer"
 
 const rootReducer = combineReducers({
   auth,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   ecommerce,
   dataTables,
   permissions,
-  loginReducer
+  loginReducer,
+  mainCatViewReducer
 })
 
 export default rootReducer

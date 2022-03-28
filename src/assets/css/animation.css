@@ -56,6 +56,16 @@
     animation-fill-mode: forwards;
 }
 
+/*scalable animation*/
+.scalable {
+    transition: 0.2s;
+}
+
+.scalable:hover {
+    transition: 0.4s;
+    transform: scale(1.05, 1.05);
+}
+
 /*Animation properties*/
 .delay-1 {
     animation-delay: 1s;

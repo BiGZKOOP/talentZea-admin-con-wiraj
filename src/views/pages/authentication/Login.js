@@ -107,6 +107,10 @@ const Login = () => {
         }
     }
 
+    const signup = () => {
+
+    }
+
     return (
         <div className='auth-wrapper auth-cover login-back'>
             <div className='auth-inner m-0 d-flex overflow-hidden'>
@@ -118,7 +122,7 @@ const Login = () => {
                 </div>
                 <Card className="flex-grow-1 d-center h-100">
                     <Col
-                        className='d-flex align-items-center shadow-lg bg-transparent login-inner radius-20 auth-bg px-2 p-5'
+                        className='d-flex align-items-center bg-transparent login-inner radius-20 auth-bg px-2 p-5'
                         lg={11}>
                         <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                             <CardTitle tag='h2' className='fw-bold mb-1 text-center text-dark f-Londrina'>
@@ -169,7 +173,9 @@ const Login = () => {
                                 </Button>
                                 <div className="text-center mt-2 mb-1 f-Londrina">
                                     <h4>New to the talentZea ?
-                                        <span className="text-primary p-0 pointer"> signup here.</span>
+                                        <span
+                                            onClick={signup}
+                                            className="text-primary p-0 pointer"> signup here.</span>
                                     </h4>
                                 </div>
                             </Form>
