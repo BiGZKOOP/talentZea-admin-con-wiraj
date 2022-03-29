@@ -1,5 +1,6 @@
 import {Card, CardBody, CardFooter, CardHeader} from "reactstrap"
 import BreakPointSwipper from "../swippers/BreakPointSwipper"
+import {Edit, Eye} from "react-feather"
 
 const CategoryViewCard = ({data}) => {
 
@@ -21,8 +22,9 @@ const CategoryViewCard = ({data}) => {
                 <BreakPointSwipper images={getImageArray()}/>
             </div>
         </CardBody>
-        <CardFooter>
-            <button className="btn btn-primary">update</button>
+        <CardFooter className="d-flex justify-content-end">
+            <button className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
+            <button className="btn btn-outline-success"><Eye size={15}/></button>
         </CardFooter>
     </Card>
 }
