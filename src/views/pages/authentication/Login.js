@@ -30,12 +30,13 @@ import InputPasswordToggle from '@components/input-password-toggle'
 import {getHomeRouteForLoggedInUser} from '@utils'
 
 // ** Reactstrap Imports
-import {Row, Col, Form, Input, Label, Alert, Button, CardText, CardTitle, UncontrolledTooltip} from 'reactstrap'
+import {Row, Col, Form, Input, Label, Alert, Button, CardText, CardTitle, UncontrolledTooltip, Card} from 'reactstrap'
 
 // ** Styles
 import '@styles/react/pages/page-authentication.scss'
 import {loginListen} from "./redux/actions"
-import {getStreet} from "../../../utility/configCalling/actions"
+
+import logo from "../../../assets/custom_images/logo.png"
 
 const ToastContent = ({name, role}) => (
     <Fragment>
@@ -73,8 +74,7 @@ const Login = () => {
 
     useEffect(() => {
         dispatch(loginListen())
-        dispatch(getStreet(1))
-    },  [])
+    }, [])
 
     // eslint-disable-next-line no-unused-vars
     const onSubmit = data => {
@@ -107,65 +107,81 @@ const Login = () => {
         }
     }
 
+    const signup = () => {
+
+    }
+
     return (
         <div className='auth-wrapper auth-cover login-back'>
-            <div className='auth-inner m-0 d-center'>
-                <Col className='d-flex align-items-center shadow-lg bg-transparent login-inner radius-20 auth-bg px-2 p-5' lg='4' sm='2'>
-                    <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-                        <CardTitle tag='h2' className='fw-bold mb-1 text-center text-dark f-Londrina'>
-                            <h1>WELCOME TO THE TALENT ZEA</h1>
-                        </CardTitle>
-                        <CardText className='mb-2 text-center f-courgette'><h4>Creativity awaits...</h4></CardText>
-                        <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
-                            <div className='mb-1 mt-5'>
-                                <Label className='f-shippori' for='login-email'>
-                                    <h6 className="p-0">Email</h6>
-                                </Label>
-                                <Controller
-                                    id='loginEmail'
-                                    name='loginEmail'
-                                    control={control}
-                                    render={({field}) => (
-                                        <Input
-                                            autoFocus
-                                            type='email'
-                                            placeholder='john@example.com'
-                                            invalid={errors.loginEmail && true}
-                                            {...field}
-                                        />
-                                    )}
-                                />
-                            </div>
-                            <div className='mb-2'>
-                                <div className='d-flex justify-content-between'>
-                                    <Label className='f-shippori' for='login-password'>
-                                        <h6 className="mt-1">Password</h6>
+            <div className='auth-inner m-0 d-flex overflow-hidden'>
+                <div className="flex-grow-2 d-center flex-column">
+                    <img src={logo} width="40%" className="animate__animated animate__bounce"/>
+                    <h1 className="text-center mt-2 f-Londrina font-large-2">We design <span
+                        className="text-primary">memories</span> here</h1>
+                    <p className="f-courgette text-medium">Creativity awaits...</p>
+                </div>
+                <Card className="flex-grow-1 d-center h-100">
+                    <Col
+                        className='d-flex align-items-center bg-transparent login-inner radius-20 auth-bg px-2 p-5'
+                        lg={11}>
+                        <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
+                            <CardTitle tag='h2' className='fw-bold mb-1 text-center text-dark f-Londrina'>
+                                <h1>WELCOME TO THE TALENT ZEA</h1>
+                            </CardTitle>
+                            <CardText className='mb-2 text-center f-courgette'><h4>Creativity awaits...</h4></CardText>
+                            <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
+                                <div className='mb-1 mt-5'>
+                                    <Label className='f-shippori' for='login-email'>
+                                        <h6 className="p-0">Email</h6>
                                     </Label>
+                                    <Controller
+                                        id='loginEmail'
+                                        name='loginEmail'
+                                        control={control}
+                                        render={({field}) => (
+                                            <Input
+                                                autoFocus
+                                                type='email'
+                                                placeholder='john@example.com'
+                                                invalid={errors.loginEmail && true}
+                                                {...field}
+                                            />
+                                        )}
+                                    />
                                 </div>
-                                <Controller
-                                    id='password'
-                                    name='password'
-                                    control={control}
-                                    render={({field}) => (
-                                        <InputPasswordToggle className='input-group-merge'
-                                                             invalid={errors.password && true} {...field} />
-                                    )}
-                                />
-                            </div>
-                            <div className="text-right f-Londrina mt-2 mb-1">
-                                <h5 className="text-primary">forgot password ?</h5>
-                            </div>
-                            <Button type='submit' color='primary' block className="p-1 mt-2 mb-3">
-                                Sign in
-                            </Button>
-                            <div className="text-center mt-2 mb-1 f-Londrina">
-                                <h4>New to the talentZea ?
-                                    <span className="text-primary p-0 pointer"> signup here.</span>
-                                </h4>
-                            </div>
-                        </Form>
+                                <div className='mb-2'>
+                                    <div className='d-flex justify-content-between'>
+                                        <Label className='f-shippori' for='login-password'>
+                                            <h6 className="mt-1">Password</h6>
+                                        </Label>
+                                    </div>
+                                    <Controller
+                                        id='password'
+                                        name='password'
+                                        control={control}
+                                        render={({field}) => (
+                                            <InputPasswordToggle className='input-group-merge'
+                                                                 invalid={errors.password && true} {...field} />
+                                        )}
+                                    />
+                                </div>
+                                <div className="text-right f-Londrina mt-2 mb-1">
+                                    <h5 className="text-primary">forgot password ?</h5>
+                                </div>
+                                <Button type='submit' color='primary' block className="p-1 mt-2 mb-3">
+                                    Sign in
+                                </Button>
+                                <div className="text-center mt-2 mb-1 f-Londrina">
+                                    <h4>New to the talentZea ?
+                                        <span
+                                            onClick={signup}
+                                            className="text-primary p-0 pointer"> signup here.</span>
+                                    </h4>
+                                </div>
+                            </Form>
+                        </Col>
                     </Col>
-                </Col>
+                </Card>
             </div>
         </div>
     )

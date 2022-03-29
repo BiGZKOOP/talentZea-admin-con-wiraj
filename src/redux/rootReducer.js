@@ -11,9 +11,9 @@ import calendar from '@src/views/apps/calendar/store'
 import ecommerce from '@src/views/apps/ecommerce/store'
 import dataTables from '@src/views/tables/data-tables/store'
 import permissions from '@src/views/apps/roles-permissions/store'
-import configReducer from "../utility/configCalling/reducer"
 import loginReducer from "../views/pages/authentication/redux/reducer"
 import {combineReducers} from "redux"
+import mainCatViewReducer from "../custom-views/MainCategoryView/reducer"
 
 const rootReducer = combineReducers({
   auth,
@@ -28,8 +28,8 @@ const rootReducer = combineReducers({
   ecommerce,
   dataTables,
   permissions,
-  configReducer,
-  loginReducer
+  loginReducer,
+  mainCatViewReducer
 })
 
 export default rootReducer

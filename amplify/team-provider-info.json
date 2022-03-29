@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-talentzeaadmin-dev-142414-authRole",
+      "UnauthRoleArn": "arn:aws:iam::951523937455:role/amplify-talentzeaadmin-dev-142414-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::951523937455:role/amplify-talentzeaadmin-dev-142414-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-talentzeaadmin-dev-142414-deployment",
+      "UnauthRoleName": "amplify-talentzeaadmin-dev-142414-unauthRole",
+      "StackName": "amplify-talentzeaadmin-dev-142414",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:951523937455:stack/amplify-talentzeaadmin-dev-142414/52f7a330-ace2-11ec-ac17-0af75d25fefc",
+      "AmplifyAppId": "d7iddh9lib33r"
+    },
+    "categories": {
+      "auth": {
+        "talentzeaadmin46fe4951": {}
+      }
+    }
+  }
+}

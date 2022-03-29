@@ -1,0 +1,32 @@
+import {Card, CardBody, CardFooter, CardHeader} from "reactstrap"
+import BreakPointSwipper from "../swippers/BreakPointSwipper"
+import {Edit, Eye} from "react-feather"
+
+const CategoryViewCard = ({data}) => {
+
+    const getImageArray = () => {
+
+        if (data) {
+            const {image1, image2, image3} = data.image
+            return [image1, image2, image3]
+        }
+    }
+
+    return <Card className="w-25 mr-2 scalable">
+        <CardHeader>
+            <h1 className="f-Londrina">{data.mainTopic}</h1>
+        </CardHeader>
+        <CardBody>
+            <p>{data.mainTopicDescription}</p>
+            <div>
+                <BreakPointSwipper images={getImageArray()}/>
+            </div>
+        </CardBody>
+        <CardFooter className="d-flex justify-content-end">
+            <button className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
+            <button className="btn btn-outline-success"><Eye size={15}/></button>
+        </CardFooter>
+    </Card>
+}
+
+export default CategoryViewCard
