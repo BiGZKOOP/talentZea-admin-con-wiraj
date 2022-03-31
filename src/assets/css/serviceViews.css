@@ -1,0 +1,25 @@
+.topic-header {
+    font-size: 60px;
+}
+
+.main-img {
+    width: 25%;
+}
+
+.text-contact {
+    font-size: 25px;
+}
+
+@media (max-width: 578px) {
+    .topic-header {
+        font-size: 40px;
+    }
+
+    .main-img {
+        width: 50%;
+    }
+
+    .text-contact {
+        font-size: 17px;
+    }
+}
