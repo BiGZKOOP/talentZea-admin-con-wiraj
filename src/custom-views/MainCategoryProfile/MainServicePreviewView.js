@@ -12,6 +12,7 @@ import {useEffect} from "react"
 import {getMainServiceByIdListen} from "./actions"
 import Footer from "../../@core/layouts/components/footer"
 import MainNav from "../../custom-components/MainNav"
+import BreakPointSwipper from "../../custom-components/swippers/BreakPointSwipper"
 
 const MainServicePreviewView = () => {
 
@@ -23,7 +24,6 @@ const MainServicePreviewView = () => {
 
     // eslint-disable-next-line no-unused-vars
     const {mainCatPreview, mainCatPreviewLoading} = useSelector(state => state.mainCatPreviewReducer)
-    console.log(mainCatPreview)
 
     useEffect(() => {
         dispatch(getMainServiceByIdListen(id))
@@ -32,25 +32,23 @@ const MainServicePreviewView = () => {
     // eslint-disable-next-line no-unused-vars
     const validateSubService = () => {
 
-        return mainCatPreview.length > 0
+        return Object.keys(mainCatPreview).length !== 0
     }
-    
-    // eslint-disable-next-line no-unused-vars
+
     const getImageArray = () => {
 
         if (validateSubService()) {
-            const {image1, image2, image3} = subServices[0].mainService.image
+            const {image1, image2, image3} = mainCatPreview?.image
             return [image1, image2, image3]
         }
     }
-
 
     return <Row>
         <div className="p-1 mb-5 mb-lg-0 w-100 sticky-top-custom">
             <MainNav index={2}/>
         </div>
         <div className="mt-4 mb-5 d-center flex-column">
-            <div />
+            <div/>
             <div className="main-img floating-img">
                 <CreativeSvg/>
             </div>
@@ -104,14 +102,15 @@ const MainServicePreviewView = () => {
         </Col>
         <Row className="mt-5">
             <div className="mt-5">
-                <p className="f-Londrina text-topic text-center">Some of our works...</p>
+                <p className="f-Londrina text-topic text-center font-large-2">Some of our works...</p>
             </div>
-            {/*<div>*/}
-            {/*    <OurWorkMainService images={getImageArray()}/>*/}
-            {/*</div>*/}
+            <div>
+                <BreakPointSwipper count={3} images={getImageArray()}/>
+            </div>
         </Row>
+        <div/>
         {/*<ContactComp />*/}
-        <Footer />
+        <Footer/>
     </Row>
 }
 

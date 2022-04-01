@@ -22,7 +22,7 @@ const CategoryViewCard = ({data}) => {
         <CardBody>
             <p>{data.mainTopicDescription}</p>
             <div>
-                <BreakPointSwipper images={getImageArray()}/>
+                <BreakPointSwipper count={1} images={getImageArray()}/>
             </div>
         </CardBody>
         <CardFooter className="d-flex justify-content-end">

@@ -2,21 +2,21 @@ import '@styles/react/libs/swiper/swiper.scss'
 import {CardBody} from "reactstrap"
 import {Swiper, SwiperSlide} from "swiper/react/swiper-react"
 
-const BreakPointSwipper = ({ isRtl, images }) => {
+const BreakPointSwipper = ({ isRtl, images, count }) => {
 
     const params = {
-        slidesPerView: 1,
+        slidesPerView: count,
         spaceBetween: 50,
         pagination: {
             clickable: true
         },
         breakpoints: {
             1024: {
-                slidesPerView: 1,
+                slidesPerView: count,
                 spaceBetween: 40
             },
             768: {
-                slidesPerView: 1,
+                slidesPerView: count,
                 spaceBetween: 30
             },
             640: {
