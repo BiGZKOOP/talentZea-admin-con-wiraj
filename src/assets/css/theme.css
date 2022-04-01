@@ -25,6 +25,10 @@
     font-size: 18px;
 }
 
+.text-small {
+    font-size: 15px;
+}
+
 .bg-grey {
     background-color: #e3e3e3;
 }
