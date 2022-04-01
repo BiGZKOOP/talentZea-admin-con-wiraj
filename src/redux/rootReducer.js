@@ -15,6 +15,7 @@ import loginReducer from "../views/pages/authentication/redux/reducer"
 import {combineReducers} from "redux"
 import mainCatViewReducer from "../custom-views/MainCategoryView/reducer"
 import mainCatPreviewReducer from "../custom-views/MainCategoryProfile/reducer"
+import mainCatCreateReducer from "../custom-views/MainCategoryCreate/reducer"
 
 const rootReducer = combineReducers({
   auth,
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   permissions,
   loginReducer,
   mainCatViewReducer,
-  mainCatPreviewReducer
+  mainCatPreviewReducer,
+  mainCatCreateReducer
 })
 
 export default rootReducer

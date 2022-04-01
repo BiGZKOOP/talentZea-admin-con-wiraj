@@ -14,6 +14,10 @@ const DashboardRoutes = [
     path: '/service/:id',
     component: lazy(() => import('../../custom-views/MainCategoryProfile/MainServicePreviewView')),
     layout: 'BlankLayout'
+  },
+  {
+    path: '/main-category/create',
+    component: lazy(() => import('../../custom-views/MainCategoryCreate/MainCatCreate'))
   }
 ]
 
