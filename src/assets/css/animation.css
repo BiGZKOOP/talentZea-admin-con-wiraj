@@ -107,6 +107,20 @@
     animation-delay: 10s;
 }
 
+.clickable {
+    transition: 0.2s;
+}
+
+.clickable:hover {
+    transition: 0.3s;
+    transform: scale(1.1, 1.1);
+}
+
+.clickable:active {
+    transition: 0.2s;
+    transform: scale(0.96, 0.96);
+}
+
 /*Fadein animation keyframes*/
 @keyframes fadeInAnim {
     from {

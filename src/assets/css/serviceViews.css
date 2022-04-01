@@ -10,6 +10,11 @@
     font-size: 25px;
 }
 
+.editor-btn {
+    top: 0px;
+    right: 0px;
+}
+
 @media (max-width: 578px) {
     .topic-header {
         font-size: 40px;

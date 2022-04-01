@@ -2,7 +2,7 @@ import * as actionTypes from "./constants"
 
 const init = {
     mainCatPreviewLoading: false,
-    mainCatPreview: {}
+    mainCatPreview: []
 }
 
 const mainCatPreviewReducer = (state = init, action) => {

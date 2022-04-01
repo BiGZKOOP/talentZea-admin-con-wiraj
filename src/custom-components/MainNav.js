@@ -3,12 +3,14 @@ import {AlignJustify, Briefcase, Home, Info, Key, LogIn, LogOut, Phone, Power, R
 import {useState} from "react"
 import logo from "../assets/custom_images/logo.png"
 import Avatar from "../@core/components/avatar"
+import {useHistory} from "react-router-dom"
 
 const MainNav = () => {
 
     const [isOpen, setIsOpen] = useState(false)
     const toggle = () => setIsOpen(!isOpen)
 
+    const history = useHistory()
 
     return <Navbar container={false}
                    className='d-flex justify-content-between justify-content-md-between w-100 bg-transparent'
@@ -27,6 +29,14 @@ const MainNav = () => {
                         <NavLink
                             className='fw-bold' active>
                             <span className='d-none d-md-block text-light'>THIS IS THE PREVIEW</span>
+                            <Home className='d-block d-md-none' size={14}/>
+                        </NavLink>
+                    </NavItem>
+                    <NavItem className="ml-5">
+                        <NavLink
+                            onClick={() => history.goBack()}
+                            className='fw-bold btn btn-outline-danger'>
+                            <span className='d-none d-md-block text-danger'>BACK</span>
                             <Home className='d-block d-md-none' size={14}/>
                         </NavLink>
                     </NavItem>

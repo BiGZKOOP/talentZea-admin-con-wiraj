@@ -5,7 +5,7 @@ import {getMainServiceByIdSuccess, handleMainCatPreviewLoading} from "./actions"
 
 const getMainServiceByIdAsync = async (id) => {
 
-    return await axios.get(`main-service/${id}`).then(res => res).catch(err => console.error(err.message))
+    return await axios.get(`/sub-service/main/${id}`).then(res => res).catch(err => console.error(err.message))
 }
 
 ////////////////////
@@ -19,7 +19,7 @@ export function* getMainServiceByIdCB(action) {
     try {
         yield put(handleMainCatPreviewLoading(true))
         const res = yield call(getMainServiceByIdAsync, payload)
-        yield put(getMainServiceByIdSuccess(res.data.data))
+        yield put(getMainServiceByIdSuccess(res.data))
     } catch (err) {
         console.error(err.message)
     } finally {
