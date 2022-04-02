@@ -2,6 +2,7 @@ import {Card, CardBody, CardFooter, CardHeader} from "reactstrap"
 import BreakPointSwipper from "../swippers/BreakPointSwipper"
 import {Edit, Eye} from "react-feather"
 import {useHistory} from "react-router-dom"
+import "../../assets/css/mainCategory.css"
 
 const CategoryViewCard = ({data}) => {
 
@@ -15,7 +16,7 @@ const CategoryViewCard = ({data}) => {
         }
     }
 
-    return <Card className="w-25 mr-2 scalable">
+    return <Card className="w-23-c mr-2 scalable">
         <CardHeader>
             <h1 className="f-Londrina">{data.mainTopic}</h1>
         </CardHeader>

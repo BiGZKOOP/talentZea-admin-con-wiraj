@@ -103,6 +103,7 @@
   },
   "devDependencies": {
     "@types/sortablejs": "^1.10.6",
+    "aws-amplify": "^4.3.18",
     "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.0",
     "sass-loader": "8.0.2"

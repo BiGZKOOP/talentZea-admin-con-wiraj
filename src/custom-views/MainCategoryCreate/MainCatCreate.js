@@ -3,6 +3,9 @@ import {useFormik} from "formik"
 import {useState} from "react"
 import "../../assets/css/mainCategory.css"
 import {PlusSquare, Upload} from "react-feather"
+import {fireAlertError} from "../../utility/customUtils"
+import {useDispatch} from "react-redux"
+import {createMainCatListen} from "./actions"
 
 const MainCatCreate = () => {
 
@@ -10,20 +13,50 @@ const MainCatCreate = () => {
     const [image2, setImage2] = useState()
     const [image3, setImage3] = useState()
 
+    const dispatch = useDispatch()
+    
+    //Use this to cook the main cat create object
+    const cookDataObject = (values) => {
+
+        return {
+            ...values,
+            image1,
+            image2,
+            image3
+        }
+    }
+
+    const validate = (values) => {
+
+        if (!values.mainTopic) {
+            fireAlertError("Hmm..", "You need to give a main topic !")
+            return false
+        }
+
+        if (!values.mainTopicDescription) {
+            fireAlertError("Hmm..", "You need to give a main topic description !")
+            return false
+        }
+
+        dispatch(createMainCatListen(cookDataObject(values)))
+        return true
+    }
+
     const formik = useFormik({
         initialValues: {
             mainTopic: "",
             mainTopicDescription: ""
         },
-        onSubmit: 
+        onSubmit: values => {
+            validate(values)
+        }
     })
 
     const handleImage1 = () => {
 
         if (image1) {
             return <Label htmlFor="image1">
-                <img width="350px"
-                     src="https://cdn.vox-cdn.com/thumbor/mXo5ObKpTbHYi9YslBy6YhfedT4=/95x601:1280x1460/1200x800/filters:focal(538x858:742x1062)/cdn.vox-cdn.com/uploads/chorus_image/image/66699060/mgidarccontentnick.comc008fa9d_d.0.png"/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image1)}/>
             </Label>
         } else {
             return <Label htmlFor="image1">
@@ -39,8 +72,7 @@ const MainCatCreate = () => {
 
         if (image2) {
             return <Label htmlFor="image2">
-                <img width="350px"
-                     src="https://cdn.vox-cdn.com/thumbor/mXo5ObKpTbHYi9YslBy6YhfedT4=/95x601:1280x1460/1200x800/filters:focal(538x858:742x1062)/cdn.vox-cdn.com/uploads/chorus_image/image/66699060/mgidarccontentnick.comc008fa9d_d.0.png"/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image2)}/>
             </Label>
         } else {
             return <Label htmlFor="image2">
@@ -56,8 +88,7 @@ const MainCatCreate = () => {
 
         if (image3) {
             return <Label htmlFor="image3">
-                <img width="350px"
-                     src="https://cdn.vox-cdn.com/thumbor/mXo5ObKpTbHYi9YslBy6YhfedT4=/95x601:1280x1460/1200x800/filters:focal(538x858:742x1062)/cdn.vox-cdn.com/uploads/chorus_image/image/66699060/mgidarccontentnick.comc008fa9d_d.0.png"/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image3)}/>
             </Label>
         } else {
             return <Label htmlFor="image3">
@@ -74,6 +105,8 @@ const MainCatCreate = () => {
             <Col>
                 <Label htmlFor="main" className="text-small mb-1">Main topic</Label>
                 <Input
+                    id="mainTopic"
+                    name="mainTopic"
                     onChange={formik.handleChange}
                     value={formik.values.mainTopic}
                     placeholder="Enter main topic..."/>
@@ -81,6 +114,8 @@ const MainCatCreate = () => {
             <Col className="mt-2">
                 <Label htmlFor="main" className="text-small mb-1">Service description</Label>
                 <Input
+                    id="mainTopicDescription"
+                    name="mainTopicDescription"
                     onChange={formik.handleChange}
                     value={formik.values.mainTopicDescription}
                     placeholder="Enter main topic..."/>
