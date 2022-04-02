@@ -14,7 +14,8 @@ const MainCatCreate = () => {
         initialValues: {
             mainTopic: "",
             mainTopicDescription: ""
-        }
+        },
+        onSubmit: 
     })
 
     const handleImage1 = () => {
@@ -72,11 +73,17 @@ const MainCatCreate = () => {
         <Form onSubmit={formik.handleSubmit}>
             <Col>
                 <Label htmlFor="main" className="text-small mb-1">Main topic</Label>
-                <Input placeholder="Enter main topic..."/>
+                <Input
+                    onChange={formik.handleChange}
+                    value={formik.values.mainTopic}
+                    placeholder="Enter main topic..."/>
             </Col>
             <Col className="mt-2">
                 <Label htmlFor="main" className="text-small mb-1">Service description</Label>
-                <Input placeholder="Enter main topic..."/>
+                <Input
+                    onChange={formik.handleChange}
+                    value={formik.values.mainTopicDescription}
+                    placeholder="Enter main topic..."/>
             </Col>
             <Col className="mt-5">
                 <div className="d-flex justify-content-between">
@@ -95,7 +102,7 @@ const MainCatCreate = () => {
                 </div>
             </Col>
             <Col className="d-flex justify-content-end mt-3 mb-2">
-                <button className="btn btn-primary">Create main service</button>
+                <button type="submit" className="btn btn-primary">Create main service</button>
             </Col>
         </Form>
     </Card>
