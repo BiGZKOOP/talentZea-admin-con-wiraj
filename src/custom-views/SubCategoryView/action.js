@@ -23,3 +23,29 @@ export const handleSubCatLoading = (state) => {
         payload: state
     }
 }
+
+//Get sub service by id
+export const getSubServiceByIDListen = (id) => {
+
+    return {
+        type: actionTypes.GET_SUB_CAT_BY_ID_LISTEN,
+        payload: id
+    }
+}
+
+export const getSubServiceByIDSuccess = (data) => {
+
+    return {
+        type: actionTypes.GET_SUB_CAT_BY_ID_SUCCESS,
+        payload: data
+    }
+}
+
+//Use this to handle the loading of get sub cat by id
+export const handleGetSubCatByIDListen = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_SUB_CAT_BY_ID_LOADING,
+        payload: state
+    }
+}

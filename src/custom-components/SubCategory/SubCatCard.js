@@ -30,7 +30,7 @@ const SubCatCard = ({data}) => {
         <CardFooter className="d-flex justify-content-end">
             <button className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
             <button
-                onClick={() => history.push(`/service/${data._id}`)}
+                onClick={() => history.push(`/sub-category/preview/${data._id}`)}
                 className="btn btn-outline-success"><Eye size={15}/></button>
         </CardFooter>
     </Card>

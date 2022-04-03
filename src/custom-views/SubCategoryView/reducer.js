@@ -2,7 +2,9 @@ import * as actionTypes from "./constants"
 
 const init = {
     subCatLoading: false,
-    subCat: []
+    subCat: [],
+    singleSubCat: {},
+    singleSubCatLoading: false
 }
 
 const subCatReducer = (state = init, action) => {
@@ -17,6 +19,16 @@ const subCatReducer = (state = init, action) => {
             return {
                 ...state,
                 subCatLoading: action.payload
+            }
+        case actionTypes.GET_SUB_CAT_BY_ID_SUCCESS:
+            return {
+                ...state,
+                singleSubCat: action.payload
+            }
+        case actionTypes.HANDLE_SUB_CAT_BY_ID_LOADING:
+            return {
+                ...state,
+                singleSubCatLoading: action.payload
             }
         default:
             return state
