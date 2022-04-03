@@ -12,7 +12,6 @@ const MainCategoryView = () => {
 
     useEffect(() => {
         dispatch(getAllMainCatListen())
-        console.log(mainCat)
     }, [])
 
     return <div>

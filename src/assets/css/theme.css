@@ -184,7 +184,7 @@
 .custom-dropdown {
     padding: 10px 20px;
     border-radius: 5px;
-    border-color: #bdc3c7;
+    border: none;
 }
 
 .custom-dropdown:focus {
