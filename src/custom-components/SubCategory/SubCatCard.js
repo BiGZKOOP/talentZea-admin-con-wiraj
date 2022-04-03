@@ -3,7 +3,7 @@ import BreakPointSwipper from "../swippers/BreakPointSwipper"
 import {Edit, Eye} from "react-feather"
 import {useHistory} from "react-router-dom"
 
-const CategoryViewCard = ({data}) => {
+const SubCatCard = ({data}) => {
 
     const history = useHistory()
 
@@ -15,12 +15,14 @@ const CategoryViewCard = ({data}) => {
         }
     }
 
+
     return <Card className="w-25 mr-2 scalable">
         <CardHeader>
-            <h1 className="f-Londrina">{data.mainTopic}</h1>
+            <h4 className="f-Londrina"><span className="text-primary">{data.mainService.mainTopic}</span> {"> "}
+                <span className="text-danger">{data.mainTopic}</span></h4>
         </CardHeader>
         <CardBody>
-            <p>{data.mainTopicDescription}</p>
+            <p>{data.description}</p>
             <div>
                 <BreakPointSwipper count={1} images={getImageArray()}/>
             </div>
@@ -34,4 +36,4 @@ const CategoryViewCard = ({data}) => {
     </Card>
 }
 
-export default CategoryViewCard
+export default SubCatCard

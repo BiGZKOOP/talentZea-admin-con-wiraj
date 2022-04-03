@@ -30,8 +30,8 @@ const MainCategoryView = () => {
         }
         <div className="d-flex flex-wrap">
             {
-                mainCat?.map(data => {
-                    return <CategoryViewCard data={data}/>
+                mainCat?.map((data, index) => {
+                    return <CategoryViewCard key={index} data={data}/>
                 })
             }
         </div>
