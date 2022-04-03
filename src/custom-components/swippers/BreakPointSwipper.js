@@ -36,7 +36,7 @@ const BreakPointSwipper = ({ isRtl, images, count }) => {
                 {
                     images?.map((image, index) => {
                         return <SwiperSlide className="grabbing p-0">
-                            <img src={image} alt={`swiper ${index}`} className='img-fluid'/>
+                            <img src={image} height="150px" alt={`swiper ${index}`} className='object-fit'/>
                         </SwiperSlide>
                     })
                 }

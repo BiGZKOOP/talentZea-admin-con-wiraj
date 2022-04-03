@@ -1,18 +1,18 @@
-import {Card, Input, Spinner} from "reactstrap"
 import {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {getAllMainCatListen} from "./actions"
-import CategoryViewCard from "../../custom-components/MainCategoryView/CategoryViewCard"
+import {getAllSubCatListen} from "./action"
+import {Card, Input, Spinner} from "reactstrap"
 import {Search} from "react-feather"
+import SubCatCard from "../../custom-components/SubCategory/SubCatCard"
 
-const MainCategoryView = () => {
+const SubCategoryView = () => {
 
     const dispatch = useDispatch()
-    const {mainCat, mainCatLoading} = useSelector(state => state.mainCatViewReducer)
+
+    const {subCat, subCatLoading} = useSelector(state => state.subCatReducer)
 
     useEffect(() => {
-        dispatch(getAllMainCatListen())
-        console.log(mainCat)
+        dispatch(getAllSubCatListen())
     }, [])
 
     return <div>
@@ -23,19 +23,19 @@ const MainCategoryView = () => {
             </div>
         </Card>
         {
-            mainCatLoading && <div className="w-100 h-75-v d-center flex-column animate__animated animate__bounce">
+            subCatLoading && <div className="w-100 h-75-v d-center flex-column animate__animated animate__bounce">
                 <Spinner className="mb-2"/>
                 <p className="text-medium f-Londrina">Cooking your data...</p>
             </div>
         }
         <div className="d-flex flex-wrap">
             {
-                mainCat?.map((data, index) => {
-                    return <CategoryViewCard key={index} data={data}/>
+                subCat?.map(data => {
+                    return <SubCatCard data={data}/>
                 })
             }
         </div>
     </div>
-}
 
-export default MainCategoryView
+}
+export default SubCategoryView
