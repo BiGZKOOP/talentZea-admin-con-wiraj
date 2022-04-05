@@ -6,6 +6,7 @@ import { Calendar } from 'react-feather'
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
 
+// eslint-disable-next-line no-unused-vars
 const ChartjsBarChart = ({ success, gridLineColor, labelColor }) => {
   // ** Chart Options
   const options = {
@@ -41,24 +42,23 @@ const ChartjsBarChart = ({ success, gridLineColor, labelColor }) => {
   // ** Chart data
   const data = {
     labels: [
-      '7/12',
-      '8/12',
-      '9/12',
-      '10/12',
-      '11/12',
-      '12/12',
-      '13/12',
-      '14/12',
-      '15/12',
-      '16/12',
-      '17/12',
-      '18/12',
-      '19/12'
+      'january',
+      'february',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december'
     ],
     datasets: [
       {
         maxBarThickness: 15,
-        backgroundColor: success,
+        backgroundColor: "#7ed6df",
         borderColor: 'transparent',
         borderRadius: { topRight: 15, topLeft: 15 },
         data: [275, 90, 190, 205, 125, 85, 55, 87, 127, 150, 230, 280, 190]
@@ -70,17 +70,6 @@ const ChartjsBarChart = ({ success, gridLineColor, labelColor }) => {
     <Card>
       <CardHeader className='d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column'>
         <CardTitle tag='h4'>Latest Statistics</CardTitle>
-        <div className='d-flex align-items-center'>
-          <Calendar size={14} />
-          <Flatpickr
-            className='form-control flat-picker bg-transparent border-0 shadow-none'
-            options={{
-              mode: 'range',
-              // eslint-disable-next-line no-mixed-operators
-              defaultDate: [new Date(), new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000)]
-            }}
-          />
-        </div>
       </CardHeader>
       <CardBody>
         <div style={{ height: '400px' }}>
