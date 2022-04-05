@@ -25,6 +25,10 @@
     font-size: 18px;
 }
 
+.text-large {
+    font-size: 20px;
+}
+
 .text-small {
     font-size: 15px;
 }
@@ -184,7 +188,7 @@
 .custom-dropdown {
     padding: 10px 20px;
     border-radius: 5px;
-    border-color: #bdc3c7;
+    border: none;
 }
 
 .custom-dropdown:focus {

@@ -9,12 +9,13 @@ import {useDispatch, useSelector} from "react-redux"
 import SuccessOrderSVG from "../../assets/custom_images/svg/SuccessOrderSVG"
 import FriendlySvg from "../../assets/custom_images/svg/Friendly.svg"
 import {useEffect, useState} from "react"
-import {getMainServiceByIdListen} from "./actions"
+import {getMainServiceByIdListen, updateMainServiceByListen} from "./actions"
 import MainNav from "../../custom-components/MainNav"
 import BreakPointSwipper from "../../custom-components/swippers/BreakPointSwipper"
 import Footer from "../../custom-components/footer/Footer"
-import {Edit3} from "react-feather"
+import {Edit3, Upload} from "react-feather"
 import ContactComp from "../../custom-components/contact-comp"
+import {fireAlertError} from "../../utility/customUtils"
 
 const MainServicePreviewView = () => {
 
@@ -27,6 +28,11 @@ const MainServicePreviewView = () => {
     const [topicModelShow, setTopicModelShow] = useState(false)
     const [descriptionModelShow, setDescriptionModelShow] = useState(false)
     const [imagesModelShow, setImagesModelShow] = useState(false)
+
+    // eslint-disable-next-line no-unused-vars
+    const [image1, setImage1] = useState("")
+    const [image2, setImage2] = useState("")
+    const [image3, setImage3] = useState("")
 
     const [topicUpdate, setTopicUpdate] = useState("")
     const [descriptionUpadte, setDescriptionUpdate] = useState("")
@@ -45,11 +51,77 @@ const MainServicePreviewView = () => {
         return mainCatPreview?.length > 0
     }
 
+    // eslint-disable-next-line no-unused-vars
     const getImageArray = () => {
 
         if (validateSubService()) {
-            const {image1, image2, image3} = mainCatPreview[0]?.mainService?.image
-            return [image1, image2, image3]
+            return [mainCatPreview[0]?.mainService?.image?.image1, mainCatPreview[0]?.mainService?.image?.image2, mainCatPreview[0]?.mainService?.image?.image3]
+        }
+    }
+
+    const updateMainServiceByID = (dataObj) => {
+
+        dispatch(updateMainServiceByListen(dataObj))
+    }
+
+    const updateTopic = () => {
+
+        if (topicUpdate.length > 5) {
+            updateMainServiceByID({
+                ...mainCatPreview[0],
+                mainTopic: topicUpdate
+            })
+        } else fireAlertError("Oops...", "Your topic must contains at least 5 letter")
+    }
+
+    const handleImage1 = () => {
+
+        if (image1) {
+            return <Label htmlFor="image1">
+                <img width="200px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image1)}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image1">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 1</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage2 = () => {
+
+        if (image2) {
+            return <Label htmlFor="image2">
+                <img width="200px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image2)}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image2">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 2</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage3 = () => {
+
+        if (image3) {
+            return <Label htmlFor="image3">
+                <img width="200px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image3)}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image3">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 3</p>
+                </div>
+            </Label>
         }
     }
 
@@ -125,39 +197,56 @@ const MainServicePreviewView = () => {
         </Col>
         <Row className="mt-5">
             <div className="mt-5">
-                <p className="f-Londrina text-topic text-center font-large-2">Some of our works...<Edit3
-                    className="text-danger cursor-pointer clickable ml-2"
-                    size={35}/></p>
+                <p className="f-Londrina text-topic text-center font-large-2">Some of our works...
+                    <Edit3
+                        onClick={() => setImagesModelShow(!imagesModelShow)}
+                        className="text-danger cursor-pointer clickable ml-2"
+                        size={35}/></p>
             </div>
-            <div>
-                <BreakPointSwipper count={3} images={getImageArray()}/>
+            <div className="d-flex justify-content-around mt-3 mb-3 position-relative">
+                {
+                    getImageArray()?.map((e, index) => {
+                        return <div className="w-25">
+                            <img src={e} height="200px" width="300px" alt={`swiper ${index}`}
+                                 className='object-fit scalable cursor-pointer'/>
+                        </div>
+
+                    })
+                }
             </div>
         </Row>
         <div/>
         <ContactComp/>
         <Footer/>
         {/*Topic update model*/}
-        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)} className='modal-dialog-centered modal-md'>
+        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
+               className='modal-dialog-centered modal-md'>
             <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
                 <h3 className="text-light">Real time update</h3>
             </ModalHeader>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                 <Label htmlFor="topicId" className="text-medium lead mb-1">Update the topic</Label>
-                <Input id="topicId" placeholder="Service topic here..." value={topicUpdate} onChange={e => setTopicUpdate(e.target.value)}/>
+                <Input id="topicId" placeholder="Service topic here..." value={topicUpdate}
+                       onChange={e => setTopicUpdate(e.target.value)}/>
             </ModalBody>
             <ModalFooter>
-                <button className="btn btn-primary">Update</button>
+                <button
+                    onClick={updateTopic}
+                    className="btn btn-primary">Update
+                </button>
             </ModalFooter>
         </Modal>
 
         {/*Description update model*/}
-        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)} className='modal-dialog-centered modal-md'>
+        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
+               className='modal-dialog-centered modal-md'>
             <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
                 <h3 className="text-light">Real time update</h3>
             </ModalHeader>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                 <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte} onChange={e => setDescriptionUpdate(e.target.value)}/>
+                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                       onChange={e => setDescriptionUpdate(e.target.value)}/>
             </ModalBody>
             <ModalFooter>
                 <button className="btn btn-primary">Update</button>
@@ -165,9 +254,30 @@ const MainServicePreviewView = () => {
         </Modal>
 
         {/*service images update model*/}
-        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)} className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)} />
+        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
+               className='modal-dialog-centered modal-lg'>
+            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                <h1 className="f-Londrina">Update the images</h1>
+                <Col className="mt-5">
+                    <div className="d-flex justify-content-between">
+                        <div>
+                            {handleImage1()}
+                            <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
+                        </div>
+                        <div>
+                            {handleImage2()}
+                            <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
+                        </div>
+                        <div>
+                            {handleImage3()}
+                            <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
+                        </div>
+                    </div>
+                </Col>
+                <Col className="d-flex justify-content-end mt-2">
+                    <button className="btn btn-primary">Update images</button>
+                </Col>
             </ModalBody>
         </Modal>
     </Row>

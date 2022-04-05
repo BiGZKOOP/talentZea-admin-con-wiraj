@@ -44,3 +44,9 @@ export const jsonToFormData = (obj) => {
 export const getIDToken = async () => {
     return Auth.currentSession().then((res) => res.getIdToken().getJwtToken())
 }
+
+//Use this to delete object attr
+export const deleteAttrFromObject = (obj, attr) => {
+    delete obj[attr]
+    return obj
+}

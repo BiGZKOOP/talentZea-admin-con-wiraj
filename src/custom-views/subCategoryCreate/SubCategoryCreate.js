@@ -1,12 +1,16 @@
 import {Button, Card, Col, Form, Input, Label, Row} from "reactstrap"
 import {useFormik} from "formik"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import "../../assets/css/mainCategory.css"
 import {PlusSquare, Upload} from "react-feather"
 import {fireAlertError} from "../../utility/customUtils"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import {getAllMainCatListen} from "../MainCategoryView/actions"
 
 const SubCategoryCreate = () => {
+
+    // eslint-disable-next-line no-unused-vars
+    const {mainCat, mainCatLoading} = useSelector(state => state.mainCatViewReducer)
 
     const [image1, setImage1] = useState()
     const [image2, setImage2] = useState()
@@ -60,7 +64,8 @@ const SubCategoryCreate = () => {
 
         if (image1) {
             return <Label htmlFor="image1">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image1)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image1)}/>
             </Label>
         } else {
             return <Label htmlFor="image1">
@@ -76,7 +81,8 @@ const SubCategoryCreate = () => {
 
         if (image2) {
             return <Label htmlFor="image2">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image2)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image2)}/>
             </Label>
         } else {
             return <Label htmlFor="image2">
@@ -92,7 +98,8 @@ const SubCategoryCreate = () => {
 
         if (image3) {
             return <Label htmlFor="image3">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image3)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image3)}/>
             </Label>
         } else {
             return <Label htmlFor="image3">
@@ -103,6 +110,11 @@ const SubCategoryCreate = () => {
             </Label>
         }
     }
+
+    useEffect(() => {
+        dispatch(getAllMainCatListen())
+        console.log(mainCat)
+    }, [])
 
     return <Card className="p-1">
         <Form onSubmit={formik.handleSubmit}>
@@ -118,11 +130,31 @@ const SubCategoryCreate = () => {
             <Col className="mt-2">
                 <Label htmlFor="main" className="text-small mb-1">Service description</Label>
                 <Input
+                    type="textarea"
                     id="mainTopicDescription"
                     name="mainTopicDescription"
                     onChange={formik.handleChange}
                     value={formik.values.mainTopicDescription}
                     placeholder="Enter main topic..."/>
+            </Col>
+            <Col className="mt-2">
+                <Label htmlFor="main" className="text-small mb-1">Select </Label>
+                <Card className="w-25">
+                    <select
+                        className="custom-dropdown bg-instagram text-light"
+                        id="mainService"
+                        name="mainService"
+                        onChange={formik.handleChange}
+                        value={formik.values.mainService}
+                        placeholder="Select main service...">
+                        {
+                            mainCat?.map((e, index) => {
+                                if (mainCatLoading) return <option key={index}>Loading...</option>
+                                else return <option key={index}>{e.mainTopic}</option>
+                            })
+                        }
+                    </select>
+                </Card>
             </Col>
             <Col className="mt-5">
                 <div className="d-flex justify-content-between">

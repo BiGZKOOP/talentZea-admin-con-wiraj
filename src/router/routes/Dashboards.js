@@ -26,6 +26,11 @@ const DashboardRoutes = [
   {
     path: '/sub-category/create',
     component: lazy(() => import('../../custom-views/subCategoryCreate/SubCategoryCreate'))
+  },
+  {
+    path: '/sub-category/preview/:id',
+    component: lazy(() => import('../../custom-views/SubCatPreview/SubCatPreview')),
+    layout: 'BlankLayout'
   }
 ]
 

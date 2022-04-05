@@ -28,13 +28,15 @@ const SubCategoryView = () => {
                 <p className="text-medium f-Londrina">Cooking your data...</p>
             </div>
         }
-        <div className="d-flex flex-wrap">
-            {
-                subCat?.map(data => {
-                    return <SubCatCard data={data}/>
-                })
-            }
-        </div>
+        {
+            !subCatLoading && <div className="d-flex flex-wrap">
+                {
+                    subCat?.map(data => {
+                        return <SubCatCard data={data}/>
+                    })
+                }
+            </div>
+        }
     </div>
 
 }
