@@ -24,7 +24,7 @@ const getSubCatByIDAsync = async (id) => {
 export function* getAllSubCatCB() {
 
     try {
-        yield put(handleSubCatLoading(false))
+        yield put(handleSubCatLoading(true))
         const res = yield call(getAllSubCatAsync)
         yield put(getAllSubCatSuccess(res.data))
     } catch (err) {
@@ -51,6 +51,7 @@ export function* getSubCatByIDCB(action) {
 
 function* watchSubCatSagas() {
     yield takeLatest(actionTypes.GET_ALL_SUB_CAT_LISTEN, getAllSubCatCB)
+    yield takeLatest(actionTypes.GET_SUB_CAT_BY_ID_LISTEN, getSubCatByIDCB)
 }
 
 const subServiceSagas = [watchSubCatSagas]

@@ -38,12 +38,14 @@ export function* getMainServiceByIdCB(action) {
 
 }
 
-export function* updateMainServiceByID(action) {
+export function* updateMainServiceByIDCB(action) {
 
     const {payload} = action
 
+    console.log(payload)
+
     try {
-        const res = yield call(updateMainServiceByIDAsync, payload)
+        const res = yield call(updateMainServiceByIDAsync, payload, payload._id)
         console.log(res)
     } catch (err) {
         console.error(err.message)
@@ -53,6 +55,7 @@ export function* updateMainServiceByID(action) {
 function* watchMainServicePreviewSagas() {
 
     yield takeLatest(actionTypes.GET_MAIN_SERVICE_BY_ID_LISTEN, getMainServiceByIdCB)
+    yield takeLatest(actionTypes.UPDATE_MAIN_SERVICE_BY_ID_LISTEN, updateMainServiceByIDCB)
 }
 
 const mainServicePreviewSagas = [watchMainServicePreviewSagas]
