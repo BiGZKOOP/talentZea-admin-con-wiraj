@@ -13,7 +13,7 @@ const getAllSubCatAsync = async () => {
 
 const getSubCatByIDAsync = async (id) => {
 
-    return await axios.get(`/sub-service/${id}`).then(res => res).catch(err => {
+    return await axios.get(`/sub-service/main/${id}`).then(res => res).catch(err => {
         console.error(err.message)
     })
 }
