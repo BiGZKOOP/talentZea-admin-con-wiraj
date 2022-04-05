@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import SuccessOrderSVG from "../../assets/custom_images/svg/SuccessOrderSVG"
 import FriendlySvg from "../../assets/custom_images/svg/Friendly.svg"
 import {useEffect, useState} from "react"
-import {getMainServiceByIdListen} from "./actions"
+import {getMainServiceByIdListen, updateMainServiceByListen} from "./actions"
 import MainNav from "../../custom-components/MainNav"
 import BreakPointSwipper from "../../custom-components/swippers/BreakPointSwipper"
 import Footer from "../../custom-components/footer/Footer"
@@ -48,9 +48,21 @@ const MainServicePreviewView = () => {
     const getImageArray = () => {
 
         if (validateSubService()) {
-            const {image1, image2, image3} = mainCatPreview[0]?.mainService?.image
-            return [image1, image2, image3]
+            return [mainCatPreview[0]?.mainService?.image?.image1, mainCatPreview[0]?.mainService?.image?.image2, mainCatPreview[0]?.mainService?.image?.image3]
         }
+    }
+
+    const cookObject = () => {
+        return {
+            ...mainCatPreview,
+            mainTopic: topicUpdate,
+            mainTopicDescription: descriptionUpadte
+        }
+    }
+
+    const updateMainServiceByID = () => {
+
+        dispatch(updateMainServiceByListen(cookObject()))
     }
 
     return <Row>
@@ -137,27 +149,34 @@ const MainServicePreviewView = () => {
         <ContactComp/>
         <Footer/>
         {/*Topic update model*/}
-        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)} className='modal-dialog-centered modal-md'>
+        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
+               className='modal-dialog-centered modal-md'>
             <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
                 <h3 className="text-light">Real time update</h3>
             </ModalHeader>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                 <Label htmlFor="topicId" className="text-medium lead mb-1">Update the topic</Label>
-                <Input id="topicId" placeholder="Service topic here..." value={topicUpdate} onChange={e => setTopicUpdate(e.target.value)}/>
+                <Input id="topicId" placeholder="Service topic here..." value={topicUpdate}
+                       onChange={e => setTopicUpdate(e.target.value)}/>
             </ModalBody>
             <ModalFooter>
-                <button className="btn btn-primary">Update</button>
+                <button
+                    onClick={updateMainServiceByID}
+                    className="btn btn-primary">Update
+                </button>
             </ModalFooter>
         </Modal>
 
         {/*Description update model*/}
-        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)} className='modal-dialog-centered modal-md'>
+        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
+               className='modal-dialog-centered modal-md'>
             <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
                 <h3 className="text-light">Real time update</h3>
             </ModalHeader>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                 <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte} onChange={e => setDescriptionUpdate(e.target.value)}/>
+                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                       onChange={e => setDescriptionUpdate(e.target.value)}/>
             </ModalBody>
             <ModalFooter>
                 <button className="btn btn-primary">Update</button>
@@ -165,8 +184,9 @@ const MainServicePreviewView = () => {
         </Modal>
 
         {/*service images update model*/}
-        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)} className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)} />
+        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
+               className='modal-dialog-centered modal-md'>
+            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
             <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
             </ModalBody>
         </Modal>

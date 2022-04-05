@@ -36,7 +36,7 @@ const UserDropdown = () => {
   }, [])
 
   //** Vars
-  const userAvatar = (userData && <userData className="avatar"/>) || defaultAvatar
+  const userAvatar = (userData && userData.avatar) || defaultAvatar
 
   return (
       <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>

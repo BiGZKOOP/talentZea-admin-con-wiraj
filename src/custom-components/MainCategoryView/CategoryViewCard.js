@@ -8,10 +8,8 @@ const CategoryViewCard = ({data}) => {
     const history = useHistory()
 
     const getImageArray = () => {
-
         if (data) {
-            const {image1, image2, image3} = data.image
-            return [image1, image2, image3]
+            return [data?.image?.image1, data?.image?.image2, data?.image?.image3]
         }
     }
 
