@@ -2,9 +2,9 @@ import * as actionTypes from "./constants"
 // eslint-disable-next-line no-unused-vars
 import axios from "../../axios/axios"
 import {call, put, takeLatest} from "redux-saga/effects"
-import {createMainCatSuccess} from "./actions"
+import {createMainCatSuccess, handleMainCatCreateLoading} from "./actions"
 // eslint-disable-next-line no-unused-vars
-import {getIDToken, jsonToFormData} from "../../utility/customUtils"
+import {fireAlertSuccess, getIDToken, jsonToFormData} from "../../utility/customUtils"
 
 const createMainServiceAsync = async (data) => {
 
@@ -14,7 +14,10 @@ const createMainServiceAsync = async (data) => {
         headers: {
             'content-type': 'application/x-www-form-urlencoded'
         }
-    }).then(res => res).catch(err => {
+    }).then(res => {
+        fireAlertSuccess("You have created a new main service !", "Could be a beginning of something great")
+        return res
+    }).catch(err => {
         console.error(err.message)
     })
 }
@@ -25,13 +28,17 @@ const createMainServiceAsync = async (data) => {
 
 export function* createMainCatCB(action) {
 
-    const {payload} = action
+    const {payload, history} = action
 
     try {
+        yield put(handleMainCatCreateLoading(true))
         const res = yield call(createMainServiceAsync, payload)
         yield put(createMainCatSuccess(res.data))
+        history.push("/main-category/view")
     } catch (err) {
         console.error(err.message)
+    } finally {
+        yield put(handleMainCatCreateLoading(false))
     }
 }
 

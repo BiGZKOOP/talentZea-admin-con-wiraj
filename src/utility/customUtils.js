@@ -30,6 +30,16 @@ export const fireAlertError = (title, msg) => {
     )
 }
 
+//Use this to fire success alerts
+export const fireAlertSuccess = (title, msg) => {
+
+    Swal.fire(
+        title,
+        msg,
+        "success"
+    )
+}
+
 //Use this to convert json to form data
 export const jsonToFormData = (obj) => {
     const formData = new FormData()

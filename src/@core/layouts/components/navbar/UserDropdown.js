@@ -10,6 +10,7 @@ import { isUserLoggedIn } from '@utils'
 
 // ** Store & Actions
 import { useDispatch } from 'react-redux'
+// eslint-disable-next-line no-unused-vars
 import { handleLogout } from '@store/authentication'
 
 // ** Third Party Components
@@ -23,6 +24,7 @@ import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 
 const UserDropdown = () => {
   // ** Store Vars
+    // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch()
 
   // ** State
@@ -48,19 +50,19 @@ const UserDropdown = () => {
           <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online'/>
         </DropdownToggle>
         <DropdownMenu end className="pb-0">
-          {
-            isUserLoggedIn() && <DropdownItem className="btn btn-danger w-100" onClick={() => HandlesignoutUser()}>
-              <Power size={14} className='me-75'/>
-              <span className='align-middle'>Logout</span>
-            </DropdownItem>
-          }
-          {
-            !isUserLoggedIn() && <DropdownItem className="btn btn-danger" tag={Link} to='/login'
-                                               onClick={() => dispatch(handleLogout())}>
-              <Key size={14} className='me-75'/>
-              <span className='align-middle'>Login</span>
-            </DropdownItem>
-          }
+          {/*{*/}
+          {/*  isUserLoggedIn() && <DropdownItem className="btn btn-danger w-100" onClick={() => HandlesignoutUser()}>*/}
+          {/*    <Power size={14} className='me-75'/>*/}
+          {/*    <span className='align-middle'>Logout</span>*/}
+          {/*  </DropdownItem>*/}
+          {/*}*/}
+          {/*{*/}
+          {/*  !isUserLoggedIn() && <DropdownItem className="btn btn-danger" tag={Link} to='/login'*/}
+          {/*                                     onClick={() => dispatch(handleLogout())}>*/}
+          {/*    <Key size={14} className='me-75'/>*/}
+          {/*    <span className='align-middle'>Login</span>*/}
+          {/*  </DropdownItem>*/}
+          {/*}*/}
         </DropdownMenu>
       </UncontrolledDropdown>
   )
