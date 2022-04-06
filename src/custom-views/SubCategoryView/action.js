@@ -49,3 +49,28 @@ export const handleGetSubCatByIDListen = (state) => {
         payload: state
     }
 }
+
+//Use this to create sub services
+export const createSubCatServiceListen = (data, history) => {
+
+    return {
+        type: actionTypes.CREATE_SUB_CAT_LISTEN,
+        payload: data,
+        history
+    }
+}
+
+export const createSubCatServiceSuccess = () => {
+    return {
+        type: actionTypes.CREATE_SUB_CAT_SUCCESS
+    }
+}
+
+//Use this to handle sub cat creation loading
+export const handleSubCatCreateLoading = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_SUB_CAT_CREATE_LOADING,
+        payload: state
+    }
+}

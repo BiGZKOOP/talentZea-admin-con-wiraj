@@ -1,4 +1,4 @@
-import {Button, Card, Col, Form, Input, Label, Row} from "reactstrap"
+import {Button, Card, Col, Form, Input, Label, Row, Spinner} from "reactstrap"
 import {useFormik} from "formik"
 import {useEffect, useState} from "react"
 import "../../assets/css/mainCategory.css"
@@ -6,11 +6,15 @@ import {PlusSquare, Upload} from "react-feather"
 import {fireAlertError} from "../../utility/customUtils"
 import {useDispatch, useSelector} from "react-redux"
 import {getAllMainCatListen} from "../MainCategoryView/actions"
+// eslint-disable-next-line no-unused-vars
+import {createSubCatServiceListen} from "../SubCategoryView/action"
+import {useHistory} from "react-router-dom"
 
 const SubCategoryCreate = () => {
 
     // eslint-disable-next-line no-unused-vars
     const {mainCat, mainCatLoading} = useSelector(state => state.mainCatViewReducer)
+    const {subCatCreateLoading} = useSelector(state => state.subCatReducer)
 
     const [image1, setImage1] = useState()
     const [image2, setImage2] = useState()
@@ -19,10 +23,12 @@ const SubCategoryCreate = () => {
     // eslint-disable-next-line no-unused-vars
     const dispatch = useDispatch()
 
+    // eslint-disable-next-line no-unused-vars
+    const history = useHistory()
+
     //Use this to cook the main cat create object
     // eslint-disable-next-line no-unused-vars
     const cookDataObject = (values) => {
-
         return {
             ...values,
             image1,
@@ -38,12 +44,31 @@ const SubCategoryCreate = () => {
             return false
         }
 
-        if (!values.mainTopicDescription) {
+        if (!values.description) {
             fireAlertError("Hmm..", "You need to give a main topic description !")
             return false
         }
 
-        // dispatch(createMainCatListen(cookDataObject(values)))
+        if (!values.mainService) {
+            fireAlertError("Hmm..", "You need to select a main service !")
+            return false
+        }
+
+        if (!image1) {
+            fireAlertError("Hmm..", "You need must upload the image 1 !")
+            return false
+        }
+
+        if (!image2) {
+            fireAlertError("Hmm..", "You need must upload the image 2 !")
+            return false
+        }
+
+        if (!image3) {
+            fireAlertError("Hmm..", "You need must upload the image 3 !")
+            return false
+        }
+        dispatch(createSubCatServiceListen(cookDataObject(values), history))
         return true
     }
 
@@ -51,8 +76,8 @@ const SubCategoryCreate = () => {
         initialValues: {
             mainTopic: "",
             description: "",
+            subTopic: "We create memories here",
             mainService: "",
-            mainTopicDescription: "",
             faq: []
         },
         onSubmit: values => {
@@ -113,7 +138,6 @@ const SubCategoryCreate = () => {
 
     useEffect(() => {
         dispatch(getAllMainCatListen())
-        console.log(mainCat)
     }, [])
 
     return <Card className="p-1">
@@ -131,10 +155,10 @@ const SubCategoryCreate = () => {
                 <Label htmlFor="main" className="text-small mb-1">Service description</Label>
                 <Input
                     type="textarea"
-                    id="mainTopicDescription"
-                    name="mainTopicDescription"
+                    id="description"
+                    name="description"
                     onChange={formik.handleChange}
-                    value={formik.values.mainTopicDescription}
+                    value={formik.values.description}
                     placeholder="Enter main topic..."/>
             </Col>
             <Col className="mt-2">
@@ -147,10 +171,11 @@ const SubCategoryCreate = () => {
                         onChange={formik.handleChange}
                         value={formik.values.mainService}
                         placeholder="Select main service...">
+                        <option>Select main service</option>
                         {
                             mainCat?.map((e, index) => {
                                 if (mainCatLoading) return <option key={index}>Loading...</option>
-                                else return <option key={index}>{e.mainTopic}</option>
+                                else return <option key={index} value={e._id}>{e.mainTopic}</option>
                             })
                         }
                     </select>
@@ -173,7 +198,12 @@ const SubCategoryCreate = () => {
                 </div>
             </Col>
             <Col className="d-flex justify-content-end mt-3 mb-2">
-                <button type="submit" className="btn btn-primary">Create main service</button>
+                <button type="submit" className="btn btn-primary d-flex d-center text-small">
+                    {
+                        subCatCreateLoading && <Spinner className="spinner text-small mr-1"/>
+                    }
+                    Create main service
+                </button>
             </Col>
         </Form>
     </Card>
