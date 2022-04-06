@@ -1,11 +1,12 @@
-import {Button, Card, Col, Form, Input, Label, Row} from "reactstrap"
+import {Button, Card, Col, Form, Input, Label, Row, Spinner} from "reactstrap"
 import {useFormik} from "formik"
 import {useState} from "react"
 import "../../assets/css/mainCategory.css"
 import {PlusSquare, Upload} from "react-feather"
 import {fireAlertError} from "../../utility/customUtils"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {createMainCatListen} from "./actions"
+import {useHistory} from "react-router-dom"
 
 const MainCatCreate = () => {
 
@@ -14,7 +15,10 @@ const MainCatCreate = () => {
     const [image3, setImage3] = useState()
 
     const dispatch = useDispatch()
-    
+    const history = useHistory()
+
+    const {createLoader} = useSelector(state => state.mainCatCreateReducer)
+
     //Use this to cook the main cat create object
     const cookDataObject = (values) => {
 
@@ -37,8 +41,23 @@ const MainCatCreate = () => {
             fireAlertError("Hmm..", "You need to give a main topic description !")
             return false
         }
+        
+        if (!image1) {
+            fireAlertError("Hmm..", "You need must upload the image 1 !")
+            return false
+        }
 
-        dispatch(createMainCatListen(cookDataObject(values)))
+        if (!image2) {
+            fireAlertError("Hmm..", "You need must upload the image 2 !")
+            return false
+        }
+
+        if (!image3) {
+            fireAlertError("Hmm..", "You need must upload the image 3 !")
+            return false
+        }
+
+        dispatch(createMainCatListen(cookDataObject(values), history))
         return true
     }
 
@@ -56,7 +75,8 @@ const MainCatCreate = () => {
 
         if (image1) {
             return <Label htmlFor="image1">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image1)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image1)}/>
             </Label>
         } else {
             return <Label htmlFor="image1">
@@ -72,7 +92,8 @@ const MainCatCreate = () => {
 
         if (image2) {
             return <Label htmlFor="image2">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image2)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image2)}/>
             </Label>
         } else {
             return <Label htmlFor="image2">
@@ -88,7 +109,8 @@ const MainCatCreate = () => {
 
         if (image3) {
             return <Label htmlFor="image3">
-                <img width="350px" height="300px" className="object-fit scalable radius-10" src={URL.createObjectURL(image3)}/>
+                <img width="350px" height="300px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(image3)}/>
             </Label>
         } else {
             return <Label htmlFor="image3">
@@ -114,6 +136,7 @@ const MainCatCreate = () => {
             <Col className="mt-2">
                 <Label htmlFor="main" className="text-small mb-1">Service description</Label>
                 <Input
+                    type='textarea'
                     id="mainTopicDescription"
                     name="mainTopicDescription"
                     onChange={formik.handleChange}
@@ -137,7 +160,12 @@ const MainCatCreate = () => {
                 </div>
             </Col>
             <Col className="d-flex justify-content-end mt-3 mb-2">
-                <button type="submit" className="btn btn-primary">Create main service</button>
+                <button type="submit" className="btn btn-primary d-flex d-center text-small">
+                    {
+                        createLoader && <Spinner className="spinner text-small mr-1"/>
+                    }
+                    Create main service
+                </button>
             </Col>
         </Form>
     </Card>
