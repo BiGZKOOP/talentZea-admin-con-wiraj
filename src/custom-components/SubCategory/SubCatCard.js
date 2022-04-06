@@ -9,8 +9,8 @@ const SubCatCard = ({data}) => {
 
     const getImageArray = () => {
 
-        if (data) {
-            const {image1, image2, image3} = data.image
+        if (data?.image) {
+            const {image1, image2, image3} = data?.image
             return [image1, image2, image3]
         }
     }
