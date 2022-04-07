@@ -10,10 +10,36 @@
       "StackName": "amplify-talentzeaadmin-dev-142414",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:951523937455:stack/amplify-talentzeaadmin-dev-142414/52f7a330-ace2-11ec-ac17-0af75d25fefc",
       "AmplifyAppId": "d7iddh9lib33r"
+    }
+  },
+  "tzpool": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-talentzeaadmin-tzpool-91132-authRole",
+      "UnauthRoleArn": "arn:aws:iam::951523937455:role/amplify-talentzeaadmin-tzpool-91132-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::951523937455:role/amplify-talentzeaadmin-tzpool-91132-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-talentzeaadmin-tzpool-91132-deployment",
+      "UnauthRoleName": "amplify-talentzeaadmin-tzpool-91132-unauthRole",
+      "StackName": "amplify-talentzeaadmin-tzpool-91132",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:951523937455:stack/amplify-talentzeaadmin-tzpool-91132/9ef00250-b624-11ec-b434-02ae69eccaba",
+      "AmplifyAppId": "d7iddh9lib33r"
+    }
+  },
+  "tzadmin": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-talentzeaadmin-tzadmin-105444-authRole",
+      "UnauthRoleArn": "arn:aws:iam::827252531319:role/amplify-talentzeaadmin-tzadmin-105444-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::827252531319:role/amplify-talentzeaadmin-tzadmin-105444-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-talentzeaadmin-tzadmin-105444-deployment",
+      "UnauthRoleName": "amplify-talentzeaadmin-tzadmin-105444-unauthRole",
+      "StackName": "amplify-talentzeaadmin-tzadmin-105444",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:827252531319:stack/amplify-talentzeaadmin-tzadmin-105444/0cfc2040-b633-11ec-b25e-0653d22105a4",
+      "AmplifyAppId": "d2r9wzx5mpy451"
     },
     "categories": {
       "auth": {
-        "talentzeaadmin46fe4951": {}
+        "talentzeaadmin58158917": {}
       }
     }
   }

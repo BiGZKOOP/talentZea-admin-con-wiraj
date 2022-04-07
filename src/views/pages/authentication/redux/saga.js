@@ -1,23 +1,26 @@
 import * as actionTypes from './constants'
+// eslint-disable-next-line no-unused-vars
 import {takeLatest, call} from "redux-saga/effects"
-import qs from 'qs'
+import {fireAlertCustom} from "../../../../utility/customUtils"
+import {Auth} from "aws-amplify"
+
 
 // eslint-disable-next-line no-unused-vars
-const loginAsync = async (user) => {
+const loginAsync = async (username, password) => {
 
-    const params = new URLSearchParams()
-    params.append("username", "Bashana")
-    params.append("username", "1234")
-    return axios.post(`/login`, qs.stringify({username:"Bashana", password:"1234"}), {
-        headers: { 'content-type': 'application/x-www-form-urlencoded' }
-    }).then(res => console.log(res)).catch(err => console.log(err))
+    return await Auth.signIn(username, password).then(() => {
+        window.localStorage.setItem("user", "logged")
+    }).catch((err) => {
+        fireAlertCustom("hmmm...", err.message, "error")
+        return false
+    })
 }
 
-export function* loginUserCB() {
-
+export function* loginUserCB(action) {
+    const {data, history} = action
     try {
-        const data = yield call(loginAsync, "buddini")
-        console.log(data)
+        yield call(loginAsync, data.email, data.password)
+        history.push("/dashboard")
     } catch (e) {
         console.error(e)
     }
