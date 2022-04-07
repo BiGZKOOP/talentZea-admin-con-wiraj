@@ -61,7 +61,7 @@ export function* getSubCatByIDCB(action) {
     const {payload} = action
 
     try {
-        yield put(handleGetSubCatByIDListen(false))
+        yield put(handleGetSubCatByIDListen(true))
         const res = yield call(getSubCatByIDAsync, payload)
         yield put(getSubServiceByIDSuccess(res.data))
     } catch (err) {

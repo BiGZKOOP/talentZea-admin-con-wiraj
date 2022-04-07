@@ -118,7 +118,10 @@ const MainServicePreviewView = () => {
         }
     }
 
-    if (mainCatPreviewLoading) return <h1>Loading...</h1>
+    if (mainCatPreviewLoading) return <div className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
+        <Spinner className="mb-2"/>
+        <p className="text-medium f-Londrina">Cooking your data...</p>
+    </div>
     else {
         return <Row>
             <div className="p-1 mb-5 mb-lg-0 w-100 sticky-top-custom">

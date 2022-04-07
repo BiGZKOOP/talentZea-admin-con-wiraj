@@ -1,5 +1,5 @@
 import CreativeSvg from "../../assets/custom_images/svg/Creative.svg"
-import {Card, CardFooter, Col, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row} from "reactstrap"
+import {Card, CardFooter, Col, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row, Spinner} from "reactstrap"
 import "../../assets/css/serviceViews.css"
 import "../../assets/css/dashboard.css"
 import {useHistory} from "react-router-dom"
@@ -23,7 +23,7 @@ const SubCatPreview = () => {
 
     const id = pathname.split("/sub-category/preview/")[1]
 
-    const {singleSubCat} = useSelector(state => state.subCatReducer)
+    const {singleSubCat, singleSubCatLoading} = useSelector(state => state.subCatReducer)
 
     const [topicModelShow, setTopicModelShow] = useState(false)
     const [descriptionModelShow, setDescriptionModelShow] = useState(false)
@@ -107,129 +107,137 @@ const SubCatPreview = () => {
         return [singleSubCat?.image?.image1, singleSubCat?.image?.image2, singleSubCat?.image?.image3]
     }
 
+    console.log(singleSubCatLoading)
+
     useEffect(() => {
         dispatch(getSubServiceByIDListen(id))
     }, [])
 
-    return <Row>
-        <div className="p-1 mb-5  mb-lg-0">
-            <MainNav index={2}/>
+    if (singleSubCatLoading) return <div className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
+            <Spinner className="mb-2"/>
+            <p className="text-medium f-Londrina">Cooking your data...</p>
         </div>
-        <div className="mt-4 mb-5 d-center flex-column">
-            <div className="main-img floating-img">
-                <SubServiceWelcomeSVG/>
+    else {
+        return <Row>
+            <div className="p-1 mb-5  mb-lg-0">
+                <MainNav index={2}/>
             </div>
-            <h1 className="text-center mt-4 f-Londrina text-primary topic-header">
-                {singleSubCat?.mainTopic}
-                <Edit3
-                    onClick={() => setTopicModelShow(!topicModelShow)}
-                    size={45} className="ml-2 text-danger clickable cursor-pointer"/>
-            </h1>
-            <h2 className="f-indie-flower">We create memories here !</h2>
-            <div className="d-flex">
-                <button className="btn btn-danger text-medium mt-2 mr-2">PLACE ORDER</button>
-                <button
-                    onClick={() => history.goBack()}
-                    className="btn btn-outline-primary text-medium mt-2">BACK TO SERVICES
-                </button>
-            </div>
-        </div>
-        <Row className="w-100 d-center mt-5">
-            <Row className="w-50 ">
-                <h1 className="text-center mb-3 f-Londrina">
-                    What we provide
+            <div className="mt-4 mb-5 d-center flex-column">
+                <div className="main-img floating-img">
+                    <SubServiceWelcomeSVG/>
+                </div>
+                <h1 className="text-center mt-4 f-Londrina text-primary topic-header">
+                    {singleSubCat?.mainTopic}
                     <Edit3
                         onClick={() => setTopicModelShow(!topicModelShow)}
-                        size={30} className="ml-2 text-danger clickable cursor-pointer"/>
+                        size={45} className="ml-2 text-danger clickable cursor-pointer"/>
                 </h1>
-                <p className="text-medium text-center">{singleSubCat?.description}</p>
+                <h2 className="f-indie-flower">We create memories here !</h2>
+                <div className="d-flex">
+                    <button className="btn btn-danger text-medium mt-2 mr-2">PLACE ORDER</button>
+                    <button
+                        onClick={() => history.goBack()}
+                        className="btn btn-outline-primary text-medium mt-2">BACK TO SERVICES
+                    </button>
+                </div>
+            </div>
+            <Row className="w-100 d-center mt-5">
+                <Row className="w-50 ">
+                    <h1 className="text-center mb-3 f-Londrina">
+                        What we provide
+                        <Edit3
+                            onClick={() => setTopicModelShow(!topicModelShow)}
+                            size={30} className="ml-2 text-danger clickable cursor-pointer"/>
+                    </h1>
+                    <p className="text-medium text-center">{singleSubCat?.description}</p>
+                </Row>
             </Row>
+            <Row className="mt-5 d-center">
+                <div className="mt-5 mb-3">
+                    <h1 className="f-Londrina text-topic text-center">Some of our works... <Edit3
+                        onClick={() => setImagesModelShow(!imagesModelShow)}
+                        size={30} className="ml-2 text-danger clickable cursor-pointer"/></h1>
+                </div>
+                <div className="d-flex justify-content-around mt-3 mb-3 position-relative">
+                    {
+                        getImageArray()?.map((e, index) => {
+                            return <div className="w-25">
+                                <img src={e} height="200px" width="300px" alt={`swiper ${index}`}
+                                     className='object-fit scalable cursor-pointer'/>
+                            </div>
+
+                        })
+                    }
+                </div>
+            </Row>
+            {/*<SubServicePricing faq={singleSubCat?.faq}/>*/}
+            <ContactComp/>
+            <Footer/>
+
+            {/*Topic update model*/}
+            <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
+                   className='modal-dialog-centered modal-md'>
+                <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
+                    <h3 className="text-light">Real time update</h3>
+                </ModalHeader>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
+                    <Input type="textarea" id="topicId" placeholder="Service topic here..." value={topicUpdate}
+                           onChange={e => setTopicUpdate(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button
+                        onClick={updateTopic}
+                        className="btn btn-primary">Update
+                    </button>
+                </ModalFooter>
+            </Modal>
+
+            {/*Description update model*/}
+            <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
+                   className='modal-dialog-centered modal-md'>
+                <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
+                    <h3 className="text-light">Real time update</h3>
+                </ModalHeader>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
+                    <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                           onChange={e => setDescriptionUpdate(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button className="btn btn-primary">Update</button>
+                </ModalFooter>
+            </Modal>
+
+            {/*service images update model*/}
+            <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
+                   className='modal-dialog-centered modal-lg'>
+                <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <h1 className="f-Londrina">Update the images</h1>
+                    <Col className="mt-5">
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                {handleImage1()}
+                                <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
+                            </div>
+                            <div>
+                                {handleImage2()}
+                                <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
+                            </div>
+                            <div>
+                                {handleImage3()}
+                                <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col className="d-flex justify-content-end mt-2">
+                        <button className="btn btn-primary">Update images</button>
+                    </Col>
+                </ModalBody>
+            </Modal>
         </Row>
-        <Row className="mt-5 d-center">
-            <div className="mt-5 mb-3">
-                <h1 className="f-Londrina text-topic text-center">Some of our works... <Edit3
-                    onClick={() => setImagesModelShow(!imagesModelShow)}
-                    size={30} className="ml-2 text-danger clickable cursor-pointer"/></h1>
-            </div>
-            <div className="d-flex justify-content-around mt-3 mb-3 position-relative">
-                {
-                    getImageArray()?.map((e, index) => {
-                        return <div className="w-25">
-                            <img src={e} height="200px" width="300px" alt={`swiper ${index}`}
-                                 className='object-fit scalable cursor-pointer'/>
-                        </div>
-
-                    })
-                }
-            </div>
-        </Row>
-        {/*<SubServicePricing faq={singleSubCat?.faq}/>*/}
-        <ContactComp/>
-        <Footer/>
-
-        {/*Topic update model*/}
-        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
-               className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
-                <h3 className="text-light">Real time update</h3>
-            </ModalHeader>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                <Input type="textarea" id="topicId" placeholder="Service topic here..." value={topicUpdate}
-                       onChange={e => setTopicUpdate(e.target.value)}/>
-            </ModalBody>
-            <ModalFooter>
-                <button
-                    onClick={updateTopic}
-                    className="btn btn-primary">Update
-                </button>
-            </ModalFooter>
-        </Modal>
-
-        {/*Description update model*/}
-        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
-               className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
-                <h3 className="text-light">Real time update</h3>
-            </ModalHeader>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
-                       onChange={e => setDescriptionUpdate(e.target.value)}/>
-            </ModalBody>
-            <ModalFooter>
-                <button className="btn btn-primary">Update</button>
-            </ModalFooter>
-        </Modal>
-
-        {/*service images update model*/}
-        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
-               className='modal-dialog-centered modal-lg'>
-            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <h1 className="f-Londrina">Update the images</h1>
-                <Col className="mt-5">
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            {handleImage1()}
-                            <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
-                        </div>
-                        <div>
-                            {handleImage2()}
-                            <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
-                        </div>
-                        <div>
-                            {handleImage3()}
-                            <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
-                        </div>
-                    </div>
-                </Col>
-                <Col className="d-flex justify-content-end mt-2">
-                    <button className="btn btn-primary">Update images</button>
-                </Col>
-            </ModalBody>
-        </Modal>
-    </Row>
+    }
 }
 
 export default SubCatPreview
