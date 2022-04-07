@@ -6,7 +6,9 @@ import {deleteAttrFromObject} from "../../utility/customUtils"
 
 const getMainServiceByIdAsync = async (id) => {
 
-    return await axios.get(`/sub-service/main/${id}`).then(res => res).catch(err => console.error(err.message))
+    return await axios.get(`/main-service/${id}`).then(res => {
+        return res.data
+    }).catch(err => console.error(err.message))
 }
 
 const updateMainServiceByIDAsync = async (data, id) => {

@@ -156,6 +156,10 @@
     height: 100%;
 }
 
+.full-height-v {
+    height: 100vh;
+}
+
 .d-center {
     display: flex;
     align-items: center;

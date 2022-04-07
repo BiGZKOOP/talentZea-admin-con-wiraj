@@ -1,5 +1,11 @@
 import {call, put, takeLatest} from "redux-saga/effects"
-import {getAllSubCatSuccess, handleGetSubCatByIDListen, handleSubCatCreateLoading, handleSubCatLoading} from "./action"
+import {
+    getAllSubCatSuccess,
+    getSubServiceByIDSuccess,
+    handleGetSubCatByIDListen,
+    handleSubCatCreateLoading,
+    handleSubCatLoading
+} from "./action"
 import axios from "../../axios/axios"
 import * as actionTypes from "./constants"
 import {fireAlertError, fireAlertSuccess, jsonToFormData} from "../../utility/customUtils"
@@ -13,7 +19,7 @@ const getAllSubCatAsync = async () => {
 
 const getSubCatByIDAsync = async (id) => {
 
-    return await axios.get(`/sub-service/main/${id}`).then(res => res).catch(err => {
+    return await axios.get(`/sub-service/${id}`).then(res => res).catch(err => {
         console.error(err.message)
     })
 }
@@ -55,9 +61,9 @@ export function* getSubCatByIDCB(action) {
     const {payload} = action
 
     try {
-        yield put(handleGetSubCatByIDListen(false))
+        yield put(handleGetSubCatByIDListen(true))
         const res = yield call(getSubCatByIDAsync, payload)
-        console.log(res)
+        yield put(getSubServiceByIDSuccess(res.data))
     } catch (err) {
         console.error(err.message)
     } finally {
