@@ -12,7 +12,6 @@ import useJwt from '@src/auth/jwt/useJwt'
 
 // ** Third Party Components
 import {useDispatch} from 'react-redux'
-import {toast, Slide} from 'react-toastify'
 import {useForm, Controller} from 'react-hook-form'
 import {Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee} from 'react-feather'
 
@@ -27,6 +26,7 @@ import Avatar from '@components/avatar'
 import InputPasswordToggle from '@components/input-password-toggle'
 
 // ** Utils
+// eslint-disable-next-line no-unused-vars
 import {getHomeRouteForLoggedInUser} from '@utils'
 
 // ** Reactstrap Imports
@@ -60,7 +60,9 @@ const defaultValues = {
 const Login = () => {
     // ** Hooks
     const dispatch = useDispatch()
+    // eslint-disable-next-line no-unused-vars
     const history = useHistory()
+    // eslint-disable-next-line no-unused-vars
     const ability = useContext(AbilityContext)
     const {
         // eslint-disable-next-line no-unused-vars
@@ -78,9 +80,10 @@ const Login = () => {
 
     // eslint-disable-next-line no-unused-vars
     const onSubmit = data => {
+        dispatch(loginListen({email: data.loginEmail, password: data.password}, history))
         if (Object.values(data).every(field => field.length > 0)) {
             useJwt
-                .login({email: data.loginEmail, password: data.password})
+                .login({email: "admin@demo.com", password: "admin"})
                 .then(res => {
                     const data = {
                         ...res.data.userData,
@@ -88,12 +91,10 @@ const Login = () => {
                         refreshToken: res.data.refreshToken
                     }
                     dispatch(handleLogin(data))
+                    console.log(res.data.userData.ability)
+                    console.log(data.role)
                     ability.update(res.data.userData.ability)
-                    history.push(getHomeRouteForLoggedInUser(data.role))
-                    toast.success(
-                        <ToastContent name={data.fullName || data.username || 'John Doe'} role={data.role || 'admin'}/>,
-                        {icon: false, transition: Slide, hideProgressBar: true, autoClose: 2000}
-                    )
+                    // history.push(getHomeRouteForLoggedInUser(data.role))
                 })
                 .catch(err => console.log(err))
         } else {

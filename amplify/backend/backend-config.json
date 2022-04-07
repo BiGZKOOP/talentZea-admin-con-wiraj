@@ -1,6 +1,6 @@
 {
   "auth": {
-    "talentzeaadmin46fe4951": {
+    "talentzeaadmin58158917": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
