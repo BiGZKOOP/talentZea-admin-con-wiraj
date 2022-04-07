@@ -86,10 +86,22 @@ export function* createSubCatCB(action) {
     }
 }
 
+export function* signoutUserCB() {
+
+    // const {history} = action
+    alert("reached 93 signout")
+    try {
+        alert("reached 93 signout")
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
 function* watchSubCatSagas() {
     yield takeLatest(actionTypes.GET_ALL_SUB_CAT_LISTEN, getAllSubCatCB)
     yield takeLatest(actionTypes.GET_SUB_CAT_BY_ID_LISTEN, getSubCatByIDCB)
     yield takeLatest(actionTypes.CREATE_SUB_CAT_LISTEN, createSubCatCB)
+    yield takeLatest(actionTypes.SIGNOUT_LISTEN, signoutUserCB)
 }
 
 const subServiceSagas = [watchSubCatSagas]

@@ -74,3 +74,11 @@ export const handleSubCatCreateLoading = (state) => {
         payload: state
     }
 }
+
+//Use this to sign out the user
+export const signOutUserListen = (history) => {
+    return {
+        type: actionTypes.SIGNOUT_LISTEN,
+        history
+    }
+}

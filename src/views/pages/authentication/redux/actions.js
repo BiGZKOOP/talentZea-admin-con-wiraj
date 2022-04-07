@@ -16,11 +16,3 @@ export const loginSuccess = (data) => {
         data
     }
 }
-
-export const signupListen = (data) => {
-
-    return {
-        type: actionTypes.SIGNUP_LISTEN,
-        data
-    }
-}
