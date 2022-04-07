@@ -45,18 +45,11 @@ const MainServicePreviewView = () => {
         dispatch(getMainServiceByIdListen(id))
     }, [])
 
-    // eslint-disable-next-line no-unused-vars
-    const validateSubService = () => {
-
-        return mainCatPreview?.length > 0
-    }
 
     // eslint-disable-next-line no-unused-vars
     const getImageArray = () => {
 
-        if (validateSubService()) {
-            return [mainCatPreview[0]?.mainService?.image?.image1, mainCatPreview[0]?.mainService?.image?.image2, mainCatPreview[0]?.mainService?.image?.image3]
-        }
+        return [mainCatPreview?.requestMainService?.image?.image1, mainCatPreview?.requestMainService?.image?.image2, mainCatPreview?.requestMainService?.image?.image3]
     }
 
     const updateMainServiceByID = (dataObj) => {
@@ -125,162 +118,166 @@ const MainServicePreviewView = () => {
         }
     }
 
-    return <Row>
-        <div className="p-1 mb-5 mb-lg-0 w-100 sticky-top-custom">
-            <MainNav index={2}/>
-        </div>
-        <div className="mt-4 mb-5 d-center flex-column">
-            <div/>
-            <div className="main-img floating-img">
-                <CreativeSvg/>
+    if (mainCatPreviewLoading) return <h1>Loading...</h1>
+    else {
+        return <Row>
+            <div className="p-1 mb-5 mb-lg-0 w-100 sticky-top-custom">
+                <MainNav index={2}/>
             </div>
-            <div className="position-relative">
-                <h1 className="text-center mt-4 f-Londrina text-primary topic-header">{
-                    mainCatPreview?.length > 0 ? `${mainCatPreview[0].mainService.mainTopic}` : "...."
-                }<Edit3
-                    onClick={() => setTopicModelShow(!topicModelShow)}
-                    size={45} className="ml-2 text-danger clickable cursor-pointer"/></h1>
+            <div className="mt-4 mb-5 d-center flex-column">
+                <div/>
+                <div className="main-img floating-img">
+                    <CreativeSvg/>
+                </div>
+                <div className="position-relative">
+                    <h1 className="text-center mt-4 f-Londrina text-primary topic-header">{
+                        `${mainCatPreview?.requestMainService?.mainTopic}`
+                    }<Edit3
+                        onClick={() => setTopicModelShow(!topicModelShow)}
+                        size={45} className="ml-2 text-danger clickable cursor-pointer"/></h1>
+                </div>
+                <h2 className="f-indie-flower">We create memories here !</h2>
             </div>
-            <h2 className="f-indie-flower">We create memories here !</h2>
-        </div>
-        <Row className="w-100 d-center mt-5 mb-5">
-            <h1 className="text-center mb-3 f-Londrina">What we provide... <Edit3
-                onClick={() => setDescriptionModelShow(!descriptionModelShow)}
-                className="text-danger cursor-pointer clickable"
-                size={25}/></h1>
-            <Row className="w-50 ">
-                <p className="text-medium lead text-center">"{mainCatPreview[0]?.mainService?.mainTopicDescription}"</p>
+            <Row className="w-100 d-center mt-5 mb-5">
+                <h1 className="text-center mb-3 f-Londrina">What we provide... <Edit3
+                    onClick={() => setDescriptionModelShow(!descriptionModelShow)}
+                    className="text-danger cursor-pointer clickable"
+                    size={25}/></h1>
+                <Row className="w-50 ">
+                    <p className="text-medium lead text-center">"{mainCatPreview?.requestMainService?.mainTopicDescription}"</p>
+                </Row>
             </Row>
-        </Row>
-        <Col className="mt-5">
-            <Col className="text-center">
-                <h1 className="f-Londrina font-large-2">OUR SERVICES</h1>
+            <Col className="mt-5">
+                <Col className="text-center">
+                    <h1 className="f-Londrina font-large-2">OUR SERVICES</h1>
+                </Col>
+                <Row className="p-2 mt-3 radius-10  d-center flex-wrap d-flex">
+                    {
+                        mainCatPreviewLoading &&
+                        <div className="d-center flex-column animate__animated animate__bounce">
+                            <Spinner className="text-primary mb-2"/>
+                            <h1 className="text-primary">Loading...</h1>
+                        </div>
+                    }
+                    {
+                        !mainCatPreviewLoading && mainCatPreview?.subMainService?.map((e, index) => {
+                            return <Card key={index} className="dash-card m-2 scalable bg-semi-dark">
+                                <div className="pt-2">
+                                    <h2 className="text-center f-Londrina">{e?.mainTopic}</h2>
+                                </div>
+                                <CardFooter>
+                                    <p>
+                                        {e?.description}
+                                    </p>
+                                </CardFooter>
+                                <CardFooter className="d-center">
+                                    <button
+                                        className="btn btn-outline-foursquare">
+                                        SHOW ME...
+                                    </button>
+                                </CardFooter>
+                            </Card>
+                        })
+                    }
+                    <Card className="dash-card m-2 bg-instagram text-light rotatable">
+                        <div className="pt-2">
+                            <h2 className="text-center f-Londrina text-light ">COMING MORE...</h2>
+                        </div>
+                        <CardFooter>
+                            <p>
+                                More services are on the way...!!!
+                            </p>
+                        </CardFooter>
+                    </Card>
+                </Row>
             </Col>
-            <Row className="p-2 mt-3 radius-10  d-center flex-wrap d-flex">
-                {
-                    mainCatPreviewLoading && <div className="d-center flex-column animate__animated animate__bounce">
-                        <Spinner className="text-primary mb-2"/>
-                        <h1 className="text-primary">Loading...</h1>
-                    </div>
-                }
-                {
-                    !mainCatPreviewLoading && mainCatPreview?.map((e, index) => {
-                        return <Card key={index} className="dash-card m-2 scalable bg-semi-dark">
-                            <div className="pt-2">
-                                <h2 className="text-center f-Londrina">{e?.mainTopic}</h2>
+            <Row className="mt-5">
+                <div className="mt-5">
+                    <p className="f-Londrina text-topic text-center font-large-2">Some of our works...
+                        <Edit3
+                            onClick={() => setImagesModelShow(!imagesModelShow)}
+                            className="text-danger cursor-pointer clickable ml-2"
+                            size={35}/></p>
+                </div>
+                <div className="d-flex justify-content-around mt-3 mb-3 position-relative">
+                    {
+                        getImageArray()?.map((e, index) => {
+                            return <div className="w-25">
+                                <img src={e} height="200px" width="300px" alt={`swiper ${index}`}
+                                     className='object-fit scalable cursor-pointer'/>
                             </div>
-                            <CardFooter>
-                                <p>
-                                    {e?.description}
-                                </p>
-                            </CardFooter>
-                            <CardFooter className="d-center">
-                                <button
-                                    className="btn btn-outline-foursquare">
-                                    SHOW ME...
-                                </button>
-                            </CardFooter>
-                        </Card>
-                    })
-                }
-                <Card className="dash-card m-2 bg-instagram text-light rotatable">
-                    <div className="pt-2">
-                        <h2 className="text-center f-Londrina text-light ">COMING MORE...</h2>
-                    </div>
-                    <CardFooter>
-                        <p>
-                            More services are on the way...!!!
-                        </p>
-                    </CardFooter>
-                </Card>
+
+                        })
+                    }
+                </div>
             </Row>
-        </Col>
-        <Row className="mt-5">
-            <div className="mt-5">
-                <p className="f-Londrina text-topic text-center font-large-2">Some of our works...
-                    <Edit3
-                        onClick={() => setImagesModelShow(!imagesModelShow)}
-                        className="text-danger cursor-pointer clickable ml-2"
-                        size={35}/></p>
-            </div>
-            <div className="d-flex justify-content-around mt-3 mb-3 position-relative">
-                {
-                    getImageArray()?.map((e, index) => {
-                        return <div className="w-25">
-                            <img src={e} height="200px" width="300px" alt={`swiper ${index}`}
-                                 className='object-fit scalable cursor-pointer'/>
-                        </div>
+            <div/>
+            <ContactComp/>
+            <Footer/>
+            {/*Topic update model*/}
+            <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
+                   className='modal-dialog-centered modal-md'>
+                <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
+                    <h3 className="text-light">Real time update</h3>
+                </ModalHeader>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the topic</Label>
+                    <Input id="topicId" placeholder="Service topic here..." value={topicUpdate}
+                           onChange={e => setTopicUpdate(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button
+                        onClick={updateTopic}
+                        className="btn btn-primary">Update
+                    </button>
+                </ModalFooter>
+            </Modal>
 
-                    })
-                }
-            </div>
+            {/*Description update model*/}
+            <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
+                   className='modal-dialog-centered modal-md'>
+                <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
+                    <h3 className="text-light">Real time update</h3>
+                </ModalHeader>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
+                    <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                           onChange={e => setDescriptionUpdate(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button className="btn btn-primary">Update</button>
+                </ModalFooter>
+            </Modal>
+
+            {/*service images update model*/}
+            <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
+                   className='modal-dialog-centered modal-lg'>
+                <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
+                <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
+                    <h1 className="f-Londrina">Update the images</h1>
+                    <Col className="mt-5">
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                {handleImage1()}
+                                <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
+                            </div>
+                            <div>
+                                {handleImage2()}
+                                <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
+                            </div>
+                            <div>
+                                {handleImage3()}
+                                <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col className="d-flex justify-content-end mt-2">
+                        <button className="btn btn-primary">Update images</button>
+                    </Col>
+                </ModalBody>
+            </Modal>
         </Row>
-        <div/>
-        <ContactComp/>
-        <Footer/>
-        {/*Topic update model*/}
-        <Modal isOpen={topicModelShow} toggle={() => setTopicModelShow(!topicModelShow)}
-               className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setTopicModelShow(!topicModelShow)}>
-                <h3 className="text-light">Real time update</h3>
-            </ModalHeader>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <Label htmlFor="topicId" className="text-medium lead mb-1">Update the topic</Label>
-                <Input id="topicId" placeholder="Service topic here..." value={topicUpdate}
-                       onChange={e => setTopicUpdate(e.target.value)}/>
-            </ModalBody>
-            <ModalFooter>
-                <button
-                    onClick={updateTopic}
-                    className="btn btn-primary">Update
-                </button>
-            </ModalFooter>
-        </Modal>
-
-        {/*Description update model*/}
-        <Modal isOpen={descriptionModelShow} toggle={() => setDescriptionModelShow(!descriptionModelShow)}
-               className='modal-dialog-centered modal-md'>
-            <ModalHeader className='bg-primary' toggle={() => setDescriptionModelShow(!descriptionModelShow)}>
-                <h3 className="text-light">Real time update</h3>
-            </ModalHeader>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
-                       onChange={e => setDescriptionUpdate(e.target.value)}/>
-            </ModalBody>
-            <ModalFooter>
-                <button className="btn btn-primary">Update</button>
-            </ModalFooter>
-        </Modal>
-
-        {/*service images update model*/}
-        <Modal isOpen={imagesModelShow} toggle={() => setImagesModelShow(!imagesModelShow)}
-               className='modal-dialog-centered modal-lg'>
-            <ModalHeader className='bg-primary' toggle={() => setImagesModelShow(!imagesModelShow)}/>
-            <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                <h1 className="f-Londrina">Update the images</h1>
-                <Col className="mt-5">
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            {handleImage1()}
-                            <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
-                        </div>
-                        <div>
-                            {handleImage2()}
-                            <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
-                        </div>
-                        <div>
-                            {handleImage3()}
-                            <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
-                        </div>
-                    </div>
-                </Col>
-                <Col className="d-flex justify-content-end mt-2">
-                    <button className="btn btn-primary">Update images</button>
-                </Col>
-            </ModalBody>
-        </Modal>
-    </Row>
+    }
 }
 
 export default MainServicePreviewView
