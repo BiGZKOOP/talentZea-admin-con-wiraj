@@ -42,3 +42,12 @@ export const updateMainServiceByIDSuccess = (data) => {
         payload: data
     }
 }
+
+//Use this to handle main cat update loader
+export const handleMainCatUpdateLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_MAIN_SERVICE_UPDATE_LOADER,
+        payload: state
+    }
+}
