@@ -35,6 +35,8 @@ const SubCategoryCreate = () => {
 
     const [faqQuestion, setFaqQuestion] = useState("")
     const [faqAnswer, setFaqAnswer] = useState("")
+    // eslint-disable-next-line no-unused-vars
+    const [testIndex, setTestIndex] = useState(0)
 
     //This contains all the FAQ object array
     const [faq, setFaq] = useState([])
@@ -54,26 +56,6 @@ const SubCategoryCreate = () => {
             image2,
             image3
         }
-    }
-
-    //Use this to cook the FAQ object (must contains question & answer)
-    const addFAQ = (e) => {
-        e.preventDefault()
-
-        if (!faqQuestion) {
-            fireAlertCustom("Hmm...", "You need to add a question !")
-            return
-        }
-
-        if (!faqAnswer) {
-            fireAlertCustom("Hmm...", "You need to add a answer !")
-            return
-        }
-
-        setFaq(faq.concat({
-            question: faqQuestion,
-            answer: faqAnswer
-        }))
     }
 
     const validate = (values) => {
@@ -175,10 +157,40 @@ const SubCategoryCreate = () => {
         }
     }
 
+    //Use this to clean the faq states (faqQuestion & faqAnswer)
+    const cleanFAQState = () => {
+        setFaqAnswer("")
+        setFaqQuestion("")
+    }
+
+    //Use this to cook the FAQ object (must contains question & answer)
+    const addFAQ = (e) => {
+        e.preventDefault()
+
+        if (!faqQuestion) {
+            fireAlertCustom("Hmm...", "You need to add a question !")
+            return
+        }
+
+        if (!faqAnswer) {
+            fireAlertCustom("Hmm...", "You need to add a answer !")
+            return
+        }
+
+        setFaq(faq.concat({
+            question: faqQuestion,
+            answer: faqAnswer
+        }))
+        cleanFAQState()
+    }
+
     // eslint-disable-next-line no-unused-vars
     const removeFAQ = (e, index) => {
         e.preventDefault()
-        alert(index)
+        const tempArr = faq
+        tempArr.splice(index, 1)
+        setFaq([])
+        setFaq(faq.concat(tempArr))
     }
 
     useEffect(() => {
@@ -279,7 +291,7 @@ const SubCategoryCreate = () => {
                                                 <p>{e.answer}</p>
                                             </div>
                                             <div className="flex-grow-1">
-                                                <button className="btn" onClick={(e) => removeFAQ(e, 1)}><Delete/>
+                                                <button className="btn" onClick={(e) => removeFAQ(e, index)}><Delete/>
                                                 </button>
                                             </div>
                                         </CardBody>
