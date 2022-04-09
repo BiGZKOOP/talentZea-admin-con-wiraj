@@ -44,7 +44,6 @@ export const fireAlertSuccess = (title, msg) => {
 export const jsonToFormData = (obj) => {
     const formData = new FormData()
     Object.keys(obj).map(async e => {
-        console.log(obj[e])
         await formData.append(e, obj[e])
     })
     return formData
@@ -58,5 +57,6 @@ export const getIDToken = async () => {
 //Use this to delete object attr
 export const deleteAttrFromObject = (obj, attr) => {
     delete obj[attr]
+    console.log("deleted", obj)
     return obj
 }

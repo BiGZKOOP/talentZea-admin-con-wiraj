@@ -1,8 +1,13 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import * as actionTypes from "./constants"
 import axios from "../../axios/axios"
-import {getMainServiceByIdSuccess, handleMainCatPreviewLoading} from "./actions"
-import {deleteAttrFromObject} from "../../utility/customUtils"
+import {getMainServiceByIdSuccess, handleMainCatPreviewLoading, handleMainCatUpdateLoader} from "./actions"
+import {
+    deleteAttrFromObject,
+    fireAlertSuccess,
+    getIDToken,
+    jsonToFormData
+} from "../../utility/customUtils"
 
 const getMainServiceByIdAsync = async (id) => {
 
@@ -14,8 +19,14 @@ const getMainServiceByIdAsync = async (id) => {
 const updateMainServiceByIDAsync = async (data, id) => {
 
     const obj = deleteAttrFromObject(data, "_id")
+    const formData = jsonToFormData(obj)
 
-    return await axios.patch(`main-service/${id}`, obj).then(res => res).catch(err => {
+    return await axios.patch(`main-service/${id}`, formData, {
+        headers: {
+            Authorization: `Bearer ${await getIDToken()}`,
+            'content-type': 'application/x-www-form-urlencoded'
+        }
+    }).then(res => res).catch(err => {
         console.error(err.message)
     })
 }
@@ -44,13 +55,17 @@ export function* updateMainServiceByIDCB(action) {
 
     const {payload} = action
 
-    console.log(payload)
-
     try {
+        yield put(handleMainCatUpdateLoader(true))
         const res = yield call(updateMainServiceByIDAsync, payload, payload._id)
         console.log(res)
+        if (res.data.statusCode === 200) {
+            fireAlertSuccess("Yeeh !", "Main service is successfully updated")
+        }
     } catch (err) {
         console.error(err.message)
+    } finally {
+        yield put(handleMainCatUpdateLoader(false))
     }
 }
 

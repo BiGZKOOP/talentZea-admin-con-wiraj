@@ -3,15 +3,11 @@ import {Card, CardFooter, Col, Input, Label, Modal, ModalBody, ModalFooter, Moda
 import CreativeSvg from "../../assets/custom_images/svg/Creative.svg"
 import "../../assets/css/serviceViews.css"
 import "../../assets/css/dashboard.css"
-// import OurWorkMainService from "../../custom-components/MainService/OurWorkMainService"
-import ContactSVG from "../../assets/custom_images/svg/ContactSVG"
+
 import {useDispatch, useSelector} from "react-redux"
-import SuccessOrderSVG from "../../assets/custom_images/svg/SuccessOrderSVG"
-import FriendlySvg from "../../assets/custom_images/svg/Friendly.svg"
 import {useEffect, useState} from "react"
 import {getMainServiceByIdListen, updateMainServiceByListen} from "./actions"
 import MainNav from "../../custom-components/MainNav"
-import BreakPointSwipper from "../../custom-components/swippers/BreakPointSwipper"
 import Footer from "../../custom-components/footer/Footer"
 import {Edit3, Upload} from "react-feather"
 import ContactComp from "../../custom-components/contact-comp"
@@ -30,16 +26,20 @@ const MainServicePreviewView = () => {
     const [imagesModelShow, setImagesModelShow] = useState(false)
 
     // eslint-disable-next-line no-unused-vars
-    const [image1, setImage1] = useState("")
-    const [image2, setImage2] = useState("")
-    const [image3, setImage3] = useState("")
+    const [image1, setImage1] = useState()
+    const [image2, setImage2] = useState()
+    const [image3, setImage3] = useState()
 
     const [topicUpdate, setTopicUpdate] = useState("")
     const [descriptionUpadte, setDescriptionUpdate] = useState("")
 
 
     // eslint-disable-next-line no-unused-vars
-    const {mainCatPreview, mainCatPreviewLoading} = useSelector(state => state.mainCatPreviewReducer)
+    const {
+        mainCatPreview,
+        mainCatPreviewLoading,
+        mainCatUpdateLoading
+    } = useSelector(state => state.mainCatPreviewReducer)
 
     useEffect(() => {
         dispatch(getMainServiceByIdListen(id))
@@ -61,10 +61,54 @@ const MainServicePreviewView = () => {
 
         if (topicUpdate.length > 5) {
             updateMainServiceByID({
-                ...mainCatPreview[0],
+                _id: mainCatPreview?.requestMainService._id,
                 mainTopic: topicUpdate
             })
         } else fireAlertError("Oops...", "Your topic must contains at least 5 letter")
+    }
+
+    const updateDescription = () => {
+
+        if (descriptionUpadte.length > 5) {
+            updateMainServiceByID({
+                _id: mainCatPreview?.requestMainService._id,
+                mainTopicDescription: descriptionUpadte
+            })
+        } else fireAlertError("Oops...", "Your description must contains at least 5 words")
+    }
+
+    const cookImageObject = () => {
+
+        return {
+            _id: mainCatPreview?.requestMainService._id,
+            image1,
+            image2,
+            image3
+        }
+    }
+
+    const updateImages = () => {
+
+        const imageObject = cookImageObject()
+
+        const {image1, image2, image3} = imageObject
+
+        console.log("first", imageObject)
+
+        if (image1 === undefined) {
+            delete imageObject["image1"]
+        }
+        if (image2 === undefined) {
+            delete imageObject["image2"]
+
+        }
+        if (image3 === undefined) {
+            delete imageObject["image3"]
+        }
+
+        console.log("second", imageObject)
+
+        updateMainServiceByID(imageObject)
     }
 
     const handleImage1 = () => {
@@ -118,7 +162,8 @@ const MainServicePreviewView = () => {
         }
     }
 
-    if (mainCatPreviewLoading) return <div className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
+    if (mainCatPreviewLoading) return <div
+        className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
         <Spinner className="mb-2"/>
         <p className="text-medium f-Londrina">Cooking your data...</p>
     </div>
@@ -231,7 +276,8 @@ const MainServicePreviewView = () => {
                 <ModalFooter>
                     <button
                         onClick={updateTopic}
-                        className="btn btn-primary">Update
+                        className="btn btn-primary d-center">
+                        {mainCatUpdateLoading ? <Spinner size={10}/> : "Update"}
                     </button>
                 </ModalFooter>
             </Modal>
@@ -244,11 +290,15 @@ const MainServicePreviewView = () => {
                 </ModalHeader>
                 <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                     <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                    <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                    <Input type="textarea" id="topicId" placeholder="Service description here..." value={descriptionUpadte}
                            onChange={e => setDescriptionUpdate(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>
-                    <button className="btn btn-primary">Update</button>
+                    <button
+                        onClick={updateDescription}
+                        className="btn btn-primary d-center">
+                        {mainCatUpdateLoading ? <Spinner size={10}/> : "Update description"}
+                    </button>
                 </ModalFooter>
             </Modal>
 
@@ -275,7 +325,11 @@ const MainServicePreviewView = () => {
                         </div>
                     </Col>
                     <Col className="d-flex justify-content-end mt-2">
-                        <button className="btn btn-primary">Update images</button>
+                        <button
+                            onClick={updateImages}
+                            className="btn btn-primary d-center">
+                            {mainCatUpdateLoading ? <Spinner size={10}/> : "Update Images"}
+                        </button>
                     </Col>
                 </ModalBody>
             </Modal>

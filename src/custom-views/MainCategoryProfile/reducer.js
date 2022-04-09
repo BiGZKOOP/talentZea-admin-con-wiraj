@@ -2,7 +2,8 @@ import * as actionTypes from "./constants"
 
 const init = {
     mainCatPreviewLoading: false,
-    mainCatPreview: {}
+    mainCatPreview: {},
+    mainCatUpdateLoading: false
 }
 
 const mainCatPreviewReducer = (state = init, action) => {
@@ -17,6 +18,11 @@ const mainCatPreviewReducer = (state = init, action) => {
             return {
                 ...state,
                 mainCatPreviewLoading: action.payload
+            }
+        case actionTypes.HANDLE_MAIN_SERVICE_UPDATE_LOADER:
+            return {
+                ...state,
+                mainCatUpdateLoading: action.payload
             }
         default:
             return state

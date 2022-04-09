@@ -1,5 +1,5 @@
 // ** React Imports
-import {useContext, Fragment, useEffect} from 'react'
+import {useContext, Fragment} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import "../../../assets/css/login.css"
 
@@ -73,10 +73,6 @@ const Login = () => {
         // eslint-disable-next-line no-unused-vars
         formState: {errors}
     } = useForm({defaultValues})
-
-    useEffect(() => {
-        dispatch(loginListen())
-    }, [])
 
     // eslint-disable-next-line no-unused-vars
     const onSubmit = data => {
