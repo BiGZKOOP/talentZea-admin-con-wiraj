@@ -179,6 +179,30 @@
     flex-grow: 4;
 }
 
+.flex-grow-5 {
+    flex-grow: 5;
+}
+
+.flex-grow-6 {
+    flex-grow: 6;
+}
+
+.flex-grow-7 {
+    flex-grow: 7;
+}
+
+.flex-grow-8 {
+    flex-grow: 8;
+}
+
+.flex-grow-9 {
+    flex-grow: 9;
+}
+
+.flex-grow-10 {
+    flex-grow: 10;
+}
+
 /*utils*/
 .pointer {
     cursor: pointer;
@@ -241,6 +265,10 @@
 
 .f-shippori {
     font-family: 'Shippori Antique B1', sans-serif;
+}
+
+.word-break {
+    word-break: break-word;
 }
 
 @media all and (max-width: 540px) {
