@@ -13,7 +13,7 @@ const CategoryViewCard = ({data}) => {
         }
     }
 
-    return <Card className="w-25 mr-2 scalable">
+    return <Card className="mr-2 scalable" style={{width: "30%"}}>
         <CardHeader>
             <h1 className="f-Londrina">{data.mainTopic}</h1>
         </CardHeader>
