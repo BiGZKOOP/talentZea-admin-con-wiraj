@@ -8,7 +8,8 @@ import {
 } from "./action"
 import axios from "../../axios/axios"
 import * as actionTypes from "./constants"
-import {fireAlertError, fireAlertSuccess, jsonToFormData} from "../../utility/customUtils"
+// eslint-disable-next-line no-unused-vars
+import {fireAlertError, fireAlertSuccess, getIDToken} from "../../utility/customUtils"
 
 const getAllSubCatAsync = async () => {
 
@@ -26,11 +27,24 @@ const getSubCatByIDAsync = async (id) => {
 
 const createSubCatAsync = async (data) => {
 
-    const formData = jsonToFormData(data)
+    const sendFormData = new FormData()
 
-    return await axios.post("/sub-service", formData, {
+    data.faq.map((e, index) => {
+
+        sendFormData.append(`faq[${index}][question]`, e["question"])
+        sendFormData.append(`faq[${index}][answers]`, e["answers"])
+    })
+
+    delete data["faq"]
+
+    Object.keys(data).map(async e => {
+        await sendFormData.append(e, data[e])
+    })
+
+    return await axios.post("/sub-service", sendFormData, {
         headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/form-data',
+            Authorization: `Bearer ${await getIDToken()}`
         }
     }).then(res => {
         fireAlertSuccess("You have created a new sub service !", "Could be a beginning of something great")

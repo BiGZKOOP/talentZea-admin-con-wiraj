@@ -170,7 +170,7 @@ const SubCatPreview = () => {
                     }
                 </div>
             </Row>
-            {/*<SubServicePricing faq={singleSubCat?.faq}/>*/}
+            <SubServicePricing faq={singleSubCat?.faq}/>
             <ContactComp/>
             <Footer/>
 

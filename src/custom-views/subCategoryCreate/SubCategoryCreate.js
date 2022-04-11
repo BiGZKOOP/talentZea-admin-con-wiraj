@@ -52,6 +52,7 @@ const SubCategoryCreate = () => {
     const cookDataObject = (values) => {
         return {
             ...values,
+            faq,
             image1,
             image2,
             image3
@@ -99,7 +100,7 @@ const SubCategoryCreate = () => {
             description: "",
             subTopic: "We create memories here",
             mainService: "",
-            faq: []
+            price: ""
         },
         onSubmit: values => {
             validate(values)
@@ -179,7 +180,7 @@ const SubCategoryCreate = () => {
 
         setFaq(faq.concat({
             question: faqQuestion,
-            answer: faqAnswer
+            answers: faqAnswer
         }))
         cleanFAQState()
     }
@@ -189,8 +190,8 @@ const SubCategoryCreate = () => {
         e.preventDefault()
         const tempArr = faq
         tempArr.splice(index, 1)
-        setFaq([])
-        setFaq(faq.concat(tempArr))
+        setFaq(tempArr)
+        setFaq(faq.concat())
     }
 
     useEffect(() => {
@@ -219,26 +220,37 @@ const SubCategoryCreate = () => {
                         value={formik.values.description}
                         placeholder="Enter main topic..."/>
                 </Col>
-                <Col className="mt-2">
-                    <Label htmlFor="main" className="text-small mb-1">Select </Label>
-                    <Card className="w-25">
-                        <select
-                            className="custom-dropdown bg-instagram text-light"
-                            id="mainService"
-                            name="mainService"
+                <Row>
+                    <Col className="mt-2" lg={3}>
+                        <Label htmlFor="main" className="text-small mb-1">Select </Label>
+                        <Card>
+                            <select
+                                className="custom-dropdown bg-instagram text-light"
+                                id="mainService"
+                                name="mainService"
+                                onChange={formik.handleChange}
+                                value={formik.values.mainService}
+                                placeholder="Select main service...">
+                                <option>Select main service</option>
+                                {
+                                    mainCat?.map((e, index) => {
+                                        if (mainCatLoading) return <option key={index}>Loading...</option>
+                                        else return <option key={index} value={e._id}>{e.mainTopic}</option>
+                                    })
+                                }
+                            </select>
+                        </Card>
+                    </Col>
+                    <Col className="mt-2" lg={3}>
+                        <Label htmlFor="price" className="text-small mb-1">Sub service price</Label>
+                        <Input
+                            name="price"
                             onChange={formik.handleChange}
-                            value={formik.values.mainService}
-                            placeholder="Select main service...">
-                            <option>Select main service</option>
-                            {
-                                mainCat?.map((e, index) => {
-                                    if (mainCatLoading) return <option key={index}>Loading...</option>
-                                    else return <option key={index} value={e._id}>{e.mainTopic}</option>
-                                })
-                            }
-                        </select>
-                    </Card>
-                </Col>
+                            value={formik.values.price}
+                            id="price"
+                            placeholder="Price from dollar..."/>
+                    </Col>
+                </Row>
                 <Col className="mt-5">
                     <div className="d-flex justify-content-between">
                         <div>
@@ -283,23 +295,23 @@ const SubCategoryCreate = () => {
                         <div style={{height: "400px"}} className="overflow-auto p-1 radius-10 shadow-inner">
                             {
                                 faq.length > 0 ? faq.map((e, index) => {
-                                    return <div key={index} className="radius-10 mb-3 dashed-faq ">
-                                        <CardHeader className="p-1">{e.question}</CardHeader>
-                                        <hr/>
-                                        <CardBody className="p-1 d-flex">
-                                            <div className="flex-grow-10 word-break">
-                                                <p>{e.answer}</p>
-                                            </div>
-                                            <div className="flex-grow-1">
-                                                <button className="btn" onClick={(e) => removeFAQ(e, index)}><Delete/>
-                                                </button>
-                                            </div>
-                                        </CardBody>
+                                        return <div key={index} className="radius-10 mb-3 dashed-faq ">
+                                            <CardHeader className="p-1">{e.question}</CardHeader>
+                                            <hr/>
+                                            <CardBody className="p-1 d-flex">
+                                                <div className="flex-grow-10 word-break">
+                                                    <p>{e.answers}</p>
+                                                </div>
+                                                <div className="flex-grow-1">
+                                                    <button className="btn" onClick={(e) => removeFAQ(e, index)}><Delete/>
+                                                    </button>
+                                                </div>
+                                            </CardBody>
+                                        </div>
+                                    }) : <div className="w-100 h-100 d-center animate__animated animate__bounce flex-column">
+                                        <Gift className="mb-2 text-primary"/>
+                                        <h2 className="f-Londrina text-success">Your FAQ will be shown here...</h2>
                                     </div>
-                                }) : <div className="w-100 h-100 d-center animate__animated animate__bounce flex-column">
-                                    <Gift className="mb-2 text-primary"/>
-                                    <h2 className="f-Londrina text-success">Your FAQ will be shown here...</h2>
-                                </div>
                             }
                         </div>
                     </div>
