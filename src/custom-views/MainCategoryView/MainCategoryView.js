@@ -27,7 +27,7 @@ const MainCategoryView = () => {
                 <p className="text-medium f-Londrina">Cooking your data...</p>
             </div>
         }
-        <div className="d-flex flex-wrap">
+        <div className="d-flex justify-content-between flex-wrap">
             {
                 mainCat?.map((data, index) => {
                     return <CategoryViewCard key={index} data={data}/>
