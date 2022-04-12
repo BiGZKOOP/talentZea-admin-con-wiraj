@@ -12,7 +12,7 @@ import MainNav from "../../custom-components/MainNav"
 import BreakPointSwipper from "../../custom-components/swippers/BreakPointSwipper"
 import SubServicePricing from "./SubServicePricing"
 import {useEffect, useState} from "react"
-import {getSubServiceByIDListen} from "../SubCategoryView/action"
+import {getSubServiceByIDListen, updateSubServiceByIDListen} from "../SubCategoryView/action"
 import Footer from "../../custom-components/footer/Footer"
 import {Edit3, Upload} from "react-feather"
 import {fireAlertError} from "../../utility/customUtils"
@@ -23,7 +23,7 @@ const SubCatPreview = () => {
 
     const id = pathname.split("/sub-category/preview/")[1]
 
-    const {singleSubCat, singleSubCatLoading} = useSelector(state => state.subCatReducer)
+    const {singleSubCat, singleSubCatLoading, subCatUpdateLoading} = useSelector(state => state.subCatReducer)
 
     const [topicModelShow, setTopicModelShow] = useState(false)
     const [descriptionModelShow, setDescriptionModelShow] = useState(false)
@@ -42,13 +42,58 @@ const SubCatPreview = () => {
     const history = useHistory()
 
     const updateTopic = () => {
-
         if (topicUpdate.length > 5) {
-            // updateMainServiceByID({
-            //     ...mainCatPreview[0],
-            //     mainTopic: topicUpdate
-            // })
+            dispatch(updateSubServiceByIDListen({
+                mainService: singleSubCat.mainService,
+                mainTopic: topicUpdate
+            }, singleSubCat._id))
         } else fireAlertError("Oops...", "Your topic must contains at least 5 letter")
+    }
+
+    const updateDescription = () => {
+
+        if (descriptionUpadte.length > 5) {
+            dispatch(updateSubServiceByIDListen({
+                mainService: singleSubCat.mainService,
+                description: descriptionUpadte
+            }, singleSubCat._id))
+        } else fireAlertError("Oops...", "Your description must contains at least 10 letter")
+    }
+
+    const updateImage = (data) => {
+        dispatch(updateSubServiceByIDListen(data, singleSubCat._id))
+    }
+
+    const cookImageObject = () => {
+
+        return {
+            _id: singleSubCat?._id,
+            image1,
+            image2,
+            image3
+        }
+    }
+
+    const cookUpdateImage = () => {
+
+        const imageObject = cookImageObject()
+
+        const {image1, image2, image3} = imageObject
+
+        if (image1 === undefined) {
+            delete imageObject["image1"]
+        }
+
+        if (image2 === undefined) {
+            delete imageObject["image2"]
+
+        }
+
+        if (image3 === undefined) {
+            delete imageObject["image3"]
+        }
+
+        updateImage(imageObject)
     }
 
     const handleImage1 = () => {
@@ -107,16 +152,15 @@ const SubCatPreview = () => {
         return [singleSubCat?.image?.image1, singleSubCat?.image?.image2, singleSubCat?.image?.image3]
     }
 
-    console.log(singleSubCatLoading)
-
     useEffect(() => {
         dispatch(getSubServiceByIDListen(id))
     }, [])
 
-    if (singleSubCatLoading) return <div className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
-            <Spinner className="mb-2"/>
-            <p className="text-medium f-Londrina">Cooking your data...</p>
-        </div>
+    if (singleSubCatLoading) return <div
+        className="w-100 h-100-v d-center flex-column animate__animated animate__bounce">
+        <Spinner className="mb-2"/>
+        <p className="text-medium f-Londrina">Cooking your data...</p>
+    </div>
     else {
         return <Row>
             <div className="p-1 mb-5  mb-lg-0">
@@ -146,7 +190,7 @@ const SubCatPreview = () => {
                     <h1 className="text-center mb-3 f-Londrina">
                         What we provide
                         <Edit3
-                            onClick={() => setTopicModelShow(!topicModelShow)}
+                            onClick={() => setDescriptionModelShow(!descriptionModelShow)}
                             size={30} className="ml-2 text-danger clickable cursor-pointer"/>
                     </h1>
                     <p className="text-medium text-center">{singleSubCat?.description}</p>
@@ -181,14 +225,15 @@ const SubCatPreview = () => {
                     <h3 className="text-light">Real time update</h3>
                 </ModalHeader>
                 <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
-                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                    <Input type="textarea" id="topicId" placeholder="Service topic here..." value={topicUpdate}
+                    <Label htmlFor="topicId" className="text-medium lead mb-1">Update the topic</Label>
+                    <Input id="topicId" placeholder="Service topic here..." value={topicUpdate}
                            onChange={e => setTopicUpdate(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>
                     <button
                         onClick={updateTopic}
-                        className="btn btn-primary">Update
+                        className="btn btn-primary">
+                        {subCatUpdateLoading ? <Spinner size={10}/> : "Update topic"}
                     </button>
                 </ModalFooter>
             </Modal>
@@ -201,11 +246,16 @@ const SubCatPreview = () => {
                 </ModalHeader>
                 <ModalBody className='px-sm-5 mx-50 pb-4 mt-2'>
                     <Label htmlFor="topicId" className="text-medium lead mb-1">Update the description</Label>
-                    <Input id="topicId" placeholder="Service description here..." value={descriptionUpadte}
+                    <Input type="textarea" id="topicId" placeholder="Service description here..."
+                           value={descriptionUpadte}
                            onChange={e => setDescriptionUpdate(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>
-                    <button className="btn btn-primary">Update</button>
+                    <button
+                        onClick={updateDescription}
+                        className="btn btn-primary">
+                        {subCatUpdateLoading ? <Spinner size={10}/> : "Update description"}
+                    </button>
                 </ModalFooter>
             </Modal>
 
@@ -232,7 +282,11 @@ const SubCatPreview = () => {
                         </div>
                     </Col>
                     <Col className="d-flex justify-content-end mt-2">
-                        <button className="btn btn-primary">Update images</button>
+                        <button
+                            onClick={cookUpdateImage}
+                            className="btn btn-primary">
+                            {subCatUpdateLoading ? <Spinner size={10}/> : "Update images"}
+                        </button>
                     </Col>
                 </ModalBody>
             </Modal>

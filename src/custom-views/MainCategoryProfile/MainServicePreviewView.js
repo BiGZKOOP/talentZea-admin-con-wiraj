@@ -93,8 +93,6 @@ const MainServicePreviewView = () => {
 
         const {image1, image2, image3} = imageObject
 
-        console.log("first", imageObject)
-
         if (image1 === undefined) {
             delete imageObject["image1"]
         }
@@ -105,8 +103,6 @@ const MainServicePreviewView = () => {
         if (image3 === undefined) {
             delete imageObject["image3"]
         }
-
-        console.log("second", imageObject)
 
         updateMainServiceByID(imageObject)
     }

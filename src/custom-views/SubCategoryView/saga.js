@@ -57,14 +57,16 @@ const createSubCatAsync = async (data) => {
 const updateSubServiceByIDAsync = async (data, id) => {
 
     const sendFormData = new FormData()
+    if (data?.faq) {
+        alert("reached async 62")
+        data?.faq?.map((e, index) => {
 
-    data.faq.map((e, index) => {
+            sendFormData.append(`faq[${index}][question]`, e["question"])
+            sendFormData.append(`faq[${index}][answers]`, e["answers"])
+        })
 
-        sendFormData.append(`faq[${index}][question]`, e["question"])
-        sendFormData.append(`faq[${index}][answers]`, e["answers"])
-    })
-
-    delete data["faq"]
+        delete data["faq"]
+    }
 
     Object.keys(data).map(async e => {
         await sendFormData.append(e, data[e])
@@ -143,12 +145,12 @@ export function* signoutUserCB() {
 
 export function* updateSubCatByIDCB(action) {
 
-    const {data, id} = action
+    const {payload, id} = action
 
     try {
-        yield put(handleUpdateSubServiceLoader(false))
-        const res = yield call(updateSubServiceByIDAsync, data, id)
-        console.log(res)
+        yield put(handleUpdateSubServiceLoader(true))
+        const res = yield call(updateSubServiceByIDAsync, payload, id)
+        yield put(getSubServiceByIDSuccess(res.data.data))
     } catch (err) {
         console.error(err.message)
     } finally {

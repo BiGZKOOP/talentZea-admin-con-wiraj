@@ -58,9 +58,11 @@ export function* updateMainServiceByIDCB(action) {
     try {
         yield put(handleMainCatUpdateLoader(true))
         const res = yield call(updateMainServiceByIDAsync, payload, payload._id)
-        console.log(res)
         if (res.data.statusCode === 200) {
             fireAlertSuccess("Yeeh !", "Main service is successfully updated")
+            setTimeout(() => {
+                window.location.reload()
+            }, 500)
         }
     } catch (err) {
         console.error(err.message)
