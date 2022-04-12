@@ -79,6 +79,7 @@ const updateSubServiceByIDAsync = async (data, id) => {
         fireAlertSuccess("Updated", "You have successfully updated the sub service !")
         return res
     }).catch(err => {
+        fireAlertError("hmm...", "Looks like something went wrong !")
         console.error(err.message)
     })
 }
