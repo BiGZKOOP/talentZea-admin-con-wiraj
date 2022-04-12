@@ -75,7 +75,10 @@ const updateSubServiceByIDAsync = async (data, id) => {
             'content-type': 'application/form-data',
             Authorization: `Bearer ${await getIDToken()}`
         }
-    }).then(res => res).catch(err => {
+    }).then(res => {
+        fireAlertSuccess("Updated", "You have successfully updated the sub service !")
+        return res
+    }).catch(err => {
         console.error(err.message)
     })
 }
