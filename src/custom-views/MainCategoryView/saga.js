@@ -5,7 +5,6 @@ import * as actionTypes from "./constants"
 
 const getAllMainCatAsync = async () => {
         return await axios.get("/main-service").then(res => {
-        console.log(res)
         return res
     }).catch(err => console.error(err))
 }

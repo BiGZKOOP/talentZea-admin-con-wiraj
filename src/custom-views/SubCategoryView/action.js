@@ -82,3 +82,30 @@ export const signOutUserListen = (history) => {
         history
     }
 }
+
+//Use this to update the sub services
+export const updateSubServiceByIDListen = (data, id) => {
+
+    return {
+        type: actionTypes.UPDATE_SUB_SERVICE_BY_ID_LISTEN,
+        payload: data,
+        id
+    }
+}
+
+export const updateSubServiceByIDSuccess = (data) => {
+
+    return {
+        type: actionTypes.UPDATE_SUB_SERVICE_BY_ID_SUCCESS,
+        payload: data
+    }
+}
+
+//Use this to handle the sub service update loader
+export const handleUpdateSubServiceLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_UPDATE_SUB_SERVICE_LOADER,
+        payload: state
+    }
+}

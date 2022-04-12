@@ -5,7 +5,8 @@ const init = {
     subCat: [],
     singleSubCat: {},
     singleSubCatLoading: false,
-    subCatCreateLoading: false
+    subCatCreateLoading: false,
+    subCatUpdateLoading: false
 }
 
 const subCatReducer = (state = init, action) => {
@@ -35,6 +36,11 @@ const subCatReducer = (state = init, action) => {
             return {
                 ...state,
                 subCatCreateLoading: action.payload
+            }
+        case actionTypes.HANDLE_UPDATE_SUB_SERVICE_LOADER:
+            return {
+                ...state,
+                subCatUpdateLoading: action.payload
             }
         default:
             return state

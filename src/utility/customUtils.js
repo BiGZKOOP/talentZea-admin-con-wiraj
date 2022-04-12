@@ -57,6 +57,5 @@ export const getIDToken = async () => {
 //Use this to delete object attr
 export const deleteAttrFromObject = (obj, attr) => {
     delete obj[attr]
-    console.log("deleted", obj)
     return obj
 }
