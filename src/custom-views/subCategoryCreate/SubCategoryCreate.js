@@ -15,7 +15,7 @@ import {useFormik} from "formik"
 import {useEffect, useState} from "react"
 import "../../assets/css/mainCategory.css"
 import "../../assets/css/serviceViews.css"
-import {Circle, Delete, Gift, PlusSquare, Upload} from "react-feather"
+import {Circle, Clock, CreditCard, Delete, Gift, PlusSquare, Upload} from "react-feather"
 import {fireAlertCustom, fireAlertError} from "../../utility/customUtils"
 import {useDispatch, useSelector} from "react-redux"
 import {getAllMainCatListen} from "../MainCategoryView/actions"
@@ -35,6 +35,8 @@ const SubCategoryCreate = () => {
 
     const [faqQuestion, setFaqQuestion] = useState("")
     const [faqAnswer, setFaqAnswer] = useState("")
+    // eslint-disable-next-line no-unused-vars
+    const [orderCards, setOrderCards] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [testIndex, setTestIndex] = useState(0)
 
@@ -93,6 +95,16 @@ const SubCategoryCreate = () => {
         dispatch(createSubCatServiceListen(cookDataObject(values), history))
         return true
     }
+
+    // eslint-disable-next-line no-unused-vars
+    const orderCardFormik = useFormik({
+        initialValues: {
+            orderTopic: "",
+            orderDescription: "",
+            deliveryTime: "",
+            price: ""
+        }
+    })
 
     const formik = useFormik({
         initialValues: {
@@ -164,6 +176,14 @@ const SubCategoryCreate = () => {
         setFaqQuestion("")
     }
 
+    // eslint-disable-next-line no-unused-vars
+    const cleanOrderCardState = () => {
+        orderCardFormik.values.orderTopic = ""
+        orderCardFormik.values.orderDescription = ""
+        orderCardFormik.values.deliveryTime = ""
+        orderCardFormik.values.price = ""
+    }
+
     //Use this to cook the FAQ object (must contains question & answer)
     const addFAQ = (e) => {
         e.preventDefault()
@@ -186,12 +206,30 @@ const SubCategoryCreate = () => {
     }
 
     // eslint-disable-next-line no-unused-vars
+    const addOrderCard = (e) => {
+        e.preventDefault()
+
+        setOrderCards(orderCards.concat(orderCardFormik.values))
+        console.log(orderCards)
+        // cleanOrderCardState()
+    }
+
+    // eslint-disable-next-line no-unused-vars
     const removeFAQ = (e, index) => {
         e.preventDefault()
         const tempArr = faq
         tempArr.splice(index, 1)
         setFaq(tempArr)
         setFaq(faq.concat())
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const removeOrderCard = (e, index) => {
+        e.preventDefault()
+        const tempArr = orderCards
+        tempArr.splice(index, 1)
+        setOrderCards(tempArr)
+        setOrderCards(orderCards.concat())
     }
 
     useEffect(() => {
@@ -240,15 +278,6 @@ const SubCategoryCreate = () => {
                                 }
                             </select>
                         </Card>
-                    </Col>
-                    <Col className="mt-2" lg={3}>
-                        <Label htmlFor="price" className="text-small mb-1">Sub service price</Label>
-                        <Input
-                            name="price"
-                            onChange={formik.handleChange}
-                            value={formik.values.price}
-                            id="price"
-                            placeholder="Price from dollar..."/>
                     </Col>
                 </Row>
                 <Col className="mt-5">
@@ -311,6 +340,93 @@ const SubCategoryCreate = () => {
                                     }) : <div className="w-100 h-100 d-center animate__animated animate__bounce flex-column">
                                         <Gift className="mb-2 text-primary"/>
                                         <h2 className="f-Londrina text-success">Your FAQ will be shown here...</h2>
+                                    </div>
+                            }
+                        </div>
+                    </div>
+                </Col>
+            </div>
+            <Card className="mt-3">
+                <CardHeader className="m-0 bg-primary">
+                    <h3 className="m-0 p-0 text-light">Add Order cards</h3>
+                </CardHeader>
+                <CardBody>
+                    <div className="mt-2">
+                        <Label htmlFor="txtOrderCardTopic" className="text-small mb-1">Order card topic</Label>
+                        <Input
+                            id="orderTopic"
+                            name="orderTopic"
+                            onChange={orderCardFormik.handleChange}
+                            value={orderCardFormik.values.orderTopic}
+                            placeholder="Order card topic..."/>
+                    </div>
+                    <div className="mt-2">
+                        <Label htmlFor="txtOrderCardTopic" className="text-small mb-1">Order card topic</Label>
+                        <Input
+                            id="orderDescription"
+                            name="orderDescription"
+                            onChange={orderCardFormik.handleChange}
+                            value={orderCardFormik.values.orderDescription}
+                            placeholder="Order card topic..."/>
+                    </div>
+                    <Row className="mt-2">
+                        <Col lg={4}>
+                            <Label htmlFor="txtOrderCardPrice" className="text-small mb-1">Order card price</Label>
+                            <Input
+                                id="price"
+                                name="price"
+                                onChange={orderCardFormik.handleChange}
+                                value={orderCardFormik.values.price}
+                                placeholder="Enter your price..."/>
+                        </Col>
+                        <Col lg={3}>
+                            <Label htmlFor="txtOrderCardDeliveryTime" className="text-small mb-1">Order delivery
+                                time</Label>
+                            <Input
+                                id="deliveryTime"
+                                name="deliveryTime"
+                                onChange={orderCardFormik.handleChange}
+                                value={orderCardFormik.values.deliveryTime}
+                                placeholder="Add delivery time..."/>
+                        </Col>
+                        <div className="d-flex justify-content-end">
+                            <button
+                                onClick={(e) => addOrderCard(e)}
+                                className="btn btn-primary">Create order card</button>
+                        </div>
+                    </Row>
+                </CardBody>
+            </Card>
+            <div className="mt-5">
+                <Col>
+                    <div>
+                        <div style={{height: "400px"}} className="overflow-auto p-1 radius-10 shadow-inner flex-wrap d-flex">
+                            {
+                                orderCards.length > 0 ? orderCards.map((e, index) => {
+                                        return <div key={index} className="radius-10 mb-3 w-25 mr-2 bg-dark">
+                                            <CardHeader className="d-flex justify-content-between light-orange-grad overflow-auto">
+                                                <h4 className="text-black-c">{e.orderTopic}</h4>
+                                                <h1 className="font-bold text-black-c">${e.price}/=</h1>
+                                            </CardHeader>
+                                            <CardBody className="light-orange-grad m-0">
+                                                <div className="d-flex align-items-center font-bold">
+                                                    <Clock size={13} className="mr-1"/> {e?.deliveryTime} delivery
+                                                </div>
+                                            </CardBody>
+                                            <CardBody>
+                                                <div className="d-flex flex-column">
+                                                    <p className="text-light">{e?.orderDescription}</p>
+                                                </div>
+                                            </CardBody>
+                                            <CardFooter className="d-center">
+                                                <button
+                                                    onClick={(e) => removeOrderCard(e, index)}
+                                                    className="btn btn-danger w-75">delete</button>
+                                            </CardFooter>
+                                        </div>
+                                    }) : <div className="w-100 h-100 d-center animate__animated animate__bounce flex-column">
+                                        <CreditCard className="mb-2 text-success"/>
+                                        <h2 className="f-Londrina text-primary">Order cards will be shown here...</h2>
                                     </div>
                             }
                         </div>

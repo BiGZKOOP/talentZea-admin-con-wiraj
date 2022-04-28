@@ -271,6 +271,13 @@
     word-break: break-word;
 }
 
+/*grad-colors*/
+.light-orange-grad {
+    background-attachment: fixed;
+    background-size: cover;
+    background-image: linear-gradient(to left top, #fcffb0, #ffe69d, #ffcc96, #ffb497, #ff9f9f);
+}
+
 @media all and (max-width: 540px) {
     .width-24 {
         width: 100%;

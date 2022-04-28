@@ -16,7 +16,7 @@ const SubCatCard = ({data}) => {
     }
 
 
-    return <Card className="mr-2 scalable" style={{width: "30%"}}>
+    return <Card className="mr-2 scalable" style={{width: "31%"}}>
         <CardHeader>
             <h4 className="f-Londrina"><span className="text-primary">{data?.mainService?.mainTopic}</span> {"> "}
                 <span className="text-danger">{data?.mainTopic}</span></h4>
