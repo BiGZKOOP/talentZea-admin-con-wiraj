@@ -3,7 +3,7 @@ import * as actionTypes from "./constants"
 const init = {
     subCatLoading: false,
     subCat: [],
-    singleSubCat: {},
+    singleSubCat: undefined,
     singleSubCatLoading: false,
     subCatCreateLoading: false,
     subCatUpdateLoading: false

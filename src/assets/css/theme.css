@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
 /*webkit styles*/
 ::-webkit-scrollbar {
@@ -265,6 +268,18 @@
 
 .f-shippori {
     font-family: 'Shippori Antique B1', sans-serif;
+}
+
+.f-lobster {
+    font-family: 'Lobster', cursive;
+}
+
+.f-indie-flower {
+    font-family: 'Indie Flower', cursive;
+}
+
+.f-Staatliches {
+    font-family: 'Staatliches', cursive;
 }
 
 .word-break {
