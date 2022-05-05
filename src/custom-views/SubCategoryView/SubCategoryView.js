@@ -29,7 +29,7 @@ const SubCategoryView = () => {
             </div>
         }
         {
-            !subCatLoading && <div className="d-flex justify-content-between flex-wrap">
+            !subCatLoading && <div className="d-flex flex-wrap">
                 {
                     subCat?.map(data => {
                         return <SubCatCard data={data}/>

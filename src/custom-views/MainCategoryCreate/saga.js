@@ -12,7 +12,8 @@ const createMainServiceAsync = async (data) => {
 
     return await axios.post("/main-service", formData, {
         headers: {
-            'content-type': 'application/x-www-form-urlencoded'
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Bearer ${await getIDToken()}`
         }
     }).then(res => {
         fireAlertSuccess("You have created a new main service !", "Could be a beginning of something great")

@@ -17,6 +17,7 @@ import mainCatViewReducer from "../custom-views/MainCategoryView/reducer"
 import mainCatPreviewReducer from "../custom-views/MainCategoryProfile/reducer"
 import mainCatCreateReducer from "../custom-views/MainCategoryCreate/reducer"
 import subCatReducer from "../custom-views/SubCategoryView/reducer"
+import orderReducer from "../custom-views/OrderView/reducer"
 
 const rootReducer = combineReducers({
   auth,
@@ -35,7 +36,8 @@ const rootReducer = combineReducers({
   mainCatViewReducer,
   mainCatPreviewReducer,
   mainCatCreateReducer,
-  subCatReducer
+  subCatReducer,
+  orderReducer
 })
 
 export default rootReducer

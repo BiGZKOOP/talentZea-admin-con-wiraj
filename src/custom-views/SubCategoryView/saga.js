@@ -35,6 +35,21 @@ const createSubCatAsync = async (data) => {
         sendFormData.append(`faq[${index}][answers]`, e["answers"])
     })
 
+    sendFormData.append(`revisions[hide]`, data?.revisions?.hide)
+    sendFormData.append(`revisions[price]`, data?.revisions?.price)
+    sendFormData.append(`revisions[count]`, data?.revisions?.count)
+
+    sendFormData.append(`sourceFiles[hide]`, data?.sourceFiles?.hide)
+    sendFormData.append(`sourceFiles[price]`, data?.sourceFiles?.price)
+
+    sendFormData.append(`expressDelivery[hide]`, data?.expressDelivery?.hide)
+    sendFormData.append(`expressDelivery[price]`, data?.expressDelivery?.price)
+    sendFormData.append(`expressDelivery[count]`, data?.expressDelivery?.count)
+
+    delete data["revisions"]
+    delete data["sourceFiles"]
+    delete data["expressDelivery"]
+
     delete data["faq"]
 
     Object.keys(data).map(async e => {
@@ -58,15 +73,28 @@ const updateSubServiceByIDAsync = async (data, id) => {
 
     const sendFormData = new FormData()
     if (data?.faq) {
-        alert("reached async 62")
         data?.faq?.map((e, index) => {
-
             sendFormData.append(`faq[${index}][question]`, e["question"])
             sendFormData.append(`faq[${index}][answers]`, e["answers"])
         })
 
         delete data["faq"]
     }
+
+    sendFormData.append(`revisions[hide]`, data?.revisions?.hide)
+    sendFormData.append(`revisions[price]`, data?.revisions?.price)
+    sendFormData.append(`revisions[count]`, data?.revisions?.count)
+
+    sendFormData.append(`sourceFiles[hide]`, data?.sourceFiles?.hide)
+    sendFormData.append(`sourceFiles[price]`, data?.sourceFiles?.price)
+
+    sendFormData.append(`expressDelivery[hide]`, data?.expressDelivery?.hide)
+    sendFormData.append(`expressDelivery[price]`, data?.expressDelivery?.price)
+    sendFormData.append(`expressDelivery[count]`, data?.expressDelivery?.count)
+
+    delete data["revisions"]
+    delete data["sourceFiles"]
+    delete data["expressDelivery"]
 
     Object.keys(data).map(async e => {
         await sendFormData.append(e, data[e])
