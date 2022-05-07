@@ -5,7 +5,11 @@ import {useEffect, useState} from "react"
 import {useHistory} from "react-router-dom"
 import {fireAlertCustom, fireAlertError} from "../../utility/customUtils"
 // eslint-disable-next-line no-unused-vars
-import {createSubCatServiceListen, getSubServiceByIDListen} from "../../custom-views/SubCategoryView/action"
+import {
+    createSubCatServiceListen,
+    getSubServiceByIDListen,
+    updateSubServiceByIDListen
+} from "../../custom-views/SubCategoryView/action"
 import {useFormik} from "formik"
 import {getAllMainCatListen} from "../../custom-views/MainCategoryView/actions"
 
@@ -16,7 +20,7 @@ const SubCatCreateComp = ({data}) => {
     const id = pathname.split("/sub-category/create/")[1]
 
     const {mainCat, mainCatLoading} = useSelector(state => state.mainCatViewReducer)
-    const {subCatCreateLoading, singleSubCat} = useSelector(state => state.subCatReducer)
+    const {subCatCreateLoading, singleSubCat, subCatUpdateLoading} = useSelector(state => state.subCatReducer)
 
     const [image1, setImage1] = useState()
     const [image2, setImage2] = useState()
@@ -60,6 +64,10 @@ const SubCatCreateComp = ({data}) => {
             sourceFiles,
             expressDelivery
         }
+    }
+
+    const updateSubServiceByID = (values) => {
+        dispatch(updateSubServiceByIDListen(cookDataObject(values), singleSubCat._id))
     }
 
     const validate = (values) => {
@@ -114,7 +122,9 @@ const SubCatCreateComp = ({data}) => {
             return false
         }
         // console.log(cookDataObject(values))
-        dispatch(createSubCatServiceListen(cookDataObject(values), history))
+        if (id) updateSubServiceByID(values)
+        else dispatch(createSubCatServiceListen(cookDataObject(values), history))
+
         return true
     }
 
@@ -250,7 +260,6 @@ const SubCatCreateComp = ({data}) => {
 
     //Use this to populate the formik on load if the component have data
     const populateFormikData = () => {
-        console.log(singleSubCat)
         formik.values.mainTopic = singleSubCat?.mainTopic
         formik.values.description = singleSubCat?.description
         formik.values.subTopic = singleSubCat?.subTopic
@@ -259,6 +268,7 @@ const SubCatCreateComp = ({data}) => {
         formik.values.orderDescription = singleSubCat?.orderDescription
         formik.values.deliveryTime = singleSubCat?.deliveryTime
         formik.values.price = singleSubCat?.price
+        setFaq(singleSubCat?.faq)
         setExpressDelivery({
             ...expressDelivery,
             count: singleSubCat?.expressDelivery?.count,
@@ -275,9 +285,39 @@ const SubCatCreateComp = ({data}) => {
         })
     }
 
+    const cleanState = () => {
+            formik.values.mainTopic = ""
+            formik.values.description = ""
+            formik.values.mainService = ""
+            formik.values.orderTopic = ""
+            formik.values.orderDescription = ""
+            formik.values.deliveryTime = ""
+            formik.values.price = ""
+        setFaq([])
+        setExpressDelivery({
+            hide: false,
+            price: 0,
+            count: 0
+        })
+        setSourceFiles({
+            hide: false,
+            price: 0
+        })
+        setRevisions({
+            hide: false,
+            price: 0,
+            count: 0
+        })
+    }
+
     //Form data set useEffect
     useEffect(() => {
         if (singleSubCat) populateFormikData()
+
+        if (!id) {
+            alert("reached")
+            cleanState()
+        }
     }, [])
 
     useEffect(() => {
@@ -289,64 +329,53 @@ const SubCatCreateComp = ({data}) => {
 
     return <div className="p-1">
         <Form onSubmit={formik.handleSubmit}>
-            <Card className="p-1">
-                <Col>
-                    <Label htmlFor="main" className="text-small mb-1">Main topic</Label>
-                    <Input
-                        id="mainTopic"
-                        name="mainTopic"
-                        onChange={formik.handleChange}
-                        value={formik.values.mainTopic}
-                        placeholder="Enter main topic..."/>
-                </Col>
-                <Col className="mt-2">
-                    <Label htmlFor="main" className="text-small mb-1">Service description</Label>
-                    <Input
-                        type="textarea"
-                        id="description"
-                        name="description"
-                        onChange={formik.handleChange}
-                        value={formik.values.description}
-                        placeholder="Enter main topic..."/>
-                </Col>
-                <Row>
-                    <Col className="mt-2" lg={3}>
-                        <Label htmlFor="main" className="text-small mb-1">Select </Label>
-                        <Card>
-                            <select
-                                className="custom-dropdown bg-instagram text-light"
-                                id="mainService"
-                                name="mainService"
-                                onChange={formik.handleChange}
-                                value={formik.values.mainService}
-                                placeholder="Select main service...">
-                                <option>Select main service</option>
-                                {
-                                    mainCat?.map((e, index) => {
-                                        if (mainCatLoading) return <option key={index}>Loading...</option>
-                                        else return <option key={index} value={e._id}>{e.mainTopic}</option>
-                                    })
-                                }
-                            </select>
-                        </Card>
+            <Card className="p-0">
+                <CardHeader className="m-0 bg-gradient-primary">
+                    <h1 className="m-0 p-0 text-light f-Staatliches">Add Images</h1>
+                </CardHeader>
+                <CardBody className="mt-1">
+                    <Col>
+                        <Label htmlFor="main" className="text-small mb-1">Main topic</Label>
+                        <Input
+                            id="mainTopic"
+                            name="mainTopic"
+                            onChange={formik.handleChange}
+                            value={formik.values.mainTopic}
+                            placeholder="Enter main topic..."/>
                     </Col>
-                </Row>
-                <Col className="mt-5">
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            {handleImage1()}
-                            <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
-                        </div>
-                        <div>
-                            {handleImage2()}
-                            <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
-                        </div>
-                        <div>
-                            {handleImage3()}
-                            <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
-                        </div>
-                    </div>
-                </Col>
+                    <Col className="mt-2">
+                        <Label htmlFor="main" className="text-small mb-1">Service description</Label>
+                        <Input
+                            type="textarea"
+                            id="description"
+                            name="description"
+                            onChange={formik.handleChange}
+                            value={formik.values.description}
+                            placeholder="Enter main topic..."/>
+                    </Col>
+                    <Row>
+                        <Col className="mt-2" lg={3}>
+                            <Label htmlFor="main" className="text-small mb-1">Select </Label>
+                            <Card>
+                                <select
+                                    className="custom-dropdown bg-instagram text-light"
+                                    id="mainService"
+                                    name="mainService"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.mainService}
+                                    placeholder="Select main service...">
+                                    <option>Select main service</option>
+                                    {
+                                        mainCat?.map((e, index) => {
+                                            if (mainCatLoading) return <option key={index}>Loading...</option>
+                                            else return <option key={index} value={e._id}>{e.mainTopic}</option>
+                                        })
+                                    }
+                                </select>
+                            </Card>
+                        </Col>
+                    </Row>
+                </CardBody>
             </Card>
             <Card className="mt-3">
                 <CardHeader className="m-0 bg-primary">
@@ -439,7 +468,8 @@ const SubCatCreateComp = ({data}) => {
                                                 onChange={() => {
                                                     cleanExtraStates(1)
                                                 }}
-                                                type='switch' id='switch-primary' name='primary' checked={!revisions.hide}/>
+                                                type='switch' id='switch-primary' name='primary'
+                                                checked={!revisions.hide}/>
                                         </div>
                                     </Col>
                                 </Row>
@@ -548,7 +578,7 @@ const SubCatCreateComp = ({data}) => {
                 <div>
                     <div style={{height: "400px"}} className="overflow-auto p-1 radius-10 shadow-inner">
                         {
-                            faq.length > 0 ? faq.map((e, index) => {
+                            faq?.length > 0 ? faq.map((e, index) => {
                                 return <div key={index} className="radius-10 mb-3 dashed-faq ">
                                     <CardHeader className="p-1">{e.question}</CardHeader>
                                     <hr/>
@@ -570,14 +600,46 @@ const SubCatCreateComp = ({data}) => {
                     </div>
                 </div>
             </div>
+            <Card className="p-0 mt-3">
+                <CardHeader className="m-0 bg-gradient-primary">
+                    <h1 className="m-0 p-0 text-light f-Staatliches">Add Images</h1>
+                </CardHeader>
+                <CardBody className="mt-5">
+                    <div className="d-flex justify-content-between">
+                        <div>
+                            {handleImage1()}
+                            <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
+                        </div>
+                        <div>
+                            {handleImage2()}
+                            <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
+                        </div>
+                        <div>
+                            {handleImage3()}
+                            <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
+                        </div>
+                    </div>
+                </CardBody>
+            </Card>
             <Col className="d-flex justify-content-end mt-3 mb-2">
-                <button type="submit"
-                        className="btn btn-gradient-primary f-Staatliches font-large-1 d-flex d-center text-small">
-                    {
-                        subCatCreateLoading && <Spinner className="spinner text-small mr-1"/>
-                    }
-                    Create main service
-                </button>
+                {
+                    !id && <button hidden={id} type="submit"
+                                  className="btn btn-gradient-primary f-Staatliches font-large-1 d-flex d-center text-small">
+                        {
+                            subCatCreateLoading && <Spinner className="spinner text-small mr-1"/>
+                        }
+                        Create main service
+                    </button>
+                }
+                {
+                    id && <button hidden={!id} type="submit"
+                                   className="btn btn-gradient-success f-Staatliches font-large-1 d-flex d-center text-small">
+                        {
+                            subCatUpdateLoading && <Spinner className="spinner text-small mr-1"/>
+                        }
+                        Update main service
+                    </button>
+                }
             </Col>
         </Form>
     </div>
