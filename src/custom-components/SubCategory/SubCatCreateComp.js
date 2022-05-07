@@ -315,7 +315,6 @@ const SubCatCreateComp = ({data}) => {
         if (singleSubCat) populateFormikData()
 
         if (!id) {
-            alert("reached")
             cleanState()
         }
     }, [])

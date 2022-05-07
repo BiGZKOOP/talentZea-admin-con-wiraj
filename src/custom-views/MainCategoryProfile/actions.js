@@ -27,11 +27,12 @@ export const handleMainCatPreviewLoading = (state) => {
 }
 
 //use this to update the main services by id
-export const updateMainServiceByListen = (data) => {
+export const updateMainServiceByListen = (data, id) => {
 
     return {
         type: actionTypes.UPDATE_MAIN_SERVICE_BY_ID_LISTEN,
-        payload: data
+        payload: data,
+        id
     }
 }
 
