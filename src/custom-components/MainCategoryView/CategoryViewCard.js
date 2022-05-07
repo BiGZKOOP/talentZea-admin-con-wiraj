@@ -1,6 +1,6 @@
 import {Card, CardBody, CardFooter, CardHeader} from "reactstrap"
 import BreakPointSwipper from "../swippers/BreakPointSwipper"
-import {Edit, Eye} from "react-feather"
+import {Delete, Edit, Eye} from "react-feather"
 import {useHistory} from "react-router-dom"
 
 const CategoryViewCard = ({data}) => {
@@ -24,10 +24,11 @@ const CategoryViewCard = ({data}) => {
             </div>
         </CardBody>
         <CardFooter className="d-flex justify-content-end">
-            <button className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
             <button
-                onClick={() => history.push(`/service/${data._id}`)}
-                className="btn btn-outline-success"><Eye size={15}/></button>
+                onClick={() => history.push(`/main-category/create/${data?._id}`)}
+                className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
+            <button
+                className="btn btn-gradient-danger"><Delete size={15}/></button>
         </CardFooter>
     </Card>
 }
