@@ -109,3 +109,28 @@ export const handleUpdateSubServiceLoader = (state) => {
         payload: state
     }
 }
+
+//Use this to delete sub services
+export const deleteSubCatByIDListen = (id) => {
+    alert("reached !!")
+    return {
+        type: actionTypes.DELETE_SUB_CAT_LISTEN,
+        payload: id
+    }
+}
+
+export const deleteSubCatByIDSuccess = () => {
+
+    return {
+        type: actionTypes.DELETE_SUB_CAT_SUCCESS
+    }
+}
+
+//Use this to handle sub cat delete loader
+export const handleDeleteSubCatLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_SUB_CAT_LOADER,
+        payload: state
+    }
+}

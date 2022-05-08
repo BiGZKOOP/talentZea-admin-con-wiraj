@@ -1,18 +1,27 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import axios from "../../axios/axios"
+// eslint-disable-next-line no-unused-vars
 import {getAllMainCatListen, getAllMainCatSuccess, handleMainCatDeleteLoader, handleMainCatLoader} from "./actions"
 import * as actionTypes from "./constants"
+import {fireAlertError, getIDToken} from "../../utility/customUtils"
 
 const getAllMainCatAsync = async () => {
-        return await axios.get("/main-service").then(res => {
+    return await axios.get("/main-service").then(res => {
         return res
     }).catch(err => console.error(err))
 }
 
 const deleteMainCatByIDAsync = async (id) => {
-    return await axios.patch(`/main-service/delete/${id}`).then(res => {
+    return await axios.patch(`/main-service/delete/${id}`, {}, {
+        headers: {
+            Authorization: `Bearer ${await getIDToken()}`
+        }
+    }).then(res => {
         return res
-    }).catch(err => console.error(err))
+    }).catch(err => {
+        console.log(err)
+        fireAlertError("Oops !", "You can't delete main service without deleting it's sub services !")
+    })
 }
 
 
@@ -50,7 +59,7 @@ export function* deleteMainCatCB(action) {
 
 function* watchMainCatViewSagas() {
     yield takeLatest(actionTypes.GET_MAIN_SERVICES_LISTEN, getAllMainCatCB)
-    yield takeLatest(actionTypes.MAIN_CAT_DELETE_LISTEN, getAllMainCatCB)
+    yield takeLatest(actionTypes.MAIN_CAT_DELETE_LISTEN, deleteMainCatCB)
 }
 
 const mainCatSagas = [watchMainCatViewSagas]

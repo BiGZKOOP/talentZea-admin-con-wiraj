@@ -1,7 +1,8 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import {
+    getAllSubCatListen,
     getAllSubCatSuccess,
-    getSubServiceByIDSuccess,
+    getSubServiceByIDSuccess, handleDeleteSubCatLoader,
     handleGetSubCatByIDListen,
     handleSubCatCreateLoading,
     handleSubCatLoading, handleUpdateSubServiceLoader
@@ -114,6 +115,19 @@ const updateSubServiceByIDAsync = async (data, id) => {
     })
 }
 
+const handleDeleteSubCatByIDAsync = async (id) => {
+
+    return await axios.patch(`/sub-service/delete/${id}`, {}, {
+        headers: {
+            Authorization: `Bearer ${await getIDToken()}`
+        }
+    }).then(res => {
+        return res
+    }).catch(err => {
+        console.log(err)
+        fireAlertError("Oops !", "You can't delete main service without deleting it's sub services !")
+    })
+}
 //////////////////
 //ASYNC FINISHED//
 //////////////////
@@ -186,12 +200,28 @@ export function* updateSubCatByIDCB(action) {
     }
 }
 
+export function* deleteSubCatByIDCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleDeleteSubCatLoader(true))
+        yield call(handleDeleteSubCatByIDAsync, payload)
+        yield put(getAllSubCatListen())
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleDeleteSubCatLoader(false))
+    }
+}
+
 function* watchSubCatSagas() {
     yield takeLatest(actionTypes.GET_ALL_SUB_CAT_LISTEN, getAllSubCatCB)
     yield takeLatest(actionTypes.GET_SUB_CAT_BY_ID_LISTEN, getSubCatByIDCB)
     yield takeLatest(actionTypes.CREATE_SUB_CAT_LISTEN, createSubCatCB)
     yield takeLatest(actionTypes.SIGNOUT_LISTEN, signoutUserCB)
     yield takeLatest(actionTypes.UPDATE_SUB_SERVICE_BY_ID_LISTEN, updateSubCatByIDCB)
+    yield takeLatest(actionTypes.DELETE_SUB_CAT_LISTEN, deleteSubCatByIDCB)
 }
 
 const subServiceSagas = [watchSubCatSagas]

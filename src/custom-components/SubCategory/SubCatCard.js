@@ -2,10 +2,15 @@ import {Card, CardBody, CardFooter, CardHeader} from "reactstrap"
 import BreakPointSwipper from "../swippers/BreakPointSwipper"
 import {Delete, Edit, Eye} from "react-feather"
 import {useHistory} from "react-router-dom"
+import {useDispatch, useSelector} from "react-redux"
+import {deleteSubCatByIDListen} from "../../custom-views/SubCategoryView/action"
+import {fireAlertError} from "../../utility/customUtils"
 
 const SubCatCard = ({data}) => {
 
     const history = useHistory()
+    const {subCatDeleteLoading} = useSelector(state => state.subCatReducer)
+    const dispatch = useDispatch()
 
     const getImageArray = () => {
 
@@ -15,6 +20,10 @@ const SubCatCard = ({data}) => {
         }
     }
 
+    const deleteSubCatByID = () => {
+        if (!subCatDeleteLoading) dispatch(deleteSubCatByIDListen(data._id))
+        else fireAlertError("Oops", "Your previous delete request is still pending !!!")
+    }
 
     return <Card className="mr-2 scalable" style={{width: "31%"}}>
         <CardHeader>
@@ -32,7 +41,7 @@ const SubCatCard = ({data}) => {
                 onClick={() => history.push(`/sub-category/create/${data?._id}`)}
                 className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
             <button
-                onClick={() => history.push(`/sub-category/preview/${data?._id}`)}
+                onClick={deleteSubCatByID}
                 className="btn btn-gradient-danger"><Delete size={15}/></button>
         </CardFooter>
     </Card>
