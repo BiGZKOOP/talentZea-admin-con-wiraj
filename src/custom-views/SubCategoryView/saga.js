@@ -221,6 +221,7 @@ function* watchSubCatSagas() {
     yield takeLatest(actionTypes.CREATE_SUB_CAT_LISTEN, createSubCatCB)
     yield takeLatest(actionTypes.SIGNOUT_LISTEN, signoutUserCB)
     yield takeLatest(actionTypes.UPDATE_SUB_SERVICE_BY_ID_LISTEN, updateSubCatByIDCB)
+    yield takeLatest(actionTypes.DELETE_SUB_CAT_LISTEN, deleteSubCatByIDCB)
 }
 
 const subServiceSagas = [watchSubCatSagas]
