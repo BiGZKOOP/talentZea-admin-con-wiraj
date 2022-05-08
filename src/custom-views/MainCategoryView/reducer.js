@@ -2,7 +2,8 @@ import * as actionTypes from "./constants"
 
 const init = {
     mainCatLoading: false,
-    mainCat: []
+    mainCat: [],
+    mainCatDeleteLoading: false
 }
 
 const mainCatViewReducer = (state = init, action) => {
@@ -17,6 +18,11 @@ const mainCatViewReducer = (state = init, action) => {
             return {
                 ...state,
                 mainCatLoading: action.state
+            }
+        case actionTypes.HANDLE_MAIN_CAT_DELETE_LOADER:
+            return {
+                ...state,
+                mainCatDeleteLoading: action.payload
             }
         default:
             return state

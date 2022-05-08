@@ -24,3 +24,28 @@ export const handleMainCatLoader = (state) => {
         state
     }
 }
+
+//Use these to delete main services
+export const deleteMainServiceListen = (id) => {
+
+    return {
+        type: actionTypes.MAIN_CAT_DELETE_LISTEN,
+        payload: id
+    }
+}
+
+export const deleteMainServiceSuccess = () => {
+
+    return {
+        type: actionTypes.MAIN_CAT_DELETE_SUCCESS
+    }
+}
+
+//Use this to handle the main cat delete loader
+export const handleMainCatDeleteLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_MAIN_CAT_DELETE_LOADER,
+        payload: state
+    }
+}

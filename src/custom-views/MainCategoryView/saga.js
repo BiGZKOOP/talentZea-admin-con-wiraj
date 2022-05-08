@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import axios from "../../axios/axios"
-import {getAllMainCatSuccess, handleMainCatLoader} from "./actions"
+import {getAllMainCatListen, getAllMainCatSuccess, handleMainCatDeleteLoader, handleMainCatLoader} from "./actions"
 import * as actionTypes from "./constants"
 
 const getAllMainCatAsync = async () => {
@@ -8,6 +8,13 @@ const getAllMainCatAsync = async () => {
         return res
     }).catch(err => console.error(err))
 }
+
+const deleteMainCatByIDAsync = async (id) => {
+    return await axios.patch(`/main-service/delete/${id}`).then(res => {
+        return res
+    }).catch(err => console.error(err))
+}
+
 
 //////////////////
 //ASYNC FINISHED//
@@ -26,8 +33,24 @@ export function* getAllMainCatCB() {
     }
 }
 
+export function* deleteMainCatCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleMainCatDeleteLoader(true))
+        yield call(deleteMainCatByIDAsync, payload)
+        yield put(getAllMainCatListen())
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleMainCatDeleteLoader(false))
+    }
+}
+
 function* watchMainCatViewSagas() {
     yield takeLatest(actionTypes.GET_MAIN_SERVICES_LISTEN, getAllMainCatCB)
+    yield takeLatest(actionTypes.MAIN_CAT_DELETE_LISTEN, getAllMainCatCB)
 }
 
 const mainCatSagas = [watchMainCatViewSagas]
