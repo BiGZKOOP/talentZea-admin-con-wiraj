@@ -1,4 +1,5 @@
 import * as actionTypes from "./constants"
+import {HANDLE_SUB_CAT_LOADER} from "./constants";
 
 //Use this to get all the sub cat.
 export const getAllSubCatListen = () => {
@@ -106,6 +107,31 @@ export const handleUpdateSubServiceLoader = (state) => {
 
     return {
         type: actionTypes.HANDLE_UPDATE_SUB_SERVICE_LOADER,
+        payload: state
+    }
+}
+
+//Use this to delete sub services
+export const deleteSubCatByIDListen = (id) => {
+
+    return {
+        type: actionTypes.DELETE_SUB_CAT_LISTEN,
+        payload: id
+    }
+}
+
+export const deleteSubCatByIDSuccess = () => {
+
+    return {
+        type: actionTypes.DELETE_SUB_CAT_SUCCESS
+    }
+}
+
+//Use this to handle sub cat delete loader
+export const handleDeleteSubCatLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_SUB_CAT_LOADER,
         payload: state
     }
 }
