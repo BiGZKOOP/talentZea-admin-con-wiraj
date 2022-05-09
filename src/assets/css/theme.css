@@ -40,6 +40,14 @@
     background-color: #e3e3e3;
 }
 
+.text-grey {
+    color: #95a5a6;
+}
+
+.full-round {
+    border-radius: 100%;
+}
+
 /*marging right*/
 .mr-1 {
     margin-right: 10px;

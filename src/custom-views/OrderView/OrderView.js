@@ -1,7 +1,10 @@
 import {Card, Input, Table} from "reactstrap"
 import {Search} from "react-feather"
+import {useHistory} from "react-router-dom"
 
 const OrderView = () => {
+
+    const history = useHistory()
 
     return <div>
         <Card className="w-100 shadow-lg p-2">
@@ -32,7 +35,9 @@ const OrderView = () => {
                     <td>@mdo</td>
                     <td>@mdo</td>
                     <td>
-                        <button className="btn btn-primary">More details</button>
+                        <button
+                            onClick={() => history.push("/order-details/1")}
+                            className="btn btn-primary">More details</button>
                     </td>
                 </tr>
                 </tbody>

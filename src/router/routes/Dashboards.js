@@ -35,6 +35,10 @@ const DashboardRoutes = [
   {
     path: '/orders',
     component: lazy(() => import('../../custom-views/OrderView/OrderView'))
+  },
+  {
+    path: '/order-details/:id',
+    component: lazy(() => import('../../custom-views/OrderDetailsView/OrderDetailsView'))
   }
 ]
 
