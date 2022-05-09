@@ -1,0 +1,275 @@
+.floating-img {
+    animation: floatingImg infinite 10s alternate;
+}
+
+.bounce-img {
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-top: 95px;
+    margin-bottom: 60px;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+    animation-duration: 2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+}
+
+.swingimg {
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -webkit-animation: swingingImg 3.5s ease-in-out forwards infinite;
+    animation: swingingImg 3.5s ease-in-out forwards infinite;
+}
+
+.scaleImg {
+    animation: scaleImg infinite 5s alternate;
+}
+
+.shivering-anim {
+    opacity: 0;
+    animation-name: shiverinAnim;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.fadein-anim {
+    opacity: 0;
+    animation-name: fadeInAnim;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.animate__animated.animate__bounce {
+    animation-iteration-count: infinite;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+}
+
+.background-change-anim {
+    animation-name: bcChange;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+/*scalable animation*/
+.scalable {
+    transition: 0.2s;
+}
+
+.scalable:hover {
+    transition: 0.4s;
+    transform: scale(1.05, 1.05);
+}
+
+/*Animation properties*/
+.delay-1 {
+    animation-delay: 1s;
+}
+
+.delay-2 {
+    animation-delay: 2s;
+}
+
+.delay-3 {
+    animation-delay: 3s;
+}
+
+.delay-4 {
+    animation-delay: 4s;
+}
+
+.delay-5 {
+    animation-delay: 5s;
+}
+
+.delay-6 {
+    animation-delay: 6s;
+}
+
+.delay-7 {
+    animation-delay: 7s;
+}
+
+.delay-8 {
+    animation-delay: 8s;
+}
+
+.delay-9 {
+    animation-delay: 9s;
+}
+
+.delay-10 {
+    animation-delay: 10s;
+}
+
+.clickable {
+    transition: 0.2s;
+}
+
+.clickable:hover {
+    transition: 0.3s;
+    transform: scale(1.1, 1.1);
+}
+
+.clickable:active {
+    transition: 0.2s;
+    transform: scale(0.96, 0.96);
+}
+
+/*Fadein animation keyframes*/
+@keyframes fadeInAnim {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/*Background color change from white to dark blue*/
+@keyframes bcChange {
+    from {
+        background-color: #f8f8f8;
+    }
+
+    to {
+        background-color: #161d31;
+    }
+}
+
+/*shivering animation keyframs*/
+@keyframes shiverinAnim {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    10% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    35% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleImg {
+    from {
+        transform: scale(1, 1);
+    }
+
+    to {
+        transform: scale(1.05, 1.05);
+    }
+}
+
+/*Floating image*/
+@keyframes floatingImg {
+    0% {
+        transform: translate(0px, 0px);
+    }
+
+    25% {
+        transform: translate(10px, 10px) scale(1.02, 1.02);
+    }
+
+    50% {
+        transform: translate(-10px, -20px);
+    }
+
+    75% {
+        transform: translate(5px, 10px);
+    }
+
+    100% {
+        transform: translate(-15px, 20px);
+    }
+}
+
+/*bounce image*/
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(-30px);
+    }
+    60% {
+        -webkit-transform: translateY(-15px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+.bounce {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+}
+
+/*swinging image*/
+@-webkit-keyframes swingingImg {
+    0% {
+        -webkit-transform: rotate(10deg);
+    }
+    50% {
+        -webkit-transform: rotate(-5deg)
+    }
+    100% {
+        -webkit-transform: rotate(10deg);
+    }
+}
+
+@keyframes swingingImg {
+    0% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(-5deg)
+    }
+    100% {
+        transform: rotate(10deg);
+    }
+}

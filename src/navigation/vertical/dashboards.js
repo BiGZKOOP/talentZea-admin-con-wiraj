@@ -31,7 +31,7 @@ export default [
         id: 'mainCat',
         title: 'Main category',
         icon: <BookOpen size={12}/>,
-        navLink: '/main-category',
+        navLink: '/main-category/view',
         children: [
             {
                 id: 'viewMainCat',
@@ -57,13 +57,13 @@ export default [
                 id: 'viewSubCat',
                 title: 'view',
                 icon: <Circle size={12}/>,
-                navLink: '/main-category/view'
+                navLink: '/sub-category/view'
             },
             {
                 id: 'orderView',
                 title: 'create',
                 icon: <Circle size={12}/>,
-                navLink: '/main-category/create'
+                navLink: '/sub-category/create'
             }
         ]
     }

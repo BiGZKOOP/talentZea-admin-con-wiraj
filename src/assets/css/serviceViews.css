@@ -1,0 +1,42 @@
+.topic-header {
+    font-size: 60px;
+}
+
+.main-img {
+    width: 25%;
+}
+
+.text-contact {
+    font-size: 25px;
+}
+
+.editor-btn {
+    top: 0px;
+    right: 0px;
+}
+
+.dashed-faq {
+    border: 2px dashed #4b8ba9;
+}
+
+.card-dash {
+    border: 2px dashed #a1986d;
+}
+
+.shadow-inner {
+    box-shadow: inset 2px 2px 10px #989898;
+}
+
+@media (max-width: 578px) {
+    .topic-header {
+        font-size: 40px;
+    }
+
+    .main-img {
+        width: 50%;
+    }
+
+    .text-contact {
+        font-size: 17px;
+    }
+}

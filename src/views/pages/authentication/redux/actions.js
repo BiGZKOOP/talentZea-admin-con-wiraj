@@ -1,9 +1,11 @@
 import * as actionTypes from './constants'
 
-export const loginListen = () => {
+export const loginListen = (data, history) => {
 
     return {
-        type: actionTypes.LOGIN_LISTEN
+        type: actionTypes.LOGIN_LISTEN,
+        data,
+        history
     }
 }
 

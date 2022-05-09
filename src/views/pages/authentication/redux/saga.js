@@ -1,31 +1,67 @@
 import * as actionTypes from './constants'
-import {takeLatest, call} from "redux-saga/effects"
-import axios from '../../../../Axios.js'
-import qs from 'qs'
-
 // eslint-disable-next-line no-unused-vars
-const loginAsync = async (user) => {
+import {takeLatest, call} from "redux-saga/effects"
+import {fireAlertCustom} from "../../../../utility/customUtils"
+import {Auth} from "aws-amplify"
 
-    const params = new URLSearchParams()
-    params.append("username", "Bashana")
-    params.append("username", "1234")
-    return axios.post(`/login`, qs.stringify({username:"Bashana", password:"1234"}), {
-        headers: { 'content-type': 'application/x-www-form-urlencoded' }
-    }).then(res => console.log(res)).catch(err => console.log(err))
+const loginAsync = async (username, password) => {
+
+    return await Auth.signIn(username, password).then(() => {
+        window.localStorage.setItem("user", "logged")
+    }).catch((err) => {
+        fireAlertCustom("hmmm...", err.message, "error")
+        return false
+    })
 }
 
-export function* loginUserCB() {
+
+const signoutUserAsync = async (history) => {
+
+    return await Auth.signOut().then(() => {
+        localStorage.remove("user")
+        history.push("/login")
+    }).catch(err => {
+        console.error(err.message)
+    })
+}
+///////////////////
+//ASYNC FINISHED//
+/////////////////
+
+export function* loginUserCB(action) {
+
+    const {data, history} = action
+    try {
+        yield call(loginAsync, data.email, data.password)
+        history.push("/dashboard")
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export function* signoutCB(action) {
+    alert("asdasdasd")
+    const {history} = action
 
     try {
-        const data = yield call(loginAsync, "buddini")
-        console.log(data)
+        yield call(signoutUserAsync, history)
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+export function* testCB() {
+        alert("reached !!!")
+    try {
     } catch (e) {
         console.error(e)
     }
 }
 
 function* watchLoginSagas() {
+    yield takeLatest(actionTypes.SIGNUP_SUCCESS, testCB)
     yield takeLatest(actionTypes.LOGIN_LISTEN, loginUserCB)
+    yield takeLatest(actionTypes.SIGNUP_OUT, signoutCB)
 }
 
 const loginSagas = [watchLoginSagas]

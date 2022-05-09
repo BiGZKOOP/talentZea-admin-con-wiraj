@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "talentzeaadmin68e8fce1": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

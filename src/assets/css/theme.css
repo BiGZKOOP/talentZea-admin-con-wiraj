@@ -1,13 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+/*webkit styles*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff2e4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0bccba;
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #08b6a9;
+}
 
 .text-medium {
     font-size: 18px;
 }
 
+.text-large {
+    font-size: 20px;
+}
+
+.text-small {
+    font-size: 15px;
+}
+
 .bg-grey {
     background-color: #e3e3e3;
+}
+
+.text-grey {
+    color: #95a5a6;
+}
+
+.full-round {
+    border-radius: 100%;
 }
 
 /*marging right*/
@@ -129,10 +167,51 @@
     height: 100%;
 }
 
+.full-height-v {
+    height: 100vh;
+}
+
 .d-center {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/*flex styles*/
+.flex-grow-2 {
+    flex-grow: 2;
+}
+
+.flex-grow-3 {
+    flex-grow: 3;
+}
+
+.flex-grow-4 {
+    flex-grow: 4;
+}
+
+.flex-grow-5 {
+    flex-grow: 5;
+}
+
+.flex-grow-6 {
+    flex-grow: 6;
+}
+
+.flex-grow-7 {
+    flex-grow: 7;
+}
+
+.flex-grow-8 {
+    flex-grow: 8;
+}
+
+.flex-grow-9 {
+    flex-grow: 9;
+}
+
+.flex-grow-10 {
+    flex-grow: 10;
 }
 
 /*utils*/
@@ -140,11 +219,15 @@
     cursor: pointer;
 }
 
+.grabbing {
+    cursor: grabbing;
+}
+
 /*components*/
 .custom-dropdown {
     padding: 10px 20px;
     border-radius: 5px;
-    border-color: #bdc3c7;
+    border: none;
 }
 
 .custom-dropdown:focus {
@@ -166,6 +249,19 @@
     text-align: right;
 }
 
+/*page dimensions*/
+.h-50-v {
+    height: 50vh;
+}
+
+.h-75-v {
+    height: 75vh;
+}
+
+.h-100-v {
+    height: 100vh;
+}
+
 .font-bold {
     font-weight: bold;
 }
@@ -180,6 +276,29 @@
 
 .f-shippori {
     font-family: 'Shippori Antique B1', sans-serif;
+}
+
+.f-lobster {
+    font-family: 'Lobster', cursive;
+}
+
+.f-indie-flower {
+    font-family: 'Indie Flower', cursive;
+}
+
+.f-Staatliches {
+    font-family: 'Staatliches', cursive;
+}
+
+.word-break {
+    word-break: break-word;
+}
+
+/*grad-colors*/
+.light-orange-grad {
+    background-attachment: fixed;
+    background-size: cover;
+    background-image: linear-gradient(to left top, #fcffb0, #ffe69d, #ffcc96, #ffb497, #ff9f9f);
 }
 
 @media all and (max-width: 540px) {
