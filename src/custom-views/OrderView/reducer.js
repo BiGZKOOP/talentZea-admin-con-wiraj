@@ -2,9 +2,19 @@ import * as actionTypes from "./actionTypes"
 
 const init = {
     allOrder: [],
-    allOrderLoader: false,
+    allOrderLoader: true,
+
     singleOrder: {},
-    singleOrderLoader: false
+    singleOrderLoader: false,
+
+    pendingOrders: [],
+    pendingOrderLoader: false,
+
+    completeOrders: [],
+    completeOrderLoader: false,
+
+    ongoingOrders: [],
+    ongoingOrderLoader: false
 }
 
 const orderReducer = (state = init, action) => {
@@ -30,6 +40,39 @@ const orderReducer = (state = init, action) => {
                 ...state,
                 singleOrderLoader: action.payload
             }
+        case actionTypes.GET_ORDERS_BY_STATE_SUCCESS_PENDING:
+            return {
+                ...state,
+                pendingOrders: action.payload
+            }
+        case actionTypes.GET_ORDERS_BY_STATE_SUCCESS_ONGOING:
+            return {
+                ...state,
+                ongoingOrders: action.payload
+            }
+        case actionTypes.GET_ORDERS_BY_STATE_SUCCESS_COMPLETE:
+            return {
+                ...state,
+                completeOrders: action.payload
+            }
+        case actionTypes.HANDLE_PENDING_ORDER_LOADER: {
+            return {
+                ...state,
+                pendingOrderLoader: action.payload
+            }
+        }
+        case actionTypes.HANDLE_ONGOING_ORDER_LOADER: {
+            return {
+                ...state,
+                ongoingOrderLoader: action.payload
+            }
+        }
+        case actionTypes.HANDLE_COMPLETE_ORDER_LOADER: {
+            return {
+                ...state,
+                completeOrderLoader: action.payload
+            }
+        }
         default: return state
     }
 }
