@@ -60,6 +60,27 @@ export const getOrderDataByStateListen = (state) => {
     }
 }
 
+export const getOrderDataByStatePendingListen = () => {
+
+    return {
+        type: actionTypes.GET_ORDERS_BY_STATE_LISTEN_PENDING
+    }
+}
+
+export const getOrderDataByStateOngoingListen = () => {
+
+    return {
+        type: actionTypes.GET_ORDERS_BY_STATE_LISTEN_ONGOING
+    }
+}
+
+export const getOrderDataByStateCompleteListen = () => {
+
+    return {
+        type: actionTypes.GET_ORDERS_BY_STATE_LISTEN_COMPLETE
+    }
+}
+
 //Use this to transport pending order data to the reducer
 export const getOrderDataByStateSuccessPending = (data) => {
 

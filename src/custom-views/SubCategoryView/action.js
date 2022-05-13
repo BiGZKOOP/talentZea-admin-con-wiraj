@@ -112,7 +112,6 @@ export const handleUpdateSubServiceLoader = (state) => {
 
 //Use this to delete sub services
 export const deleteSubCatByIDListen = (id) => {
-    alert("reached !!")
     return {
         type: actionTypes.DELETE_SUB_CAT_LISTEN,
         payload: id
