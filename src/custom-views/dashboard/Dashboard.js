@@ -1,9 +1,26 @@
-import {Card, CardBody, CardFooter, CardHeader, Col, Row} from "reactstrap"
+import {Card, CardBody, CardFooter, CardHeader, Col, Row, Spinner} from "reactstrap"
 import ChartjsBarChart from "../../views/charts/chart-js/ChartjsBarChart"
-import AirpodsSvg from "../../assets/custom_images/svg/Airpods.svg"
-import {DollarSign} from "react-feather"
+import {useDispatch, useSelector} from "react-redux"
+import {useEffect} from "react"
+import {
+    getOrderDataByStateCompleteListen,
+    getOrderDataByStateOngoingListen,
+    getOrderDataByStatePendingListen
+} from "../OrderView/actions"
 
 const Dashboard = () => {
+    
+    // eslint-disable-next-line no-unused-vars
+    const dispatch = useDispatch()
+
+    // eslint-disable-next-line no-unused-vars
+    const {pendingOrders, pendingOrderLoader, completeOrders, completeOrderLoader, ongoingOrders, ongoingOrderLoader} = useSelector(state => state.orderReducer)
+    
+    useEffect(() => {
+        dispatch(getOrderDataByStatePendingListen())
+        dispatch(getOrderDataByStateOngoingListen())
+        dispatch(getOrderDataByStateCompleteListen())
+    }, [])
 
     return (
         <Row>
@@ -12,7 +29,9 @@ const Dashboard = () => {
                     <Card>
                         <CardHeader className="f-Londrina font-large-1 text-warning">Pending orders</CardHeader>
                         <CardBody>
-                            <p className="text-medium f-shippori text-warning">5 Orders</p>
+                            {
+                                pendingOrderLoader ? <Spinner /> : <p className="text-medium f-shippori text-warning">{pendingOrders.length} Orders</p>
+                            }
                         </CardBody>
                         <CardFooter className="d-flex justify-content-end">
                             <button className="btn btn-warning">see all</button>
@@ -21,23 +40,27 @@ const Dashboard = () => {
                 </Col>
                 <Col lg={4} className="">
                     <Card>
-                        <CardHeader className="f-Londrina font-large-1 text-success">Ongoing orders</CardHeader>
+                        <CardHeader className="f-Londrina font-large-1 text-primary">Ongoing orders</CardHeader>
                         <CardBody>
-                            <p className="text-medium f-shippori text-success">5 Orders</p>
+                            {
+                                ongoingOrderLoader ? <Spinner className="text-primary"/> : <p className="text-medium f-shippori text-primary">{ongoingOrders.length} Orders</p>
+                            }
                         </CardBody>
                         <CardFooter className="d-flex justify-content-end">
-                            <button className="btn btn-success">see all</button>
+                            <button className="btn btn-primary">see all</button>
                         </CardFooter>
                     </Card>
                 </Col>
                 <Col lg={4} className="">
                     <Card>
-                        <CardHeader className="f-Londrina font-large-1 text-primary">Customer count</CardHeader>
+                        <CardHeader className="f-Londrina font-large-1 text-success">Completed orders</CardHeader>
                         <CardBody>
-                            <p className="text-medium f-shippori text-primary">5 Orders</p>
+                            {
+                                completeOrderLoader ? <Spinner className="text-success"/> : <p className="text-medium f-shippori text-success">{completeOrders.length} Orders</p>
+                            }
                         </CardBody>
                         <CardFooter className="d-flex justify-content-end">
-                            <button className="btn btn-primary">see all</button>
+                            <button className="btn btn-success">see all</button>
                         </CardFooter>
                     </Card>
                 </Col>
