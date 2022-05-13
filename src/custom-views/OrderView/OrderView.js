@@ -1,4 +1,4 @@
-import {Card, Input, Table} from "reactstrap"
+import {Badge, Card, Input, Table} from "reactstrap"
 import {Search} from "react-feather"
 import {useHistory} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
@@ -13,6 +13,25 @@ const OrderView = () => {
     const dispatch = useDispatch()
 
     const {allOrder, allOrderLoader} = useSelector(state => state.orderReducer)
+
+    const handleOrderStateBadge = (state) => {
+        switch (state) {
+            case 0:
+                return <Badge color='light-warning' pill>
+                    Pending
+                </Badge>
+            case 1:
+                return <Badge color='light-primary' pill>
+                    On going
+                </Badge>
+            case 2:
+                return <Badge color='light-success' pill>
+                    Completed
+                </Badge>
+            default:
+                break
+        }
+    }
 
     useEffect(() => {
         if (!allOrderLoader.length > 0) dispatch(getAllOrdersListen())
@@ -36,36 +55,26 @@ const OrderView = () => {
                         <th scope="col">Customer name</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Status</th>
-                        <th scope="col" />
+                        <th scope="col"/>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <button
-                                onClick={() => history.push("/order-details/1")}
-                                className="btn btn-primary">More details</button>
-                        </td>
-                    </tr>
                     {
                         allOrder.map(e => {
                             return <tr>
                                 <th scope="row">{e?._id}</th>
                                 <td>{moment(e?.createdAt).format("MMM Do YY")}</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
+                                <td>{e?.subServiceID?.mainTopic}</td>
+                                <td>{e?.customerID?.name}</td>
+                                <td>$ {e?.amount}</td>
+                                <td>
+                                    {handleOrderStateBadge(e?.orderStatus)}
+                                </td>
                                 <td>
                                     <button
                                         onClick={() => history.push("/order-details/1")}
-                                        className="btn btn-primary">More details</button>
+                                        className="btn btn-primary">More details
+                                    </button>
                                 </td>
                             </tr>
                         })
@@ -75,7 +84,7 @@ const OrderView = () => {
             </Card>
         </div>
     } else {
-        return <CookLoader />
+        return <CookLoader/>
     }
 }
 
