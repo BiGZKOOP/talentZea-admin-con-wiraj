@@ -1,42 +1,16 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import * as actionTypes from "./actionTypes"
 import {
-    getAllOrderSuccess,
+    getAllOrderSuccess, getOrderByIDSuccess,
     getOrderDataByStateSuccessComplete,
     getOrderDataByStateSuccessOngoing,
-    getOrderDataByStateSuccessPending,
+    getOrderDataByStateSuccessPending, getOrderTimeLineByIDSuccess,
     handleGetAllOrderLoader,
     handleGetCompleteOrderLoader,
-    handleGetOngoingOrderLoader,
+    handleGetOngoingOrderLoader, handleGetOrderByIDLoader, handleGetOrderTimlineLoader,
     handleGetPendingOrderLoader
 } from "./actions"
 import axios from "../../axios/axios"
-
-export function* statusLoaderHandler(status) {
-
-    alert(status)
-
-    try {
-        switch (status) {
-            case 0:
-                yield put(handleGetPendingOrderLoader(false))
-                break
-            case 1:
-                yield put(handleGetOngoingOrderLoader(false))
-                break
-            case 2:
-                yield put(handleGetCompleteOrderLoader(false))
-                break
-            default: return
-        }
-    } catch (err) {
-        console.error(err.message)
-    }
-}
-
-//////////////////
-//COMMON FUNCTIONS
-//////////////////
 
 const getAllOrderAsync = async () => {
 
@@ -48,6 +22,20 @@ const getAllOrderAsync = async () => {
 const getOrderByStateAsync = async (state) => {
 
     return axios.get(`/order-service/order/${state}`).then(res => res).catch(err => {
+        console.error(err.message)
+    })
+}
+
+const getOrderByIDAsync = async (id) => {
+
+    return axios.get(`/order-service/${id}`).then(res => res).catch(err => {
+        console.error(err.message)
+    })
+}
+
+const getOrderTimelineByIDAsync = async (id) => {
+
+    return axios.get(`/order-log-service/${id}`).then(res => res).catch(err => {
         console.error(err.message)
     })
 }
@@ -105,12 +93,44 @@ export function* getCompleteOrderCB() {
     }
 }
 
+export function* getOrderByIDCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleGetOrderByIDLoader(true))
+        const res = yield call(getOrderByIDAsync, payload)
+        yield put(getOrderByIDSuccess(res.data))
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleGetOrderByIDLoader(false))
+    }
+}
+
+export function* getOrderTimelineByIDCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleGetOrderTimlineLoader(true))
+        const res = yield call(getOrderTimelineByIDAsync, payload)
+        yield put(getOrderTimeLineByIDSuccess(res.data))
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleGetOrderTimlineLoader(false))
+    }
+}
+
 
 function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ALL_ORDER_LISTEN, getAllOrderCB)
+    yield takeLatest(actionTypes.GET_ORDER_BY_ID_LISTEN, getOrderByIDCB)
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_PENDING, getPendingOrderCB)
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_ONGOING, getOngoingOrderCB)
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_COMPLETE, getCompleteOrderCB)
+    yield takeLatest(actionTypes.GET_ORDER_TIME_LINE_LISTEN, getOrderTimelineByIDCB)
 }
 
 const clientSagas = [watchClientSaga]
