@@ -5,16 +5,19 @@ const init = {
     allOrderLoader: true,
 
     singleOrder: {},
-    singleOrderLoader: false,
+    singleOrderLoader: true,
 
     pendingOrders: [],
-    pendingOrderLoader: false,
+    pendingOrderLoader: true,
 
     completeOrders: [],
-    completeOrderLoader: false,
+    completeOrderLoader: true,
 
     ongoingOrders: [],
-    ongoingOrderLoader: false
+    ongoingOrderLoader: true,
+
+    timeLineData: [],
+    timeLineLoader: true
 }
 
 const orderReducer = (state = init, action) => {
@@ -71,6 +74,18 @@ const orderReducer = (state = init, action) => {
             return {
                 ...state,
                 completeOrderLoader: action.payload
+            }
+        }
+        case actionTypes.GET_ORDER_TIME_LINE_SUCCESS: {
+            return {
+                ...state,
+                timeLineData: action.payload
+            }
+        }
+        case actionTypes.HANDLE_ORDER_TIME_LINE_LOADER: {
+            return {
+                ...state,
+                timeLineLoader: action.payload
             }
         }
         default: return state

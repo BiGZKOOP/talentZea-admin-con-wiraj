@@ -72,7 +72,7 @@ const OrderView = () => {
                                 </td>
                                 <td>
                                     <button
-                                        onClick={() => history.push("/order-details/1")}
+                                        onClick={() => history.push(`/order-details/${e._id}`)}
                                         className="btn btn-primary">More details
                                     </button>
                                 </td>

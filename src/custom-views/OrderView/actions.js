@@ -26,7 +26,7 @@ export const handleGetAllOrderLoader = (state) => {
 }
 
 //Use this to handle get order by ID
-export const getAllOrderByIDListen = (id) => {
+export const getOrderByIDListen = (id) => {
 
     return {
         type: actionTypes.GET_ORDER_BY_ID_LISTEN,
@@ -34,7 +34,7 @@ export const getAllOrderByIDListen = (id) => {
     }
 }
 
-export const getAllOrderByIDSuccess = (data) => {
+export const getOrderByIDSuccess = (data) => {
 
     return {
         type: actionTypes.GET_ORDER_BY_ID_SUCCESS,
@@ -43,7 +43,7 @@ export const getAllOrderByIDSuccess = (data) => {
 }
 
 //Use this to handle get order by id loader
-export const handleGetOrderByLoader = (state) => {
+export const handleGetOrderByIDLoader = (state) => {
 
     return {
         type: actionTypes.HANDLE_GET_ORDER_BY_ID_LOADER,
@@ -131,6 +131,32 @@ export const handleGetCompleteOrderLoader = (state) => {
 
     return {
         type: actionTypes.HANDLE_COMPLETE_ORDER_LOADER,
+        payload: state
+    }
+}
+
+//Use this to get order time line data by given ID
+export const getOrderTimeLineByIDListen = (id) => {
+
+    return {
+        type: actionTypes.GET_ORDER_TIME_LINE_LISTEN,
+        payload: id
+    }
+}
+
+export const getOrderTimeLineByIDSuccess = (data) => {
+
+    return  {
+        type: actionTypes.GET_ORDER_TIME_LINE_SUCCESS,
+        payload: data
+    }
+}
+
+//Use this to handle the order timeline loader
+export const handleGetOrderTimlineLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_ORDER_TIME_LINE_LOADER,
         payload: state
     }
 }
