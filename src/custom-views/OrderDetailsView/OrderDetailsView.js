@@ -81,7 +81,6 @@ const OrderDetailsView = () => {
 
     const cookTimeLineData = () => {
 
-        // eslint-disable-next-line no-unused-vars
         const timeLineArr = []
 
         timeLineData.map(e => {
@@ -89,37 +88,6 @@ const OrderDetailsView = () => {
         })
 
         return timeLineArr
-
-        return [
-            {
-                title: 'User login',
-                content: 'User login at 2:12pm',
-                meta: '12 mins ago'
-            },
-            {
-                title: 'Meeting with john',
-                content: 'React Project meeting with john @10:15am',
-                meta: '45 mins ago',
-                color: 'warning',
-                customContent: (
-                    <div className='d-flex align-items-center mb-50'>
-                        <Avatar
-                            img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUeriYGQjOOecu23m2gqPoc1_Dz5Phrr4uKWwNMnwyQxUYDgCUqOHiwv0Jph1MU5Kzf0g&usqp=CAU"
-                            imgHeight={38} imgWidth={38}/>
-                        <div className='ms-50'>
-                            <h6 className='mb-0'>Leonains (Client)</h6>
-                            <span>CEO of Pixinvent</span>
-                        </div>
-                    </div>
-                )
-            },
-            {
-                title: 'Create a new react project for client',
-                content: 'Add files to new design folder',
-                meta: '2 days ago',
-                color: 'info'
-            }
-        ]
     }
 
     useEffect(() => {
@@ -199,7 +167,7 @@ const OrderDetailsView = () => {
                     </div>
                 </CardBody>
             </Card>
-            <Row>
+            <Row className="mt-2">
                 <Col sm={12} lg={7}>
                     <div className="mb-2">
                         <h3>Order Timeline</h3>
