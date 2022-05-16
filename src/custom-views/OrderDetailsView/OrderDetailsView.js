@@ -4,10 +4,11 @@ import Timeline from "../../@core/components/timeline"
 import Avatar from "../../@core/components/avatar"
 import {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {getOrderByIDListen, getOrderTimeLineByIDListen} from "../OrderView/actions"
+import {getOrderByIDListen, getOrderTimeLineByIDListen, updateOrderStateListen} from "../OrderView/actions"
 import CookingLoader from "../../custom-components/CookingLoader"
 import moment from "moment"
 import ReviewCard from "../../custom-components/orderView/ReviewCard"
+import Swal from "sweetalert2"
 
 const OrderDetailsView = () => {
 
@@ -28,6 +29,21 @@ const OrderDetailsView = () => {
                 return "success"
             case -1:
                 return "danger"
+            default:
+                return "dark"
+        }
+    }
+
+    const handleStatusMessage = (num) => {
+        switch (num) {
+            case 0:
+                return "Pending"
+            case 1:
+                return "On going"
+            case 2:
+                return "Complete"
+            case -1:
+                return "Canceled"
             default:
                 return "dark"
         }
@@ -75,7 +91,8 @@ const OrderDetailsView = () => {
                     meta: moment(orderLog?.createdAt).format("LL"),
                     color: 'danger'
                 }
-            default: break
+            default:
+                break
         }
     }
 
@@ -88,6 +105,22 @@ const OrderDetailsView = () => {
         })
 
         return timeLineArr
+    }
+
+    const updateState = (id, state) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are going to change the order status",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Status will be updated in a moment !!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(updateOrderStateListen({id, state}))
+            }
+        })
     }
 
     useEffect(() => {
@@ -151,7 +184,7 @@ const OrderDetailsView = () => {
                                 </li>
                             }
                             {
-                               parseInt(singleOrder?.expressDelivery?.price) > 0 && <li className="text-medium">
+                                parseInt(singleOrder?.expressDelivery?.price) > 0 && <li className="text-medium">
                                     <div className="w-100 d-flex justify-content-between">
                                         <div>
                                             Express delivery - <span
@@ -174,7 +207,7 @@ const OrderDetailsView = () => {
                     </div>
                     <Card className="mb-5 p-2 bg-semi-dark d-flex">
                         {
-                            !timeLineLoader ? <Timeline data={cookTimeLineData()}/> : <Spinner />
+                            !timeLineLoader ? <Timeline data={cookTimeLineData()}/> : <Spinner/>
                         }
                     </Card>
                 </Col>
@@ -185,27 +218,35 @@ const OrderDetailsView = () => {
                                 <div
                                     className={`bg-${handleStatusPointer(singleOrder?.orderStatus)} full-round mr-1 p-0`}
                                     style={{width: "15px", height: "15px"}}/>
-                                <h1 className={`text-${handleStatusPointer(singleOrder?.orderStatus)}`}>Pending</h1>
+                                <h1 className={`text-${handleStatusPointer(singleOrder?.orderStatus)}`}>{handleStatusMessage(singleOrder?.orderStatus)}</h1>
                             </div>
-                            <div className="mt-2">
-                                <button className={`btn btn-${handleStatusPointer(singleOrder?.orderStatus)}`}>NEXT
+                            <div className="mt-2 d-flex">
+                                <button
+                                    onClick={() => updateState(singleOrder._id, singleOrder.orderStatus)}
+                                    className={`btn btn-danger mr-2`}>Prev.
                                     STATE
                                 </button>
+                                <button
+                                    onClick={() => updateState(singleOrder._id, singleOrder.orderStatus + 1)}
+                                    className={`btn btn-${handleStatusPointer(singleOrder?.orderStatus)}`}>NEXT
+                                    STATE
+                                </button>
+
                             </div>
                         </Card>
                     </div>
                 </Col>
             </Row>
-            <Row>
-                <div className="p-1">
-                    <h1 className="font-large-1 f-Staatliches p-0">What customer think about the order ?</h1>
-                </div>
-                <div className="w-100 d-flex flex-wrap">
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                </div>
-            </Row>
+            {/*<Row>*/}
+            {/*    <div className="p-1">*/}
+            {/*        <h1 className="font-large-1 f-Staatliches p-0">What customer think about the order ?</h1>*/}
+            {/*    </div>*/}
+            {/*    <div className="w-100 d-flex flex-wrap">*/}
+            {/*        <ReviewCard/>*/}
+            {/*        <ReviewCard/>*/}
+            {/*        <ReviewCard/>*/}
+            {/*    </div>*/}
+            {/*</Row>*/}
         </div>
     } else {
         return <CookingLoader/>
