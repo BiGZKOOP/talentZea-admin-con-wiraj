@@ -17,7 +17,9 @@ const init = {
     ongoingOrderLoader: true,
 
     timeLineData: [],
-    timeLineLoader: true
+    timeLineLoader: true,
+
+    updateOrderStateLoader: false
 }
 
 const orderReducer = (state = init, action) => {
@@ -86,6 +88,12 @@ const orderReducer = (state = init, action) => {
             return {
                 ...state,
                 timeLineLoader: action.payload
+            }
+        }
+        case actionTypes.HANDLE_UPDATE_ORDER_STATE_LOADER: {
+            return {
+                ...state,
+                updateOrderStateLoader: action.payload
             }
         }
         default: return state

@@ -103,7 +103,7 @@ export const handleGetPendingOrderLoader = (state) => {
 export const getOrderDataByStateSuccessOngoing = (data) => {
 
     return {
-        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_PENDING,
+        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_ONGOING,
         payload: data
     }
 }
@@ -121,7 +121,7 @@ export const handleGetOngoingOrderLoader = (state) => {
 export const getOrderDataByStateSuccessComplete = (data) => {
 
     return {
-        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_PENDING,
+        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_COMPLETE,
         payload: data
     }
 }
@@ -157,6 +157,31 @@ export const handleGetOrderTimlineLoader = (state) => {
 
     return {
         type: actionTypes.HANDLE_ORDER_TIME_LINE_LOADER,
+        payload: state
+    }
+}
+
+//Use this to update the order state
+export const updateOrderStateListen = (data) => {
+
+    return {
+        type: actionTypes.UPDATE_ORDER_STATE_LISTEN,
+        payload: data
+    }
+}
+
+export const updateOrderStateSuccess = () => {
+
+    return {
+        type: actionTypes.UPDATE_ORDER_STATE_SUCCESS
+    }
+}
+
+//Use this to handle update order state loader
+export const handleUpdateOrderStateLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_UPDATE_ORDER_STATE_LOADER,
         payload: state
     }
 }

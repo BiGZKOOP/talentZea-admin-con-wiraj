@@ -1,16 +1,18 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import * as actionTypes from "./actionTypes"
 import {
-    getAllOrderSuccess, getOrderByIDSuccess,
+    getAllOrderSuccess, getOrderByIDListen, getOrderByIDSuccess,
     getOrderDataByStateSuccessComplete,
     getOrderDataByStateSuccessOngoing,
     getOrderDataByStateSuccessPending, getOrderTimeLineByIDSuccess,
     handleGetAllOrderLoader,
     handleGetCompleteOrderLoader,
     handleGetOngoingOrderLoader, handleGetOrderByIDLoader, handleGetOrderTimlineLoader,
-    handleGetPendingOrderLoader
+    handleGetPendingOrderLoader, handleUpdateOrderStateLoader
 } from "./actions"
 import axios from "../../axios/axios"
+import {UPDATE_ORDER_STATE_LISTEN} from "./actionTypes"
+import {fireAlertError, fireAlertSuccess} from "../../utility/customUtils"
 
 const getAllOrderAsync = async () => {
 
@@ -40,6 +42,17 @@ const getOrderTimelineByIDAsync = async (id) => {
     })
 }
 
+const updateOrderStateAsync = async (id, state) => {
+
+    return axios.patch(`/order-service/orders/${id}?status=${state}`).then(res => {
+        fireAlertSuccess("Status updated", "Order status updated !")
+        return res
+    }).catch(err => {
+        console.log(err)
+        fireAlertError("Invalid status update", "You can't update the status to that state")
+        console.error(err.message)
+    })
+}
 ////////////////
 //ASYNC FINISHED
 ////////////////
@@ -123,6 +136,21 @@ export function* getOrderTimelineByIDCB(action) {
     }
 }
 
+export function* updateOrderStateCB(action) {
+
+    const {id, state} = action.payload
+
+    try {
+        yield put(handleUpdateOrderStateLoader(true))
+        yield call(updateOrderStateAsync, id, state)
+        yield put(getOrderByIDListen(id))
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleUpdateOrderStateLoader(true))
+    }
+}
+
 
 function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ALL_ORDER_LISTEN, getAllOrderCB)
@@ -131,6 +159,7 @@ function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_ONGOING, getOngoingOrderCB)
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_COMPLETE, getCompleteOrderCB)
     yield takeLatest(actionTypes.GET_ORDER_TIME_LINE_LISTEN, getOrderTimelineByIDCB)
+    yield takeLatest(actionTypes.UPDATE_ORDER_STATE_LISTEN, updateOrderStateCB)
 }
 
 const clientSagas = [watchClientSaga]
