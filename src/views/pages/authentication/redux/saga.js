@@ -51,7 +51,6 @@ export function* signoutCB(action) {
 }
 
 export function* testCB() {
-        alert("reached !!!")
     try {
     } catch (e) {
         console.error(e)
