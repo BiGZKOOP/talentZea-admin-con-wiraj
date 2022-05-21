@@ -103,7 +103,7 @@ export const handleGetPendingOrderLoader = (state) => {
 export const getOrderDataByStateSuccessOngoing = (data) => {
 
     return {
-        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_PENDING,
+        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_ONGOING,
         payload: data
     }
 }
@@ -121,7 +121,7 @@ export const handleGetOngoingOrderLoader = (state) => {
 export const getOrderDataByStateSuccessComplete = (data) => {
 
     return {
-        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_PENDING,
+        type: actionTypes.GET_ORDERS_BY_STATE_SUCCESS_COMPLETE,
         payload: data
     }
 }
