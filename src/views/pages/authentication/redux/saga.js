@@ -34,7 +34,6 @@ export function* loginUserCB(action) {
 
     const {data, history} = action
     try {
-        alert(process.env.REACT_APP_ADMIN_PW)
         if (process.env.REACT_APP_ADMIN_PW === data.password && process.env.REACT_APP_ADMIN_USERNAME === data.email) {
             window.localStorage.setItem("user", "logged")
             history.push("/dashboard")
