@@ -1,9 +1,10 @@
 import * as actionTypes from './constants'
 // eslint-disable-next-line no-unused-vars
 import {takeLatest, call} from "redux-saga/effects"
-import {fireAlertCustom} from "../../../../utility/customUtils"
+import {fireAlertCustom, fireAlertError} from "../../../../utility/customUtils"
 import {Auth} from "aws-amplify"
 
+// eslint-disable-next-line no-unused-vars
 const loginAsync = async (username, password) => {
 
     return await Auth.signIn(username, password).then(() => {
@@ -15,6 +16,7 @@ const loginAsync = async (username, password) => {
 }
 
 
+// eslint-disable-next-line no-unused-vars
 const signoutUserAsync = async (history) => {
 
     return await Auth.signOut().then(() => {
@@ -32,19 +34,26 @@ export function* loginUserCB(action) {
 
     const {data, history} = action
     try {
-        yield call(loginAsync, data.email, data.password)
-        history.push("/dashboard")
+        alert(process.env.REACT_APP_ADMIN_PW)
+        if (process.env.REACT_APP_ADMIN_PW === data.password && process.env.REACT_APP_ADMIN_USERNAME === data.email) {
+            window.localStorage.setItem("user", "logged")
+            history.push("/dashboard")
+        } else {
+            fireAlertError("Oops !", "User credentials are wrong.")
+        }
+        // yield call(loginAsync, data.email, data.password)
     } catch (e) {
         console.error(e)
     }
 }
 
 export function* signoutCB(action) {
-    alert("asdasdasd")
     const {history} = action
 
     try {
-        yield call(signoutUserAsync, history)
+        localStorage.remove("user")
+        history.push("/login")
+        // yield call(signoutUserAsync, history)
     } catch (err) {
         console.error(err.message)
     }
