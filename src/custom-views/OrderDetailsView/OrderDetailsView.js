@@ -221,17 +221,20 @@ const OrderDetailsView = () => {
                                 <h1 className={`text-${handleStatusPointer(singleOrder?.orderStatus)}`}>{handleStatusMessage(singleOrder?.orderStatus)}</h1>
                             </div>
                             <div className="mt-2 d-flex">
-                                <button
-                                    onClick={() => updateState(singleOrder._id, singleOrder.orderStatus)}
-                                    className={`btn btn-danger mr-2`}>Prev.
-                                    STATE
-                                </button>
-                                <button
-                                    onClick={() => updateState(singleOrder._id, singleOrder.orderStatus + 1)}
-                                    className={`btn btn-${handleStatusPointer(singleOrder?.orderStatus)}`}>NEXT
-                                    STATE
-                                </button>
-
+                                {
+                                    (singleOrder.orderStatus !== 0 && singleOrder.orderStatus !== -1) && <button
+                                        onClick={() => updateState(singleOrder._id, singleOrder.orderStatus)}
+                                        className={`btn btn-danger mr-2`}>Prev.
+                                        STATE
+                                    </button>
+                                }
+                                {
+                                    (singleOrder.orderStatus !== 2 && singleOrder.orderStatus !== -1) && <button
+                                        onClick={() => updateState(singleOrder._id, singleOrder.orderStatus + 1)}
+                                        className={`btn btn-${handleStatusPointer(singleOrder?.orderStatus)}`}>NEXT
+                                        STATE
+                                    </button>
+                                }
                             </div>
                         </Card>
                     </div>
