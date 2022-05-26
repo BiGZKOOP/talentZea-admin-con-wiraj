@@ -15,8 +15,8 @@ const SubCatCard = ({data}) => {
     const getImageArray = () => {
 
         if (data?.image) {
-            const {image1, image2, image3} = data?.image
-            return [image1, image2, image3]
+            const {image1, image2, image3, image4, image5, image6, image7, image8, image9, image10} = data?.image
+            return [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10]
         }
     }
 
@@ -24,6 +24,8 @@ const SubCatCard = ({data}) => {
         if (!subCatDeleteLoading) dispatch(deleteSubCatByIDListen(data._id))
         else fireAlertError("Oops", "Your previous delete request is still pending !!!")
     }
+
+    console.log(data)
 
     return <Card className="mr-2 scalable" style={{width: "31%"}}>
         <CardHeader>
