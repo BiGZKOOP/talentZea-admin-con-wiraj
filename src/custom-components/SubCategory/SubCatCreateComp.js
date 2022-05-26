@@ -67,6 +67,13 @@ const SubCatCreateComp = ({data}) => {
             image1,
             image2,
             image3,
+            image4,
+            image5,
+            image6,
+            image7,
+            image8,
+            image9,
+            image10,
             revisions,
             sourceFiles,
             expressDelivery
@@ -151,12 +158,19 @@ const SubCatCreateComp = ({data}) => {
         }
     })
 
+    const harvestBinaryData = (object) => {
+        const binaryData = []
+        console.log(object)
+        binaryData.push(object)
+        return binaryData
+    }
+
     const handleImage1 = () => {
 
         if (image1) {
             return <Label htmlFor="image1">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image1)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image1), {type: "application/zip"}))}/>
             </Label>
         } else {
             return <Label htmlFor="image1">
@@ -173,7 +187,7 @@ const SubCatCreateComp = ({data}) => {
         if (image2) {
             return <Label htmlFor="image2">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image2)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image2)))}/>
             </Label>
         } else {
             return <Label htmlFor="image2">
@@ -190,7 +204,7 @@ const SubCatCreateComp = ({data}) => {
         if (image3) {
             return <Label htmlFor="image3">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image3)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image3)))}/>
             </Label>
         } else {
             return <Label htmlFor="image3">
@@ -207,7 +221,7 @@ const SubCatCreateComp = ({data}) => {
         if (image4) {
             return <Label htmlFor="image4">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image4)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image4)))}/>
             </Label>
         } else {
             return <Label htmlFor="image4">
@@ -224,7 +238,7 @@ const SubCatCreateComp = ({data}) => {
         if (image5) {
             return <Label htmlFor="image5">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image5)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image5)))}/>
             </Label>
         } else {
             return <Label htmlFor="image5">
@@ -241,7 +255,7 @@ const SubCatCreateComp = ({data}) => {
         if (image6) {
             return <Label htmlFor="image6">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image6)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image6)))}/>
             </Label>
         } else {
             return <Label htmlFor="image6">
@@ -255,10 +269,10 @@ const SubCatCreateComp = ({data}) => {
 
     const handleImage7 = () => {
 
-        if (image6) {
+        if (image7) {
             return <Label htmlFor="image7">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image7)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image7)))}/>
             </Label>
         } else {
             return <Label htmlFor="image7">
@@ -275,7 +289,7 @@ const SubCatCreateComp = ({data}) => {
         if (image8) {
             return <Label htmlFor="image8">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image8)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image8)))}/>
             </Label>
         } else {
             return <Label htmlFor="image8">
@@ -292,7 +306,7 @@ const SubCatCreateComp = ({data}) => {
         if (image9) {
             return <Label htmlFor="image9">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image9)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image9)))}/>
             </Label>
         } else {
             return <Label htmlFor="image9">
@@ -309,7 +323,7 @@ const SubCatCreateComp = ({data}) => {
         if (image10) {
             return <Label htmlFor="image10">
                 <img width="250px" height="200px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image10)}/>
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image10)))}/>
             </Label>
         } else {
             return <Label htmlFor="image10">
