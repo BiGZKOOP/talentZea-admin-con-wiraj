@@ -25,6 +25,13 @@ const SubCatCreateComp = ({data}) => {
     const [image1, setImage1] = useState()
     const [image2, setImage2] = useState()
     const [image3, setImage3] = useState()
+    const [image4, setImage4] = useState()
+    const [image5, setImage5] = useState()
+    const [image6, setImage6] = useState()
+    const [image7, setImage7] = useState()
+    const [image8, setImage8] = useState()
+    const [image9, setImage9] = useState()
+    const [image10, setImage10] = useState()
 
 //Extras states
     const [revisions, setRevisions] = useState({
@@ -60,6 +67,13 @@ const SubCatCreateComp = ({data}) => {
             image1,
             image2,
             image3,
+            image4,
+            image5,
+            image6,
+            image7,
+            image8,
+            image9,
+            image10,
             revisions,
             sourceFiles,
             expressDelivery
@@ -144,12 +158,19 @@ const SubCatCreateComp = ({data}) => {
         }
     })
 
+    const harvestBinaryData = (object) => {
+        const binaryData = []
+        console.log(object)
+        binaryData.push(object)
+        return binaryData
+    }
+
     const handleImage1 = () => {
 
         if (image1) {
             return <Label htmlFor="image1">
-                <img width="350px" height="300px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image1)}/>
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image1), {type: "application/zip"}))}/>
             </Label>
         } else {
             return <Label htmlFor="image1">
@@ -165,8 +186,8 @@ const SubCatCreateComp = ({data}) => {
 
         if (image2) {
             return <Label htmlFor="image2">
-                <img width="350px" height="300px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image2)}/>
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image2)))}/>
             </Label>
         } else {
             return <Label htmlFor="image2">
@@ -182,14 +203,133 @@ const SubCatCreateComp = ({data}) => {
 
         if (image3) {
             return <Label htmlFor="image3">
-                <img width="350px" height="300px" className="object-fit scalable radius-10"
-                     src={URL.createObjectURL(image3)}/>
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image3)))}/>
             </Label>
         } else {
             return <Label htmlFor="image3">
                 <div className="main-cat-upload-card d-center flex-column">
                     <Upload size={50}/>
                     <p className="text-small mt-1">Upload image 3</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage4 = () => {
+
+        if (image4) {
+            return <Label htmlFor="image4">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image4)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image4">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 4</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage5 = () => {
+
+        if (image5) {
+            return <Label htmlFor="image5">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image5)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image5">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 5</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage6 = () => {
+
+        if (image6) {
+            return <Label htmlFor="image6">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image6)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image6">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 6</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage7 = () => {
+
+        if (image7) {
+            return <Label htmlFor="image7">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image7)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image7">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 7</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage8 = () => {
+
+        if (image8) {
+            return <Label htmlFor="image8">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image8)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image8">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 8</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage9 = () => {
+
+        if (image9) {
+            return <Label htmlFor="image9">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image9)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image9">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 9</p>
+                </div>
+            </Label>
+        }
+    }
+
+    const handleImage10 = () => {
+
+        if (image10) {
+            return <Label htmlFor="image10">
+                <img width="250px" height="200px" className="object-fit scalable radius-10"
+                     src={URL.createObjectURL(new Blob(harvestBinaryData(image10)))}/>
+            </Label>
+        } else {
+            return <Label htmlFor="image10">
+                <div className="main-cat-upload-card d-center flex-column">
+                    <Upload size={50}/>
+                    <p className="text-small mt-1">Upload image 10</p>
                 </div>
             </Label>
         }
@@ -604,18 +744,46 @@ const SubCatCreateComp = ({data}) => {
                     <h1 className="m-0 p-0 text-light f-Staatliches">Add Images</h1>
                 </CardHeader>
                 <CardBody className="mt-5">
-                    <div className="d-flex justify-content-between">
-                        <div>
+                    <div className="d-flex flex-wrap d-center">
+                        <div className="mt-2 mr-1">
                             {handleImage1()}
                             <input onChange={(e) => setImage1(e.target.files[0])} type="file" id="image1" hidden/>
                         </div>
-                        <div>
+                        <div className="mt-2 mr-1">
                             {handleImage2()}
                             <input onChange={(e) => setImage2(e.target.files[0])} type="file" id="image2" hidden/>
                         </div>
-                        <div>
+                        <div className="mt-2 mr-1">
                             {handleImage3()}
                             <input onChange={(e) => setImage3(e.target.files[0])} type="file" id="image3" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage4()}
+                            <input onChange={(e) => setImage4(e.target.files[0])} type="file" id="image4" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage5()}
+                            <input onChange={(e) => setImage5(e.target.files[0])} type="file" id="image5" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage6()}
+                            <input onChange={(e) => setImage6(e.target.files[0])} type="file" id="image6" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage7()}
+                            <input onChange={(e) => setImage7(e.target.files[0])} type="file" id="image7" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage8()}
+                            <input onChange={(e) => setImage8(e.target.files[0])} type="file" id="image8" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage9()}
+                            <input onChange={(e) => setImage9(e.target.files[0])} type="file" id="image9" hidden/>
+                        </div>
+                        <div className="mt-2 mr-1">
+                            {handleImage10()}
+                            <input onChange={(e) => setImage10(e.target.files[0])} type="file" id="image10" hidden/>
                         </div>
                     </div>
                 </CardBody>
