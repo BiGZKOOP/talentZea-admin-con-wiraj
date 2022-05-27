@@ -22,7 +22,9 @@ const init = {
     updateOrderStateLoader: false,
 
     sourceFiles: [],
-    sourceFilesLoader: true
+    sourceFilesLoader: true,
+
+    createSourceFileLoader: false
 }
 
 const orderReducer = (state = init, action) => {
@@ -109,6 +111,11 @@ const orderReducer = (state = init, action) => {
             return {
                 ...state,
                 sourceFilesLoader: action.payload
+            }
+        case actionTypes.HANDLE_CREATE_ORDER_SOURCE_FILES_LOADER:
+            return {
+                ...state,
+                createSourceFileLoader: action.payload
             }
         default: return state
     }

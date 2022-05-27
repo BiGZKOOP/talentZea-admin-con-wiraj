@@ -5,7 +5,7 @@ import {
     getAllOrderSuccess, getOrderByIDListen, getOrderByIDSuccess,
     getOrderDataByStateSuccessComplete,
     getOrderDataByStateSuccessOngoing,
-    getOrderDataByStateSuccessPending, getOrderTimeLineByIDSuccess,
+    getOrderDataByStateSuccessPending, getOrderTimeLineByIDSuccess, handleCreateOrderSourceFilesLoader,
     handleGetAllOrderLoader, handleGetAllOrderSourceFilesLoader,
     handleGetCompleteOrderLoader,
     handleGetOngoingOrderLoader, handleGetOrderByIDLoader, handleGetOrderTimlineLoader,
@@ -58,6 +58,18 @@ const updateOrderStateAsync = async (id, state) => {
 const getAllOrderSourceFileAsync = async (id) => {
 
     return axios.get(`/source-file/file/${id}`, {
+        headers: {
+            'content-type': 'application/form-data',
+            Authorization: `Bearer ${await getIDToken()}`
+        }
+    }).then(res => res).catch(err => {
+        fireAlertError("Oops !", err.message)
+    })
+}
+
+const createOrderSourceFileAsync = async (data) => {
+
+    return axios.post(`/source-file`, data, {
         headers: {
             'content-type': 'application/form-data',
             Authorization: `Bearer ${await getIDToken()}`
@@ -179,6 +191,20 @@ export function* getAllOrderSourceFilesCB(action) {
     }
 }
 
+export function* createOrderSourceFilesCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleCreateOrderSourceFilesLoader(true))
+        yield call(createOrderSourceFileAsync, payload)
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleCreateOrderSourceFilesLoader(true))
+    }
+}
+
 
 function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ALL_ORDER_LISTEN, getAllOrderCB)
@@ -189,6 +215,7 @@ function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ORDER_TIME_LINE_LISTEN, getOrderTimelineByIDCB)
     yield takeLatest(actionTypes.UPDATE_ORDER_STATE_LISTEN, updateOrderStateCB)
     yield takeLatest(actionTypes.GET_ORDER_SOURCE_FILES_LISTEN, getAllOrderSourceFilesCB)
+    yield takeLatest(actionTypes.CREATE_ORDER_SOURCE_FILES_LISTEN, createOrderSourceFilesCB)
 }
 
 const clientSagas = [watchClientSaga]

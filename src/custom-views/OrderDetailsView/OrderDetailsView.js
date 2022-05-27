@@ -1,8 +1,7 @@
-import {Card, CardBody, CardHeader, Col, Row, Spinner} from "reactstrap"
+import {Card, CardBody, CardHeader, Col, Modal, ModalBody, ModalHeader, Row, Spinner} from "reactstrap"
 import Timeline from "../../@core/components/timeline"
-// import {time_linedata} from "./consts"
 import Avatar from "../../@core/components/avatar"
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {
     getAllOrderSourceFilesListen,
@@ -12,8 +11,11 @@ import {
 } from "../OrderView/actions"
 import CookingLoader from "../../custom-components/CookingLoader"
 import moment from "moment"
-import ReviewCard from "../../custom-components/orderView/ReviewCard"
 import Swal from "sweetalert2"
+import SourceFileCard from "../../custom-components/orderDetailsView/SourceFileCard"
+import {Link, Upload} from "react-feather"
+import {useFormik} from "formik"
+import {fireAlertError} from "../../utility/customUtils"
 
 const OrderDetailsView = () => {
 
@@ -22,7 +24,17 @@ const OrderDetailsView = () => {
 
     const dispatch = useDispatch()
 
-    const {singleOrder, singleOrderLoader, timeLineData, timeLineLoader} = useSelector(state => state.orderReducer)
+    // eslint-disable-next-line no-unused-vars
+    const {
+        singleOrder,
+        singleOrderLoader,
+        timeLineData,
+        timeLineLoader,
+        sourceFiles,
+        sourceFilesLoader
+    } = useSelector(state => state.orderReducer)
+
+    const [show, setShow] = useState(false)
 
     const handleStatusPointer = (num) => {
         switch (num) {
@@ -53,6 +65,34 @@ const OrderDetailsView = () => {
                 return "dark"
         }
     }
+
+    const validate = (values) => {
+        if (!values.link) {
+            fireAlertError("Oops !", "You must add a link")
+            return
+        }
+
+        if (!values.title) {
+            fireAlertError("Oops !", "You must add a title")
+            return
+        }
+        
+        if (!values.description) {
+            fireAlertError("Oops !", "You must add a description")
+        }
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const formik = useFormik({
+        initialValues: {
+            link: "",
+            title: "",
+            description: ""
+        },
+        onSubmit: values => {
+            validate(values)
+        }
+    })
 
     const timelineMsgHandler = (orderLog) => {
 
@@ -128,6 +168,10 @@ const OrderDetailsView = () => {
         })
     }
 
+    const directToImageService = () => {
+        window.open("https://trainbit.com/files/", "_blank")
+    }
+
     useEffect(() => {
         dispatch(getOrderByIDListen(id))
         dispatch(getOrderTimeLineByIDListen(id))
@@ -135,6 +179,7 @@ const OrderDetailsView = () => {
 
     //Use this effect to get the source files
     useEffect(() => {
+        console.log(sourceFiles)
         dispatch(getAllOrderSourceFilesListen(singleOrder._id))
     }, [singleOrder])
 
@@ -213,7 +258,7 @@ const OrderDetailsView = () => {
             <Row className="mt-5">
                 <Col sm={12} lg={7}>
                     <div className="mb-2">
-                        <h3>Order Timeline</h3>
+                        <h1 className="f-Staatliches">Order Timeline</h1>
                     </div>
                     <Card className="mb-5 p-2 bg-semi-dark d-flex">
                         {
@@ -251,10 +296,49 @@ const OrderDetailsView = () => {
                 </Col>
             </Row>
             <Row>
-                <div>
-                    <h3>Source files</h3>
+                <div className="d-flex align-items-baseline mb-2">
+                    <h1 className="f-Staatliches">Source files</h1>
+                    <div>
+                        <button
+                            onClick={directToImageService}
+                            className="btn btn-gradient-primary ml-2"><Link /> To image service</button>
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => setShow(!show)}
+                            className="btn btn-gradient-success ml-2"><Upload/> Upload a file</button>
+                    </div>
                 </div>
+                {
+                    !sourceFilesLoader ? <div className="w-100 d-center flex-column animate__animated animate__bounce mt-2">
+                            <Spinner className="text-primary"/>
+                            <p className="text-small text-primary f-courgette mt-1">cooking data...</p>
+                        </div> : sourceFiles.length > 0 ? <Row className="mt-1 d-flex flex-wrap">
+                            {
+                                sourceFiles.map((e, index) => {
+                                    return <SourceFileCard key={index} data={e}/>
+                                })
+                            }
+                        </Row> : <div className="w-100 d-center mt-2">
+                            <h3 className="f-courgette text-danger">No source files shared yet !</h3>
+                        </div>
+                }
             </Row>
+            {/*//////////////////////*/}
+            {/*Modal starts form here*/}
+            {/*//////////////////////*/}
+            <Modal isOpen={show} toggle={() => setShow(!show)}
+                   className='modal-dialog-centered modal-lg'>
+                <ModalHeader className='bg-primary' toggle={() => setShow(!show)}>
+                    <h1 className="text-light f-Staatliches">Upload your file</h1>
+                </ModalHeader>
+                <ModalBody className='px-sm-5 mx-50 pb-4'>
+
+                </ModalBody>
+            </Modal>
+            {/*//////////////////////*/}
+            {/*Modal ended*/}
+            {/*//////////////////////*/}
             {/*<Row>*/}
             {/*    <div className="p-1">*/}
             {/*        <h1 className="font-large-1 f-Staatliches p-0">What customer think about the order ?</h1>*/}
