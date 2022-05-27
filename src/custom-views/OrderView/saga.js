@@ -1,6 +1,7 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import * as actionTypes from "./actionTypes"
 import {
+    getAllOrderSourceFilesListen,
     getAllOrderSourceFilesSuccess,
     getAllOrderSuccess, getOrderByIDListen, getOrderByIDSuccess,
     getOrderDataByStateSuccessComplete,
@@ -69,12 +70,10 @@ const getAllOrderSourceFileAsync = async (id) => {
 
 const createOrderSourceFileAsync = async (data) => {
 
-    return axios.post(`/source-file`, data, {
-        headers: {
-            'content-type': 'application/form-data',
-            Authorization: `Bearer ${await getIDToken()}`
-        }
-    }).then(res => res).catch(err => {
+    return axios.post(`/source-file`, data).then(res => {
+        fireAlertSuccess("Sent", "Your file sent to the client !")
+        return res
+    }).catch(err => {
         fireAlertError("Oops !", err.message)
     })
 }
@@ -187,21 +186,21 @@ export function* getAllOrderSourceFilesCB(action) {
     } catch (err) {
         console.error(err.message)
     } finally {
-        yield put(handleGetAllOrderSourceFilesLoader(true))
+        yield put(handleGetAllOrderSourceFilesLoader(false))
     }
 }
 
 export function* createOrderSourceFilesCB(action) {
 
     const {payload} = action
-
     try {
         yield put(handleCreateOrderSourceFilesLoader(true))
         yield call(createOrderSourceFileAsync, payload)
+        yield put(getAllOrderSourceFilesListen(payload.orderID))
     } catch (err) {
         console.error(err.message)
     } finally {
-        yield put(handleCreateOrderSourceFilesLoader(true))
+        yield put(handleCreateOrderSourceFilesLoader(false))
     }
 }
 

@@ -1,9 +1,23 @@
-import {Card, CardBody, CardHeader, Col, Modal, ModalBody, ModalHeader, Row, Spinner} from "reactstrap"
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    Form,
+    Input,
+    Label,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Row,
+    Spinner
+} from "reactstrap"
 import Timeline from "../../@core/components/timeline"
 import Avatar from "../../@core/components/avatar"
 import {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {
+    createOrderSourceFilesListen,
     getAllOrderSourceFilesListen,
     getOrderByIDListen,
     getOrderTimeLineByIDListen,
@@ -31,7 +45,8 @@ const OrderDetailsView = () => {
         timeLineData,
         timeLineLoader,
         sourceFiles,
-        sourceFilesLoader
+        sourceFilesLoader,
+        createSourceFileLoader
     } = useSelector(state => state.orderReducer)
 
     const [show, setShow] = useState(false)
@@ -67,26 +82,26 @@ const OrderDetailsView = () => {
     }
 
     const validate = (values) => {
-        if (!values.link) {
+        if (!values.sourceFile) {
             fireAlertError("Oops !", "You must add a link")
             return
         }
 
-        if (!values.title) {
-            fireAlertError("Oops !", "You must add a title")
-            return
-        }
-        
         if (!values.description) {
             fireAlertError("Oops !", "You must add a description")
+            return
         }
+
+        dispatch(createOrderSourceFilesListen({
+            ...values,
+            orderID: singleOrder._id
+        }))
     }
 
     // eslint-disable-next-line no-unused-vars
     const formik = useFormik({
         initialValues: {
-            link: "",
-            title: "",
+            sourceFile: "",
             description: ""
         },
         onSubmit: values => {
@@ -179,7 +194,6 @@ const OrderDetailsView = () => {
 
     //Use this effect to get the source files
     useEffect(() => {
-        console.log(sourceFiles)
         dispatch(getAllOrderSourceFilesListen(singleOrder._id))
     }, [singleOrder])
 
@@ -301,16 +315,18 @@ const OrderDetailsView = () => {
                     <div>
                         <button
                             onClick={directToImageService}
-                            className="btn btn-gradient-primary ml-2"><Link /> To image service</button>
+                            className="btn btn-gradient-primary ml-2"><Link/> To image service
+                        </button>
                     </div>
                     <div>
                         <button
                             onClick={() => setShow(!show)}
-                            className="btn btn-gradient-success ml-2"><Upload/> Upload a file</button>
+                            className="btn btn-gradient-success ml-2"><Upload/> Upload a file
+                        </button>
                     </div>
                 </div>
                 {
-                    !sourceFilesLoader ? <div className="w-100 d-center flex-column animate__animated animate__bounce mt-2">
+                    sourceFilesLoader ? <div className="w-100 d-center flex-column animate__animated animate__bounce mt-2">
                             <Spinner className="text-primary"/>
                             <p className="text-small text-primary f-courgette mt-1">cooking data...</p>
                         </div> : sourceFiles.length > 0 ? <Row className="mt-1 d-flex flex-wrap">
@@ -333,7 +349,47 @@ const OrderDetailsView = () => {
                     <h1 className="text-light f-Staatliches">Upload your file</h1>
                 </ModalHeader>
                 <ModalBody className='px-sm-5 mx-50 pb-4'>
-
+                    <Form onSubmit={formik.handleSubmit} className="mt-2">
+                        <div>
+                            <Label htmlFor="sourceFile">
+                                <h4 className="f-Staatliches">
+                                    Add your file link
+                                </h4>
+                            </Label>
+                            <Input
+                                id="sourceFile"
+                                name="sourceFile"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.sourceFile}
+                                placeHolder="https://www.example.com/123.jpg"/>
+                        </div>
+                        <div className="mt-3">
+                            <Label htmlFor="description">
+                                <h4 className="f-Staatliches">
+                                    Add file description
+                                </h4>
+                            </Label>
+                            <Input
+                                type="textarea"
+                                id="description"
+                                name="description"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.description}
+                                placeHolder="Add your description here..."/>
+                        </div>
+                        <div className="d-flex justify-content-end mt-2">
+                            <button className="btn btn-gradient-success f-Staatliches text-large">
+                                {
+                                    createSourceFileLoader ? <Spinner className="text-light" /> : <div className="d-flex align-items-end">
+                                        <Upload size={23} className="text-light mr-1"/>
+                                        Send the file
+                                    </div>
+                                }
+                            </button>
+                        </div>
+                    </Form>
                 </ModalBody>
             </Modal>
             {/*//////////////////////*/}

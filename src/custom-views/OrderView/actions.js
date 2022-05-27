@@ -232,7 +232,7 @@ export const createOrderSourceFilesSuccess = () => {
 export const handleCreateOrderSourceFilesLoader = (state) => {
 
     return {
-        type: actionTypes.HANDLE_GET_ORDER_SOURCE_FILES_LOADER,
+        type: actionTypes.HANDLE_CREATE_ORDER_SOURCE_FILES_LOADER,
         payload: state
     }
 }
