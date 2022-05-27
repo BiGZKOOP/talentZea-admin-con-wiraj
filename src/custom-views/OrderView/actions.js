@@ -185,3 +185,54 @@ export const handleUpdateOrderStateLoader = (state) => {
         payload: state
     }
 }
+
+//Use this to fetch all the order source files
+export const getAllOrderSourceFilesListen = (id) => {
+
+    return {
+        type: actionTypes.GET_ORDER_SOURCE_FILES_LISTEN,
+        payload: id
+    }
+}
+
+export const getAllOrderSourceFilesSuccess = (payload) => {
+
+    return {
+        type: actionTypes.GET_ORDER_SOURCE_FILES_SUCCESS,
+        payload
+    }
+}
+
+//Use this to handle the get all source files loader
+export const handleGetAllOrderSourceFilesLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_GET_ORDER_SOURCE_FILES_LOADER,
+        payload: state
+    }
+}
+
+//Use this to create a source file
+export const createOrderSourceFilesListen = (payload) => {
+
+    return {
+        type: actionTypes.CREATE_ORDER_SOURCE_FILES_LISTEN,
+        payload
+    }
+}
+
+export const createOrderSourceFilesSuccess = () => {
+
+    return {
+        type: actionTypes.CREATE_ORDER_SOURCE_FILES_SUCCESS
+    }
+}
+
+//Use this to handle the create all source files loader
+export const handleCreateOrderSourceFilesLoader = (state) => {
+
+    return {
+        type: actionTypes.HANDLE_CREATE_ORDER_SOURCE_FILES_LOADER,
+        payload: state
+    }
+}

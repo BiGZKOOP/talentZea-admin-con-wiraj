@@ -19,7 +19,12 @@ const init = {
     timeLineData: [],
     timeLineLoader: true,
 
-    updateOrderStateLoader: false
+    updateOrderStateLoader: false,
+
+    sourceFiles: [],
+    sourceFilesLoader: true,
+
+    createSourceFileLoader: false
 }
 
 const orderReducer = (state = init, action) => {
@@ -96,6 +101,22 @@ const orderReducer = (state = init, action) => {
                 updateOrderStateLoader: action.payload
             }
         }
+        case actionTypes.GET_ORDER_SOURCE_FILES_SUCCESS: {
+            return {
+                ...state,
+                sourceFiles: action.payload
+            }
+        }
+        case actionTypes.HANDLE_GET_ORDER_SOURCE_FILES_LOADER:
+            return {
+                ...state,
+                sourceFilesLoader: action.payload
+            }
+        case actionTypes.HANDLE_CREATE_ORDER_SOURCE_FILES_LOADER:
+            return {
+                ...state,
+                createSourceFileLoader: action.payload
+            }
         default: return state
     }
 }
