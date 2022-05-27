@@ -1,18 +1,19 @@
 import {call, put, takeLatest} from "redux-saga/effects"
 import * as actionTypes from "./actionTypes"
 import {
+    getAllOrderSourceFilesSuccess,
     getAllOrderSuccess, getOrderByIDListen, getOrderByIDSuccess,
     getOrderDataByStateSuccessComplete,
     getOrderDataByStateSuccessOngoing,
     getOrderDataByStateSuccessPending, getOrderTimeLineByIDSuccess,
-    handleGetAllOrderLoader,
+    handleGetAllOrderLoader, handleGetAllOrderSourceFilesLoader,
     handleGetCompleteOrderLoader,
     handleGetOngoingOrderLoader, handleGetOrderByIDLoader, handleGetOrderTimlineLoader,
     handleGetPendingOrderLoader, handleUpdateOrderStateLoader
 } from "./actions"
 import axios from "../../axios/axios"
 import {UPDATE_ORDER_STATE_LISTEN} from "./actionTypes"
-import {fireAlertError, fireAlertSuccess} from "../../utility/customUtils"
+import {fireAlertError, fireAlertSuccess, getIDToken} from "../../utility/customUtils"
 
 const getAllOrderAsync = async () => {
 
@@ -51,6 +52,18 @@ const updateOrderStateAsync = async (id, state) => {
         console.log(err)
         fireAlertError("Invalid status update", "You can't update the status to that state")
         console.error(err.message)
+    })
+}
+
+const getAllOrderSourceFileAsync = async (id) => {
+
+    return axios.get(`/source-file/file/${id}`, {
+        headers: {
+            'content-type': 'application/form-data',
+            Authorization: `Bearer ${await getIDToken()}`
+        }
+    }).then(res => res).catch(err => {
+        fireAlertError("Oops !", err.message)
     })
 }
 ////////////////
@@ -151,6 +164,21 @@ export function* updateOrderStateCB(action) {
     }
 }
 
+export function* getAllOrderSourceFilesCB(action) {
+
+    const {payload} = action
+
+    try {
+        yield put(handleGetAllOrderSourceFilesLoader(true))
+        const res = yield call(getAllOrderSourceFileAsync, payload)
+        yield put(getAllOrderSourceFilesSuccess(res.data))
+    } catch (err) {
+        console.error(err.message)
+    } finally {
+        yield put(handleGetAllOrderSourceFilesLoader(true))
+    }
+}
+
 
 function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ALL_ORDER_LISTEN, getAllOrderCB)
@@ -160,6 +188,7 @@ function* watchClientSaga() {
     yield takeLatest(actionTypes.GET_ORDERS_BY_STATE_LISTEN_COMPLETE, getCompleteOrderCB)
     yield takeLatest(actionTypes.GET_ORDER_TIME_LINE_LISTEN, getOrderTimelineByIDCB)
     yield takeLatest(actionTypes.UPDATE_ORDER_STATE_LISTEN, updateOrderStateCB)
+    yield takeLatest(actionTypes.GET_ORDER_SOURCE_FILES_LISTEN, getAllOrderSourceFilesCB)
 }
 
 const clientSagas = [watchClientSaga]
