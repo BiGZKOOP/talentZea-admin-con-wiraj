@@ -66,6 +66,7 @@ const createSubCatAsync = async (data) => {
         fireAlertSuccess("You have created a new sub service !", "Could be a beginning of something great")
         return res
     }).catch(err => {
+        // fireAlertError("Oops !", err.message)
         console.error(err.message)
     })
 }

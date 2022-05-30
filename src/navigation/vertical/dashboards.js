@@ -11,7 +11,7 @@ import {
     Trello,
     Briefcase,
     BookOpen,
-    CreditCard
+    CreditCard, Clipboard
 } from 'react-feather'
 
 export default [

@@ -59,3 +59,8 @@ export const deleteAttrFromObject = (obj, attr) => {
     delete obj[attr]
     return obj
 }
+
+//Use this to check string typed boolean
+export const checkBool = (dis) => {
+    return dis === "true"
+}
