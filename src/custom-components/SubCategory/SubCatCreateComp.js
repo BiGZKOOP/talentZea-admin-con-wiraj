@@ -3,7 +3,7 @@ import {Delete, Gift, Upload} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import {useEffect, useState} from "react"
 import {useHistory} from "react-router-dom"
-import {fireAlertCustom, fireAlertError} from "../../utility/customUtils"
+import {checkBool, fireAlertCustom, fireAlertError} from "../../utility/customUtils"
 // eslint-disable-next-line no-unused-vars
 import {
     createSubCatServiceListen,
@@ -35,7 +35,7 @@ const SubCatCreateComp = ({data}) => {
 
 //Extras states
     const [revisions, setRevisions] = useState({
-        hide: false,
+        hide: true,
         price: 0,
         count: 0
     })
@@ -137,7 +137,9 @@ const SubCatCreateComp = ({data}) => {
         }
         // console.log(cookDataObject(values))
         if (id) updateSubServiceByID(values)
-        else dispatch(createSubCatServiceListen(cookDataObject(values), history))
+        else {
+            dispatch(createSubCatServiceListen(cookDataObject(values), history))
+        }
 
         return true
     }
@@ -160,7 +162,6 @@ const SubCatCreateComp = ({data}) => {
 
     const harvestBinaryData = (object) => {
         const binaryData = []
-        console.log(object)
         binaryData.push(object)
         return binaryData
     }
@@ -375,7 +376,7 @@ const SubCatCreateComp = ({data}) => {
         switch (index) {
             case 1:
                 setRevisions({
-                    hide: !revisions.hide,
+                    hide: true,
                     count: 0,
                     price: 0
                 })
@@ -410,29 +411,29 @@ const SubCatCreateComp = ({data}) => {
         formik.values.price = singleSubCat?.price
         setFaq(singleSubCat?.faq)
         setExpressDelivery({
-            ...expressDelivery,
+            hide: checkBool(singleSubCat?.expressDelivery?.hide),
             count: singleSubCat?.expressDelivery?.count,
             price: singleSubCat?.expressDelivery?.price
         })
         setSourceFiles({
-            ...sourceFiles,
+            hide: checkBool(singleSubCat?.sourceFiles?.hide),
             price: singleSubCat?.sourceFiles?.price
         })
         setRevisions({
-            ...revisions,
+            hide: checkBool(singleSubCat?.revisions?.hide),
             count: singleSubCat?.revisions?.count,
             price: singleSubCat?.revisions?.price
         })
     }
 
     const cleanState = () => {
-            formik.values.mainTopic = ""
-            formik.values.description = ""
-            formik.values.mainService = ""
-            formik.values.orderTopic = ""
-            formik.values.orderDescription = ""
-            formik.values.deliveryTime = ""
-            formik.values.price = ""
+        formik.values.mainTopic = ""
+        formik.values.description = ""
+        formik.values.mainService = ""
+        formik.values.orderTopic = ""
+        formik.values.orderDescription = ""
+        formik.values.deliveryTime = ""
+        formik.values.price = ""
         setFaq([])
         setExpressDelivery({
             hide: false,
@@ -444,7 +445,7 @@ const SubCatCreateComp = ({data}) => {
             price: 0
         })
         setRevisions({
-            hide: false,
+            hide: true,
             price: 0,
             count: 0
         })
@@ -490,7 +491,7 @@ const SubCatCreateComp = ({data}) => {
                             name="description"
                             onChange={formik.handleChange}
                             value={formik.values.description}
-                            placeholder="Enter main topic..."/>
+                            placeholder="Add a adescription here..."/>
                     </Col>
                     <Row>
                         <Col className="mt-2" lg={3}>
@@ -570,50 +571,50 @@ const SubCatCreateComp = ({data}) => {
                                 <h1 className="f-Staatliches">Add Extras</h1>
                             </Col>
                             <Col lg={12}>
-                                <Row lg={12} className="d-flex">
-                                    <Col lg={4}>
-                                        <Label htmlFor="revisionsCount" className="text-small mb-1">
-                                            Maximum revisions count
-                                        </Label>
-                                        <div className="d-flex d-center">
-                                            <Input
-                                                onChange={e => setRevisions({
-                                                    ...revisions,
-                                                    count: e.target.value
-                                                })}
-                                                value={revisions.count}
-                                                disabled={revisions.hide}
-                                                placeholder="Max revision count..."
-                                                id="revisionsC|ount" type="number" name="revisionsCount"/>
-                                        </div>
-                                    </Col>
-                                    <Col lg={4}>
-                                        <Label htmlFor="revisionsPrice" className="text-small mb-1">
-                                            Per revisions price
-                                        </Label>
-                                        <Input
-                                            onChange={e => setRevisions({
-                                                ...revisions,
-                                                price: e.target.value
-                                            })}
-                                            value={revisions.price}
-                                            disabled={revisions.hide}
-                                            placeholder="Per revisions price..."
-                                            id="revisionsPrice" type="number" name="revisionsPrice"/>
-                                    </Col>
-                                    <Col lg={3} className="d-flex align-items-end">
-                                        <div className='form-switch form-check-success ml-2'>
-                                            <Input
-                                                onChange={() => {
-                                                    cleanExtraStates(1)
-                                                }}
-                                                type='switch' id='switch-primary' name='primary'
-                                                checked={!revisions.hide}/>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                {/*<Row lg={12} className="d-flex">*/}
+                                {/*<Col lg={4}>*/}
+                                {/*    <Label htmlFor="revisionsCount" className="text-small mb-1">*/}
+                                {/*        Maximum revisions count*/}
+                                {/*    </Label>*/}
+                                {/*    <div className="d-flex d-center">*/}
+                                {/*        <Input*/}
+                                {/*            onChange={e => setRevisions({*/}
+                                {/*                ...revisions,*/}
+                                {/*                count: e.target.value*/}
+                                {/*            })}*/}
+                                {/*            value={revisions.count}*/}
+                                {/*            disabled={revisions.hide}*/}
+                                {/*            placeholder="Max revision count..."*/}
+                                {/*            id="revisionsC|ount" type="number" name="revisionsCount"/>*/}
+                                {/*    </div>*/}
+                                {/*</Col>*/}
+                                {/*<Col lg={4}>*/}
+                                {/*    <Label htmlFor="revisionsPrice" className="text-small mb-1">*/}
+                                {/*        Per revisions price*/}
+                                {/*    </Label>*/}
+                                {/*    <Input*/}
+                                {/*        onChange={e => setRevisions({*/}
+                                {/*            ...revisions,*/}
+                                {/*            price: e.target.value*/}
+                                {/*        })}*/}
+                                {/*        value={revisions.price}*/}
+                                {/*        disabled={revisions.hide}*/}
+                                {/*        placeholder="Per revisions price..."*/}
+                                {/*        id="revisionsPrice" type="number" name="revisionsPrice"/>*/}
+                                {/*</Col>*/}
+                                {/*<Col lg={3} className="d-flex align-items-end">*/}
+                                {/*    <div className='form-switch form-check-success ml-2'>*/}
+                                {/*        <Input*/}
+                                {/*            onChange={() => {*/}
+                                {/*                cleanExtraStates(1)*/}
+                                {/*            }}*/}
+                                {/*            type='switch' id='switch-primary' name='primary'*/}
+                                {/*            checked={!revisions.hide}/>*/}
+                                {/*    </div>*/}
+                                {/*</Col>*/}
+                                {/*</Row>*/}
                                 <Row>
-                                    <Col lg={3} className="mt-3">
+                                    <Col lg={3}>
                                         <Label htmlFor="sourceFiles" className="text-small mb-1">
                                             Source files included price
                                         </Label>
@@ -640,29 +641,15 @@ const SubCatCreateComp = ({data}) => {
                                                     cleanExtraStates(2)
                                                 }
                                                 }
-                                                type='switch' id='switch-primary' name='primary' defaultChecked/>
+                                                type='switch' id='switch-primary' name='primary'
+                                                checked={!sourceFiles.hide}/>
                                         </div>
                                     </Col>
                                 </Row>
                                 <Row className="mt-3 d-flex">
-                                    <Col lg={3}>
-                                        <Label htmlFor="expressDelivery" className="text-small mb-1">
-                                            Express delivery days
-                                        </Label>
-                                        <Input
-                                            disabled={expressDelivery.hide}
-                                            onChange={(e) => setExpressDelivery({
-                                                ...expressDelivery,
-                                                count: e.target.value
-                                            })
-                                            }
-                                            value={expressDelivery.count}
-                                            placeholder="express delivery days..."
-                                            id="expressDelivery" type="number" name="expressDelivery"/>
-                                    </Col>
-                                    <Col lg={4} className="ml-3">
+                                    <Col lg={3} className="">
                                         <Label htmlFor="expressDeliveryPrice" className="text-small mb-1">
-                                            Express delivery price
+                                            8 hours delivery price {sourceFiles.hide.toString()}
                                         </Label>
                                         <Input
                                             onChange={(e) => setExpressDelivery({
@@ -682,7 +669,8 @@ const SubCatCreateComp = ({data}) => {
                                                     cleanExtraStates(3)
                                                 }
                                                 }
-                                                type='switch' id='switch-primary' name='primary' defaultChecked/>
+                                                type='switch' id='switch-primary' name='primary'
+                                                checked={!expressDelivery.hide}/>
                                         </div>
                                     </Col>
                                 </Row>
@@ -791,7 +779,7 @@ const SubCatCreateComp = ({data}) => {
             <Col className="d-flex justify-content-end mt-3 mb-2">
                 {
                     !id && <button hidden={id} type="submit"
-                                  className="btn btn-gradient-primary f-Staatliches font-large-1 d-flex d-center text-small">
+                                   className="btn btn-gradient-primary f-Staatliches font-large-1 d-flex d-center text-small">
                         {
                             subCatCreateLoading && <Spinner className="spinner text-small mr-1"/>
                         }
@@ -800,7 +788,7 @@ const SubCatCreateComp = ({data}) => {
                 }
                 {
                     id && <button hidden={!id} type="submit"
-                                   className="btn btn-gradient-success f-Staatliches font-large-1 d-flex d-center text-small">
+                                  className="btn btn-gradient-success f-Staatliches font-large-1 d-flex d-center text-small">
                         {
                             subCatUpdateLoading && <Spinner className="spinner text-small mr-1"/>
                         }
