@@ -40,6 +40,9 @@ const SubCatCard = ({data}) => {
         </CardBody>
         <CardFooter className="d-flex justify-content-end">
             <button
+                onClick={() => history.push(`/sub-service/required-page/${data?._id}`)}
+                className="btn btn-gradient-success mr-2">Required page</button>
+            <button
                 onClick={() => history.push(`/sub-category/create/${data?._id}`)}
                 className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>
             <button

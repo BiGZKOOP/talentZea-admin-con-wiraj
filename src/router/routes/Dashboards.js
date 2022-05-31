@@ -42,7 +42,7 @@ const DashboardRoutes = [
   },
   {
     path: '/sub-service/required-page/:id',
-    component: lazy(() => import('../../custom-views/OrderDetailsView/OrderDetailsView'))
+    component: lazy(() => import('../../custom-views/RequieredPage/RequiredPageView'))
   }
 ]
 
