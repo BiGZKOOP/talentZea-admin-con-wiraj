@@ -2,14 +2,23 @@ import {Button, Card, CardBody, CardHeader, Col, Form, Input, Label, Row} from "
 import {useFormik} from "formik"
 import {fireAlertError} from "../../utility/customUtils"
 import {useState} from "react"
-import {DEFAULT, NUMBER, TEXT, TEXT_AREA} from "./consts"
+import {NUMBER, TEXT, TEXT_AREA} from "./consts"
 import {ArrowDownCircle, ArrowUpCircle, Trash2} from "react-feather"
+import {useDispatch} from "react-redux"
+import {createRequiredPageListen} from "./actions"
+import Swal from "sweetalert2"
 
 const RequiredPageView = () => {
 
     const [type, setType] = useState(0)
 
     const [formArr, setFromArr] = useState([])
+
+    const dispatch = useDispatch()
+
+    const pathname = window.location.pathname
+
+    const id = pathname.split("/sub-service/required-page/")[1]
 
     const validate = (values) => {
 
@@ -39,6 +48,22 @@ const RequiredPageView = () => {
         }))
         // eslint-disable-next-line no-use-before-define
         cleanForm()
+    }
+
+    const createRequiredPage = () => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to update this after created !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(createRequiredPageListen(formArr, id))
+                }
+            })
     }
 
     const formik = useFormik({
@@ -208,6 +233,11 @@ const RequiredPageView = () => {
                 }
             </CardBody>
         </Card>
+        <div className="mt-3 d-flex justify-content-end">
+            <button
+                onClick={createRequiredPage}
+                className="btn btn-gradient-primary f-Staatliches font-large-1">ADD THE REQUIRED PAGE</button>
+        </div>
     </div>
 }
 

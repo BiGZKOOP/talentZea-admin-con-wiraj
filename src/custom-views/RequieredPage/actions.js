@@ -1,11 +1,12 @@
 import * as actionTypes from "./constants"
 
 //Use this to create the required page
-export const createRequiredPageListen = (data) => {
+export const createRequiredPageListen = (data, id) => {
 
     return {
         type: actionTypes.CREATE_REQUIRED_PAGE_LISTEN,
-        payload: data
+        payload: data,
+        id
     }
 }
 

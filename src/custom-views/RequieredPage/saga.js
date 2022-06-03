@@ -4,8 +4,8 @@ import axios from "../../axios/axios"
 import {fireAlertError, fireAlertSuccess, getIDToken} from "../../utility/customUtils"
 import * as actionTypes from "./constants"
 
-const createRequiredPageAsync = async (data) => {
-    return await axios.post("/required-page", data, {
+const createRequiredPageAsync = async (data, id) => {
+    return await axios.patch(`/required-page`, {...data, subservice: id}, {
         headers: {
             Authorization: `Bearer ${await getIDToken()}`
         }
@@ -34,11 +34,11 @@ const getRequiredPageAsync = async (id) => {
 
 export function* createRequiredPageCB(action) {
 
-    const {payload} = action
+    const {payload, id} = action
 
     try {
         yield put(handleCreateRequiredPageLoader(true))
-        yield call(createRequiredPageAsync, payload)
+        yield call(createRequiredPageAsync, payload, id)
     } catch (err) {
         console.error(err.message)
     } finally {
