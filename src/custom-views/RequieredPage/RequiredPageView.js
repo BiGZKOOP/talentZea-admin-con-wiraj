@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {NUMBER, TEXT, TEXT_AREA} from "./consts"
 import {ArrowDownCircle, ArrowUpCircle, Trash2} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-import {createRequiredPageListen} from "./actions"
+import {createRequiredPageListen, deleteRequiredPageListen} from "./actions"
 import Swal from "sweetalert2"
 import {getSubServiceByIDListen} from "../SubCategoryView/action"
 import CookingLoader from "../../custom-components/CookingLoader"
@@ -131,6 +131,13 @@ const RequiredPageView = () => {
 
     }
 
+    const handleDeleteRequiredPage = () => {
+        dispatch(deleteRequiredPageListen({
+            id: singleSubCat?.requiredPage._id,
+            subID: singleSubCat?._id
+        }))
+    }
+
     useEffect(() => {
         populateFormArr()
     }, [singleSubCat])
@@ -141,83 +148,91 @@ const RequiredPageView = () => {
 
     if (subCatCreateLoading) return <CookingLoader />
     else return <div className="p-0">
-        <Card>
-            <CardHeader className="bg-gradient-primary m-0">
-                <div className="d-flex justify-content-between w-100 align-items-center">
-                    <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">Required page</h1>
-                    <button className="btn btn-foursquare f-Staatliches d-flex align-items-end text-large">Delete <Trash2 /></button>
-                </div>
-            </CardHeader>
-            <CardBody className="pt-2">
-                <Form onSubmit={formik.handleSubmit}>
-                    <Col lg={3}>
-                        <Label htmlfor="id" className="f-Staatliches text-medium mb-1">Enter ID</Label>
-                        <Input
-                            id="id"
-                            name="id"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.id}
-                            placeholder="ID here"/>
-                        <p className="mt-1 f-courgette text-danger">*. Every ID must be unique for each input field</p>
-                    </Col>
-                    <Col lg={12} className="mt-3">
-                        <Label className="f-Staatliches text-medium mb-1">Enter label</Label>
-                        <Input
-                            htmlFor="label"
-                            id="label"
-                            name="label"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.label}
-                            placeholder="Label here..."/>
-                    </Col>
-                    <Col lg={12} className="mt-3">
-                        <Label className="f-Staatliches text-medium mb-1">Enter placeholder</Label>
-                        <Input
-                            htmlFor="placeholder"
-                            id="placeholder"
-                            name="placeholder"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.placeholder}
-                            placeholder="placeholder here..."/>
-                    </Col>
-                    <Col lg={12} className="mt-3">
-                        <Label className="f-Staatliches text-medium mb-1">Enter description</Label>
-                        <Input
-                            type="textarea"
-                            htmlFor="description"
-                            id="description"
-                            name="description"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.description}
-                            placeholder="description here..."/>
-                    </Col>
-                    <Col className="mt-3">
-                        <Label className="f-Staatliches text-medium mb-1">Input type</Label>
-                        <div className="d-flex">
-                            <div
-                                onClick={() => setType(TEXT)}
-                                className={`btn ${type === TEXT ? "btn-primary" : "btn-outline-primary"} mr-5 text-extra-small`}>TEXT</div>
-                            <div
-                                onClick={() => setType(NUMBER)}
-                                className={`btn ${type === NUMBER ? "btn-success" : "btn-outline-success"} mr-5 text-extra-small`}>NUMBER</div>
-                            <div
-                                onClick={() => setType(TEXT_AREA)}
-                                className={`btn ${type === TEXT_AREA ? "btn-danger" : "btn-outline-danger"} mr-5 text-extra-small`}>TEXT AREA</div>
-                        </div>
-                    </Col>
-                    <Col className="mt-3 d-flex justify-content-end">
-                        <button type="submit" className="btn-gradient-success btn font-large-1 f-Staatliches">add field</button>
-                    </Col>
-                </Form>
-            </CardBody>
-        </Card>
-        <Card className="mt-5 p-0 m-0">
+        {
+            <Card>
+                <CardHeader className="bg-gradient-primary m-0">
+                    <div className="d-flex justify-content-between w-100 align-items-center">
+                        <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">Required page</h1>
+                    </div>
+                </CardHeader>
+                <CardBody className="pt-2">
+                    <Form onSubmit={formik.handleSubmit}>
+                        <Col lg={3}>
+                            <Label htmlfor="id" className="f-Staatliches text-medium mb-1">Enter ID</Label>
+                            <Input
+                                id="id"
+                                name="id"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.id}
+                                placeholder="ID here"/>
+                            <p className="mt-1 f-courgette text-danger">*. Every ID must be unique for each input field</p>
+                        </Col>
+                        <Col lg={12} className="mt-3">
+                            <Label className="f-Staatliches text-medium mb-1">Enter label</Label>
+                            <Input
+                                htmlFor="label"
+                                id="label"
+                                name="label"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.label}
+                                placeholder="Label here..."/>
+                        </Col>
+                        <Col lg={12} className="mt-3">
+                            <Label className="f-Staatliches text-medium mb-1">Enter placeholder</Label>
+                            <Input
+                                htmlFor="placeholder"
+                                id="placeholder"
+                                name="placeholder"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.placeholder}
+                                placeholder="placeholder here..."/>
+                        </Col>
+                        <Col lg={12} className="mt-3">
+                            <Label className="f-Staatliches text-medium mb-1">Enter description</Label>
+                            <Input
+                                type="textarea"
+                                htmlFor="description"
+                                id="description"
+                                name="description"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.description}
+                                placeholder="description here..."/>
+                        </Col>
+                        <Col className="mt-3">
+                            <Label className="f-Staatliches text-medium mb-1">Input type</Label>
+                            <div className="d-flex">
+                                <div
+                                    onClick={() => setType(TEXT)}
+                                    className={`btn ${type === TEXT ? "btn-primary" : "btn-outline-primary"} mr-5 text-extra-small`}>TEXT</div>
+                                <div
+                                    onClick={() => setType(NUMBER)}
+                                    className={`btn ${type === NUMBER ? "btn-success" : "btn-outline-success"} mr-5 text-extra-small`}>NUMBER</div>
+                                <div
+                                    onClick={() => setType(TEXT_AREA)}
+                                    className={`btn ${type === TEXT_AREA ? "btn-danger" : "btn-outline-danger"} mr-5 text-extra-small`}>TEXT AREA</div>
+                            </div>
+                        </Col>
+                        <Col className="mt-3 d-flex justify-content-end">
+                            <button type="submit" className="btn-gradient-success btn font-large-1 f-Staatliches">add field</button>
+                        </Col>
+                    </Form>
+                </CardBody>
+            </Card>
+        }
+        <Card className="p-0 m-0">
             <CardHeader className="bg-gradient-success m-0">
-                <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">Preview</h1>
+                <div className="d-flex justify-content-between w-100 align-items-center">
+                    <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">PREVIEW </h1>
+                    {
+                        singleSubCat?.requiredPage !== null && <button
+                            onClick={handleDeleteRequiredPage}
+                            className="btn btn-foursquare f-Staatliches d-flex align-items-end text-large">Delete <Trash2 /></button>
+                    }
+                </div>
             </CardHeader>
             <CardBody>
                 {
@@ -262,11 +277,13 @@ const RequiredPageView = () => {
                 }
             </CardBody>
         </Card>
-        <div className="mt-3 d-flex justify-content-end">
-            <button
-                onClick={createRequiredPage}
-                className="btn btn-gradient-primary f-Staatliches font-large-1">ADD THE REQUIRED PAGE</button>
-        </div>
+        {
+            singleSubCat?.requiredPage === null && <div className="mt-3 d-flex justify-content-end">
+                <button
+                    onClick={createRequiredPage}
+                    className="btn btn-gradient-primary f-Staatliches font-large-1">ADD THE REQUIRED PAGE</button>
+            </div>
+        }
     </div>
 }
 
