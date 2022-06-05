@@ -4,12 +4,15 @@ import {fireAlertError} from "../../utility/customUtils"
 import {useEffect, useState} from "react"
 import {NUMBER, TEXT, TEXT_AREA} from "./consts"
 import {ArrowDownCircle, ArrowUpCircle, Trash2} from "react-feather"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {createRequiredPageListen} from "./actions"
 import Swal from "sweetalert2"
 import {getSubServiceByIDListen} from "../SubCategoryView/action"
+import CookingLoader from "../../custom-components/CookingLoader"
 
 const RequiredPageView = () => {
+
+    const {subCatCreateLoading, singleSubCat} = useSelector(state => state.subCatReducer)
 
     const [type, setType] = useState(0)
 
@@ -114,14 +117,36 @@ const RequiredPageView = () => {
         setFromArr(formArr.concat())
     }
 
+    const populateFormArr = () => {
+        console.log(singleSubCat?.requiredPage?.meta_data)
+        singleSubCat?.requiredPage?.meta_data.map(e => {
+            setFromArr(formArr.concat({
+                description: e.description,
+                id: e.id,
+                label: e.label,
+                placeholder: e.placeholder,
+                type: e.type
+            }))
+        })
+
+    }
+
+    useEffect(() => {
+        populateFormArr()
+    }, [singleSubCat])
+
     useEffect(() => {
         dispatch(getSubServiceByIDListen(id))
     }, [])
 
-    return <div className="p-0">
+    if (subCatCreateLoading) return <CookingLoader />
+    else return <div className="p-0">
         <Card>
             <CardHeader className="bg-gradient-primary m-0">
-                <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">Required page</h1>
+                <div className="d-flex justify-content-between w-100 align-items-center">
+                    <h1 className="f-Staatliches font-large-1 text-light p-0 m-0">Required page</h1>
+                    <button className="btn btn-foursquare f-Staatliches d-flex align-items-end text-large">Delete <Trash2 /></button>
+                </div>
             </CardHeader>
             <CardBody className="pt-2">
                 <Form onSubmit={formik.handleSubmit}>
@@ -211,11 +236,11 @@ const RequiredPageView = () => {
                                         onBlur={formik.handleBlur}
                                         placeholder={e.placeholder}/>
                                     <div className="d-flex">
-                                       <div>
-                                           <button
-                                               onClick={() => { removeFields(e, index) }}
-                                               className="btn btn-foursquare ml-2"><Trash2 size={21} className="m-0 p-0"/></button>
-                                       </div>
+                                        <div>
+                                            <button
+                                                onClick={() => { removeFields(e, index) }}
+                                                className="btn btn-foursquare ml-2"><Trash2 size={21} className="m-0 p-0"/></button>
+                                        </div>
                                         <div>
                                             <button
                                                 hidden={index === 0}
