@@ -19,6 +19,7 @@ import mainCatCreateReducer from "../custom-views/MainCategoryCreate/reducer"
 import subCatReducer from "../custom-views/SubCategoryView/reducer"
 import orderReducer from "../custom-views/OrderView/reducer"
 import dashboardReducer from "../custom-views/dashboard/reducer"
+import requiredPageReducer from "../custom-views/RequieredPage/reducer"
 
 const rootReducer = combineReducers({
   auth,
@@ -39,7 +40,8 @@ const rootReducer = combineReducers({
   mainCatCreateReducer,
   subCatReducer,
   orderReducer,
-  dashboardReducer
+  dashboardReducer,
+  requiredPageReducer
 })
 
 export default rootReducer

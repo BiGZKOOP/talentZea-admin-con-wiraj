@@ -571,48 +571,6 @@ const SubCatCreateComp = ({data}) => {
                                 <h1 className="f-Staatliches">Add Extras</h1>
                             </Col>
                             <Col lg={12}>
-                                {/*<Row lg={12} className="d-flex">*/}
-                                {/*<Col lg={4}>*/}
-                                {/*    <Label htmlFor="revisionsCount" className="text-small mb-1">*/}
-                                {/*        Maximum revisions count*/}
-                                {/*    </Label>*/}
-                                {/*    <div className="d-flex d-center">*/}
-                                {/*        <Input*/}
-                                {/*            onChange={e => setRevisions({*/}
-                                {/*                ...revisions,*/}
-                                {/*                count: e.target.value*/}
-                                {/*            })}*/}
-                                {/*            value={revisions.count}*/}
-                                {/*            disabled={revisions.hide}*/}
-                                {/*            placeholder="Max revision count..."*/}
-                                {/*            id="revisionsC|ount" type="number" name="revisionsCount"/>*/}
-                                {/*    </div>*/}
-                                {/*</Col>*/}
-                                {/*<Col lg={4}>*/}
-                                {/*    <Label htmlFor="revisionsPrice" className="text-small mb-1">*/}
-                                {/*        Per revisions price*/}
-                                {/*    </Label>*/}
-                                {/*    <Input*/}
-                                {/*        onChange={e => setRevisions({*/}
-                                {/*            ...revisions,*/}
-                                {/*            price: e.target.value*/}
-                                {/*        })}*/}
-                                {/*        value={revisions.price}*/}
-                                {/*        disabled={revisions.hide}*/}
-                                {/*        placeholder="Per revisions price..."*/}
-                                {/*        id="revisionsPrice" type="number" name="revisionsPrice"/>*/}
-                                {/*</Col>*/}
-                                {/*<Col lg={3} className="d-flex align-items-end">*/}
-                                {/*    <div className='form-switch form-check-success ml-2'>*/}
-                                {/*        <Input*/}
-                                {/*            onChange={() => {*/}
-                                {/*                cleanExtraStates(1)*/}
-                                {/*            }}*/}
-                                {/*            type='switch' id='switch-primary' name='primary'*/}
-                                {/*            checked={!revisions.hide}/>*/}
-                                {/*    </div>*/}
-                                {/*</Col>*/}
-                                {/*</Row>*/}
                                 <Row>
                                     <Col lg={3}>
                                         <Label htmlFor="sourceFiles" className="text-small mb-1">
