@@ -4,8 +4,9 @@ import axios from "../../axios/axios"
 import {fireAlertError, fireAlertSuccess, getIDToken} from "../../utility/customUtils"
 import * as actionTypes from "./constants"
 
+// eslint-disable-next-line no-unused-vars
 const createRequiredPageAsync = async (data, id) => {
-    return await axios.patch(`/required-page`, {...data, subservice: id}, {
+    return await axios.post(`/required-page/${id}`, {meta_data:data}, {
         headers: {
             Authorization: `Bearer ${await getIDToken()}`
         }

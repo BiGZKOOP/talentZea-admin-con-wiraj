@@ -1,12 +1,13 @@
 import {Button, Card, CardBody, CardHeader, Col, Form, Input, Label, Row} from "reactstrap"
 import {useFormik} from "formik"
 import {fireAlertError} from "../../utility/customUtils"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {NUMBER, TEXT, TEXT_AREA} from "./consts"
 import {ArrowDownCircle, ArrowUpCircle, Trash2} from "react-feather"
 import {useDispatch} from "react-redux"
 import {createRequiredPageListen} from "./actions"
 import Swal from "sweetalert2"
+import {getSubServiceByIDListen} from "../SubCategoryView/action"
 
 const RequiredPageView = () => {
 
@@ -58,7 +59,7 @@ const RequiredPageView = () => {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Add the page !'
             }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(createRequiredPageListen(formArr, id))
@@ -69,7 +70,6 @@ const RequiredPageView = () => {
     const formik = useFormik({
         initialValues: {
             label: "",
-            special: "",
             placeholder: "",
             description: "",
             id: ""
@@ -113,6 +113,10 @@ const RequiredPageView = () => {
         setFromArr(tempArr)
         setFromArr(formArr.concat())
     }
+
+    useEffect(() => {
+        dispatch(getSubServiceByIDListen(id))
+    }, [])
 
     return <div className="p-0">
         <Card>
