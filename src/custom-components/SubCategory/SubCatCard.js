@@ -25,8 +25,6 @@ const SubCatCard = ({data}) => {
         else fireAlertError("Oops", "Your previous delete request is still pending !!!")
     }
 
-    console.log(data)
-
     return <Card className="mr-2 scalable" style={{width: "31%"}}>
         <CardHeader>
             <h4 className="f-Londrina"><span className="text-primary">{data?.mainService?.mainTopic}</span> {"> "}
@@ -39,6 +37,9 @@ const SubCatCard = ({data}) => {
             </div>
         </CardBody>
         <CardFooter className="d-flex justify-content-end">
+            <button
+                onClick={() => history.push(`/sub-service/required-page/${data?._id}`)}
+                className="btn btn-gradient-success mr-2">Required page</button>
             <button
                 onClick={() => history.push(`/sub-category/create/${data?._id}`)}
                 className="btn btn-primary mr-2 d-center"><Edit size={15} className="mr-1"/> Edit</button>

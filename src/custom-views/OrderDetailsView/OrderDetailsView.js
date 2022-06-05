@@ -199,6 +199,19 @@ const OrderDetailsView = () => {
 
     if (!singleOrderLoader) {
         return <div>
+            <Card className="p-0">
+                <CardHeader className="bg-gradient-primary f-Staatliches">
+                    <h1 className="text-light">Required Data</h1>
+                </CardHeader>
+                <CardBody>
+                    {singleOrder?.meta_data?.map((e, index) => {
+                        return <div key={index} className="mt-2">
+                            <Label className="text-large f-Staatliches">{e.key}</Label>
+                            <Input value={e.value} disabled={true} placeholder=""/>
+                        </div>
+                    })}
+                </CardBody>
+            </Card>
             <Card>
                 <CardHeader className="d-flex justify-content-between">
                     <div>
