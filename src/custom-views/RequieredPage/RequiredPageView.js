@@ -111,8 +111,6 @@ const RequiredPageView = () => {
         tempArr[index] = next
         tempArr[nextIndex] = cur
 
-        console.log(next)
-
         setFromArr(tempArr)
         setFromArr(formArr.concat())
     }

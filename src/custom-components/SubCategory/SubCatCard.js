@@ -25,8 +25,6 @@ const SubCatCard = ({data}) => {
         else fireAlertError("Oops", "Your previous delete request is still pending !!!")
     }
 
-    console.log(data)
-
     return <Card className="mr-2 scalable" style={{width: "31%"}}>
         <CardHeader>
             <h4 className="f-Londrina"><span className="text-primary">{data?.mainService?.mainTopic}</span> {"> "}
